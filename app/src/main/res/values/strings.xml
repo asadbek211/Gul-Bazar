@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Gul Bozor</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="fromCamera">С камеры</string>
+    <string name="fromGallery">Из галереи</string>
+</resources>
