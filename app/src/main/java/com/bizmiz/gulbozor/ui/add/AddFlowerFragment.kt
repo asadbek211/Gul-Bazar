@@ -3,39 +3,52 @@ package com.bizmiz.gulbozor.ui.add
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
-import com.bizmiz.gulbozor.ui.Utils.NumberFormat
+import com.bizmiz.gulbozor.ui.model.FlowerListResponse
 import com.bizmiz.gulbozor.utils.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.IntentUtils
+import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
+import java.io.FileOutputStream
 
 
-class AddFlowerFragment : Fragment() {
+class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
-    private var imageUrl: Uri? = null
+    private lateinit var imagePath:Uri
     private var img1ImageUri: Uri? = null
     private var img2ImageUri: Uri? = null
     private var img3ImageUri: Uri? = null
@@ -44,11 +57,8 @@ class AddFlowerFragment : Fragment() {
     private lateinit var binding: FragmentAddFlowerBinding
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -57,9 +67,20 @@ class AddFlowerFragment : Fragment() {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        binding = FragmentAddFlowerBinding.inflate(inflater, container, false)
-        if (!isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ||
-            !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        requireActivity().window.setFlags(
+            0,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
+        if (!::binding.isInitialized) {
+            binding = FragmentAddFlowerBinding.bind(view)
+        }
+        if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ||
+                        !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                false
+            }
         ) {
             askPermission(
                 arrayOf(
@@ -73,7 +94,11 @@ class AddFlowerFragment : Fragment() {
         val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, sectionList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spPriceType.adapter = adapter
-        binding.etPrice.addTextChangedListener(NumberFormat(binding.etPrice))
+        binding.etPrice.addTextChangedListener(
+            NumberFormat(
+                binding.etPrice
+            )
+        )
         binding.widthUp.setOnClickListener {
             if (binding.etWidth.text.isNotEmpty()) {
                 val price = binding.etWidth.text.toString().replace(" ", "").toInt() + 1
@@ -134,22 +159,153 @@ class AddFlowerFragment : Fragment() {
             binding.dungButtonNo.setTextColor(resources.getColor(R.color.purple_500))
             dungAdd = true
         }
+        binding.progress.setOnClickListener {}
         binding.btnAnnouncement.setOnClickListener {
-            val file = File(img1ImageUri?.path!!)
-            partBody = MultipartBody.Part.createFormData(
-                "file",
-                file.name,
-                file.asRequestBody("image/*".toMediaTypeOrNull()
-            ))
+            if (checkAnnounce()) {
+            binding.progress.visibility = View.VISIBLE
+                val file = File(img1ImageUri?.path!!)
+            partBody =
+                MultipartBody.Part.createFormData(
+                    file.name,
+                    file.name,
+                    file.asRequestBody(
+                        "image/png".toMediaTypeOrNull()
+                    )
+                )
             addFlowerViewModel.addFlower(partBody)
+                addFlowerViewModel.setAnnounce(
+                    FlowerListResponse(
+                        active = true,
+                        allowed = true,
+                        createAt = System.currentTimeMillis().toString(),
+                        description = binding.etDescription.text.toString().trim(),
+                        diameter = binding.etWidth.text.toString().trim().toInt(),
+                        height = binding.etHeight.text.toString().trim().toInt(),
+                        mainAttachId = 23,
+                        price = binding.etPrice.text.trim().toString()
+                            .replace("\\s".toRegex(), "").toInt(),
+                        title = binding.etTitle.text.toString().trim(),
+                        weight = 23,
+                        withFertilizer = dungAdd,
+                        withPot = potAdd
+                    )
+                )
+//            Glide.with(this)
+//                .asBitmap()
+//                .load("https://gulbazar.herokuapp.com/attachment/getMainAttachmentFromSystem/30.png")
+//                .into(object :CustomTarget<Bitmap>(){
+//                    override fun onResourceReady(
+//                        resource: Bitmap,
+//                        transition: Transition<in Bitmap>?
+//                    ) {
+//                        val fos: FileOutputStream? =
+//                            activity?.openFileOutput( "image1", AppCompatActivity.MODE_PRIVATE)
+//                        resource.compress(Bitmap.CompressFormat.PNG, 50, fos)
+//                        fos?.close()
+//                        imagePath = activity?.applicationContext?.getFileStreamPath("image1")?.absolutePath?.toUri()!!
+//                        Log.d("imagePath",imagePath.toString())
+//                        binding.image2.setImageURI(imagePath)
+//                    }
+//
+//                    override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                    }
+//
+//                })
+        }}
+        binding.btnViewAnnouncement.setOnClickListener {
+            if (checkAnnounce()) {
+                val bundle = bundleOf(
+                    "flowerData" to FlowerListResponse(
+                        active = true,
+                        allowed = true,
+                        createAt = System.currentTimeMillis().toString(),
+                        description = binding.etDescription.text.toString().trim(),
+                        diameter = binding.etWidth.text.toString().trim().toInt(),
+                        height = binding.etHeight.text.toString().trim().toInt(),
+                        mainAttachId = 23,
+                        price = binding.etPrice.text.trim().toString().replace("\\s".toRegex(), "")
+                            .toInt(),
+                        title = binding.etTitle.text.toString().trim(),
+                        weight = 23,
+                        withFertilizer = dungAdd,
+                        withPot = potAdd
+                    )
+                )
+                val navController =
+                    Navigation.findNavController(
+                        requireActivity(),
+                        R.id.mainContainer
+                    )
+                navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment, bundle)
+            }
         }
         imageResultObserve()
         binding.image1.onClick {
             imageUploadDialog(IMG1)
             showImage(this)
         }
+        announceResultObserve()
+        binding.etTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-        return binding.root
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (binding.etTitle.text.toString().trim().isEmpty()) {
+                    binding.titleLayout.isErrorEnabled = true
+                    binding.titleLayout.error = "Sarlavha kiriting"
+                } else {
+                    binding.titleLayout.isErrorEnabled = false
+                }
+            }
+
+        })
+        binding.etPrice.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (binding.etPrice.text.toString().trim().isEmpty()) {
+                    binding.priceLayout.isErrorEnabled = true
+                    binding.priceLayout.error = "Narx kiriting"
+                } else {
+                    binding.priceLayout.isErrorEnabled = false
+                }
+            }
+
+        })
+        binding.etDescription.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (binding.etDescription.text.toString().trim().isEmpty()) {
+                    binding.descriptionLayout.isErrorEnabled = true
+                    binding.descriptionLayout.error = "Qo'shimcha ma'lumot kriting"
+                } else {
+                    binding.descriptionLayout.isErrorEnabled = false
+                }
+            }
+
+        })
+        binding.titleLayout.isHintEnabled = false
+        binding.priceLayout.isHintEnabled = false
+        binding.descriptionLayout.isHintEnabled = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -190,8 +346,26 @@ class AddFlowerFragment : Fragment() {
         addFlowerViewModel.result.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-                    Toast.makeText(requireActivity(), "Rasm saqlandi", Toast.LENGTH_SHORT).show()
-                    Log.d("resultImage", it.data.toString())
+
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun announceResultObserve() {
+        addFlowerViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    Snackbar.make(binding.root, "E'lon saqlandi", Snackbar.LENGTH_SHORT).show()
+                    val navController =
+                        Navigation.findNavController(
+                            requireActivity(),
+                            R.id.nav_host_fragment_activity_main
+                        )
+                    navController.popBackStack()
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -241,5 +415,43 @@ class AddFlowerFragment : Fragment() {
         private const val IMG1 = 0
         private const val IMG2 = 1
         private const val IMG3 = 2
+    }
+
+    private fun checkAnnounce(): Boolean {
+        return when {
+            binding.etTitle.text.isEmpty() -> {
+                binding.titleLayout.error = "Sarlavha kiriting"
+                binding.etTitle.showSoftKeyboard()
+                false
+            }
+            img1ImageUri == null -> {
+                Toast.makeText(requireActivity(), "E'longa rasm qo'shing", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            binding.etPrice.text.isEmpty() -> {
+                binding.priceLayout.error = "Narx kiriting"
+                binding.etPrice.showSoftKeyboard()
+                false
+            }
+            binding.etWidth.text.isEmpty() -> {
+                Toast.makeText(requireActivity(), "Diametr kiriting", Toast.LENGTH_SHORT).show()
+                binding.etWidth.showSoftKeyboard()
+                false
+            }
+            binding.etHeight.text.isEmpty() -> {
+                Toast.makeText(requireActivity(), "Balandlik kiriting", Toast.LENGTH_SHORT).show()
+                binding.etHeight.showSoftKeyboard()
+                false
+            }
+            binding.etDescription.text?.isEmpty() == true -> {
+                binding.descriptionLayout.error = "Qo'shimcha ma'lumot kiriting"
+                binding.etDescription.showSoftKeyboard()
+                false
+            }
+            else -> {
+                true
+            }
+        }
     }
 }

@@ -3,21 +3,41 @@ package com.bizmiz.gulbozor.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
+import com.bizmiz.gulbozor.ui.model.FlowerListResponse
+import java.text.DecimalFormat
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
+
+    var flowersList:List<FlowerListResponse> = listOf()
+       set(value) {
+           field = value
+           notifyDataSetChanged()
+       }
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel() {
-
+        fun populateModel(flowerListResponse: FlowerListResponse) {
+            binding.flowerImage.setImageResource(R.drawable.test0)
+            binding.flowerName.text = flowerListResponse.title
+            binding.flowerDescription.text = flowerListResponse.description
+            val df = DecimalFormat("#,###.##")
+            val number = df.format(flowerListResponse.price)
+            binding.flowerPrice.text = "$$number"
+             binding.cardView.setOnClickListener {
+                 onclick.invoke(flowerListResponse)
+             }
+            binding.favourite.setOnClickListener {
+                binding.favourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
+            }
         }
 
     }
 
-//    private var onclick: (articlesData: ArticlesData) -> Unit = {}
-//    fun onClickListener(onclick: (articlesData: ArticlesData) -> Unit) {
-//        this.onclick = onclick
-//    }
+    private var onclick: (flowerListResponse: FlowerListResponse) -> Unit = {}
+    fun onClickListener(onclick: (flowerListResponse: FlowerListResponse) -> Unit) {
+        this.onclick = onclick
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Myholder {
         val flowerItemBinding =
@@ -26,8 +46,8 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     }
 
     override fun onBindViewHolder(holder: Myholder, position: Int) {
-        holder.populateModel()
+        holder.populateModel(flowersList[position])
     }
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = flowersList.size
 }

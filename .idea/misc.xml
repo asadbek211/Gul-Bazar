@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/button_shape_container.xml" value="0.1655" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/ic_baseline_favorite_on.xml" value="0.1" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/ic_baseline_favorite_on_purple.xml" value="0.152" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/product_view_button_shape.xml" value="0.1" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/drawable/text_shape_border.xml" value="0.1655" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/activity_main.xml" value="0.11574074074074074" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/flower_item.xml" value="0.18" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/fragment_add_flower.xml" value="0.25" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.19010416666666666" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/fragment_details.xml" value="0.22" />
+        <entry key="..\:/Android/proyekt/Gul-Bazar/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/drawable/baseline_photo_24.xml" value="0.1545" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/drawable/baseline_photo_camera_24.xml" value="0.1545" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/drawable/button_shape.xml" value="0.1635" />
