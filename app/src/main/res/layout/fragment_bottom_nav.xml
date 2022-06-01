@@ -56,14 +56,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?actionBarSize"
         android:background="#ECEBEB"
         app:layout_constraintBottom_toBottomOf="parent" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         app:itemBackground="@drawable/item_background"
-        android:layout_height="60dp"
+        android:layout_height="?actionBarSize"
         android:paddingBottom="2dp"
         app:itemIconSize="24dp"
         android:layout_marginStart="0dp"

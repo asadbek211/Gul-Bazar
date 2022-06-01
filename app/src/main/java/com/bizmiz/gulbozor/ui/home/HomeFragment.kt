@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,14 +53,15 @@ class HomeFragment : Fragment() {
                     requireActivity(),
                     R.id.mainContainer
                 )
-            navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment,bundle)
+            navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment, bundle)
         }
-         announceObserve()
+        announceObserve()
         binding.swipeContainer.setOnRefreshListener {
             homeViewModel.getAnnounce()
         }
         return binding.root
     }
+
     private fun announceObserve() {
         homeViewModel.announce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
