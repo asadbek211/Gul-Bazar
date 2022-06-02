@@ -28,4 +28,8 @@ interface ApiInterface {
     fun getAnnounceImageById(
         @Path("imageId")imageId:Int
     ): Call<List<FlowerListResponse>>
+    @GET("https://gulbazar.herokuapp.com/attachment/open/{imageId}")
+    fun getImageById(
+        @Path("imageId")imageId:Int
+    ): Call<ByteArray>
 }

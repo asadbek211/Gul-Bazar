@@ -77,4 +77,28 @@ class NetworkHelper(
 
         })
     }
+    fun getFlowerImage(
+        imageId:Int,
+        onSuccess: (data:ByteArray) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getImageById(imageId)
+        call.enqueue(object : Callback<ByteArray> {
+            override fun onResponse(call: Call<ByteArray>?, response: Response<ByteArray>?) {
+                Log.d("results", response.toString())
+                if (response != null) {
+                    Log.d("results", response.body().toString())
+                }
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<ByteArray>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+                Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
 }
