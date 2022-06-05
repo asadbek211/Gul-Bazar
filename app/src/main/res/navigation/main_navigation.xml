@@ -6,10 +6,10 @@
     app:startDestination="@id/bottomNavFragment">
 
     <fragment
-        tools:layout="@layout/fragment_bottom_nav"
         android:id="@+id/bottomNavFragment"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.BottomNavFragment"
-        android:label="BottomNavFragment" >
+        android:label="BottomNavFragment"
+        tools:layout="@layout/fragment_bottom_nav">
         <action
             android:id="@+id/action_bottomNavFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />

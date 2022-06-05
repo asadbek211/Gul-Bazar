@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.databinding.ItemAdListBinding
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
+import com.bizmiz.gulbozor.core.models.FlowerListResponse
+import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
@@ -17,7 +17,7 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
             notifyDataSetChanged()
         }
 
-    inner class Myholder(private val binding: ItemAdListBinding) :
+    inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(flowerListResponse: FlowerListResponse) {
             Glide.with(binding.flowerImage)
@@ -46,7 +46,7 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Myholder {
         val flowerItemBinding =
-            ItemAdListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            FlowerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Myholder(flowerItemBinding)
     }
 

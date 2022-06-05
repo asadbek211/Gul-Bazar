@@ -3,45 +3,34 @@ package com.bizmiz.gulbozor.ui.add
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.FlowerListResponse
+import com.bizmiz.gulbozor.core.utils.*
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
-import com.bizmiz.gulbozor.utils.*
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.util.IntentUtils
 import com.google.android.material.snackbar.Snackbar
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.io.FileOutputStream
 
 
 class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
