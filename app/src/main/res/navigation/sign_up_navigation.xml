@@ -31,11 +31,27 @@
         <action
             android:id="@+id/action_signUpFragment3_to_signUpFragment4"
             app:destination="@id/signUpFragment4" />
+        <action
+            android:id="@+id/action_signUpFragment3_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment4"
         android:name="com.bizmiz.gulbozor.ui.start.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
-        tools:layout="@layout/fragment_sign_up4" />
+        tools:layout="@layout/fragment_sign_up4">
+        <action
+            android:id="@+id/action_signUpFragment4_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.bizmiz.gulbozor.ui.start.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.bizmiz.gulbozor.MainActivity"
+        android:label="MainActivity" />
 
 </navigation>

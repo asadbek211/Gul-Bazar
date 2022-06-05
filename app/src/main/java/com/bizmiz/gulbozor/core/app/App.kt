@@ -1,6 +1,8 @@
 package com.bizmiz.gulbozor.core.app
 
 import android.app.Application
+import com.bizmiz.gulbozor.core.caches.LoginHelper
+import com.bizmiz.gulbozor.core.caches.PhoneNumberHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.core.di.dataModule
 import com.bizmiz.gulbozor.core.di.viewModelModule
@@ -14,6 +16,8 @@ class App : Application() {
         super.onCreate()
         val modules = listOf(dataModule, viewModelModule)
         SetUpHelper.init(this)
+        PhoneNumberHelper.init(this)
+        LoginHelper.init(this)
         startKoin { // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()
 

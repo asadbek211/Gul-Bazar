@@ -46,6 +46,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_baseline_add.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_baseline_favorite_on_purple.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.167" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_edit_text_profile_ic.xml" value="0.167" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_eye_off.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_group_1.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_gulbazar_logo.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/ic_height.xml" value="0.167" />
@@ -65,7 +67,9 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/text_shape.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/text_shape2.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/text_shape_border.xml" value="0.167" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/drawable/visibility_off.xml" value="0.167" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/font/merriweather.xml" value="0.14322916666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/layout-v28/fragment_sign_up3.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazar/app/src/main/res/layout/activity_set_up.xml" value="0.25416666666666665" />

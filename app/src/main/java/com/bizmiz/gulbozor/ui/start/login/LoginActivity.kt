@@ -9,8 +9,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivityLoginBinding
 import com.bizmiz.gulbozor.ui.start.signUp.SignUpActivity
@@ -18,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private var mIsShowPass = false
+
+    private var isFirstOpen: Boolean = LoginHelper.getHelper().login
 
     private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
@@ -28,20 +32,30 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         SetUpHelper.getHelper().board = true
 
-        setListeners()
-        showPassword(mIsShowPass)
-        checkUser()
+        if (!isFirstOpen) {
+            setListeners()
+            showPassword(mIsShowPass)
+            checkUser()
+            windowStatus()
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     private fun checkUser() {
         binding.startLogin.setOnClickListener(View.OnClickListener {
-            if (binding.etPhoneNumber.rawText == "000000000" && binding.etPass.text.contains("00000")) {
+            if (binding.etPhoneNumber.rawText.length == 9 && binding.etPass.text.contains("00000")
+                && binding.etPass.text.length == 5
+            ) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else if (binding.etPhoneNumber.rawText.length <= 8) {
-                Toast.makeText(this, "Check your number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Telefon raqamni tekshiring", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Password Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Parol xato!", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -61,10 +75,10 @@ class LoginActivity : AppCompatActivity() {
     private fun showPassword(isShow: Boolean) {
         if (isShow) {
             binding.etPass.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            binding.ivShowHidePass.setImageResource(R.drawable.visibility_off)
+            binding.ivShowHidePass.setImageResource(R.drawable.visibility_on)
         } else {
             etPass.transformationMethod = PasswordTransformationMethod.getInstance()
-            ivShowHidePass.setImageResource(R.drawable.visibility_on)
+            ivShowHidePass.setImageResource(R.drawable.ic_eye_off)
         }
         etPass.setSelection(etPass.text.toString().length)
     }
@@ -81,5 +95,10 @@ class LoginActivity : AppCompatActivity() {
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    private fun windowStatus() {
+        window.statusBarColor =
+            ContextCompat.getColor(this, R.color.white)
     }
 }

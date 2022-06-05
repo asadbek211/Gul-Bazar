@@ -3,6 +3,7 @@ package com.bizmiz.gulbozor.ui.start.onBoard
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
@@ -24,6 +25,7 @@ class SetUpActivity : AppCompatActivity() {
 
         if (!boardOpen) {
             loadBoardData()
+            windowStatus()
         } else {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -83,6 +85,11 @@ class SetUpActivity : AppCompatActivity() {
             )
         )
         adapter.data = data
+    }
+
+    private fun windowStatus() {
+        window.statusBarColor =
+            ContextCompat.getColor(this, R.color.white)
     }
 
     override fun onResume() {

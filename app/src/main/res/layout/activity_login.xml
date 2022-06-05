@@ -108,30 +108,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/visibility_off"
+                    android:src="@drawable/ic_eye_off"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/start_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="30dp"
-            android:padding="16dp"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                android:id="@+id/start_login"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/button_shape"
-                android:fontFamily="@font/ahronbd"
-                android:gravity="center"
-                android:text="@string/kirish_green"
-                android:textColor="#fff"
-                android:textSize="16sp" />
-        </androidx.cardview.widget.CardView>
+            android:src="@drawable/login_shadow" />
 
 
         <TextView
@@ -139,7 +125,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="36dp"
             android:text="@string/ro_yxatdan_o_tish"
             android:textColor="@color/naturalDark"
             android:textSize="17sp"

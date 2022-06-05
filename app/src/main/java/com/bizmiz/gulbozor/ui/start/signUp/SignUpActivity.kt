@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -13,7 +15,12 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        windowStatus()
+    }
 
+    private fun windowStatus() {
+        window.statusBarColor =
+            ContextCompat.getColor(this, R.color.white)
     }
 
     // when you click the screen while typing in editText the keyboard will hide
