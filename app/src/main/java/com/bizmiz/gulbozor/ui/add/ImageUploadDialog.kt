@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.onClick
 import com.bizmiz.gulbozor.databinding.DialogImageUploadBinding
-import com.bizmiz.gulbozor.utils.onClick
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ImageUploadDialog(private val mFragment: AddFlowerFragment) : BottomSheetDialogFragment() {

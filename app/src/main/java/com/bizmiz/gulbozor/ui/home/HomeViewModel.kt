@@ -3,9 +3,9 @@ package com.bizmiz.gulbozor.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bizmiz.gulbozor.helper.NetworkHelper
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
-import com.bizmiz.gulbozor.utils.Resource
+import com.bizmiz.gulbozor.core.helper.NetworkHelper
+import com.bizmiz.gulbozor.core.models.FlowerListResponse
+import com.bizmiz.gulbozor.core.utils.Resource
 
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {

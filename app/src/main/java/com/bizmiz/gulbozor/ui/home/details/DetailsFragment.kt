@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.FlowerListResponse
 import com.bizmiz.gulbozor.databinding.FragmentDetailsBinding
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
 import java.text.DecimalFormat
 
 class DetailsFragment : Fragment() {
@@ -89,14 +89,15 @@ class DetailsFragment : Fragment() {
         binding.flowerPrice.text = number.toString()
         binding.flowerWidth.text = "${flowerData.diameter} sm"
         binding.flowerHeight.text = "${flowerData.height} sm"
-        checkPot(binding.potCheck,flowerData.withPot)
-        checkPot(binding.dungCheck,flowerData.withFertilizer)
+        checkPot(binding.potCheck, flowerData.withPot)
+        checkPot(binding.dungCheck, flowerData.withFertilizer)
         return binding.root
     }
-    private fun checkPot(imageView: ImageView,boolean: Boolean){
-        if(boolean){
+
+    private fun checkPot(imageView: ImageView, boolean: Boolean) {
+        if (boolean) {
             imageView.setImageResource(R.drawable.img_yes)
-        }else{
+        } else {
             imageView.setImageResource(R.drawable.img_no)
         }
     }
