@@ -22,7 +22,7 @@
         android:windowSoftInputMode="adjustPan"
         tools:targetApi="31">
         <activity
-            android:name=".ui.start.signUp.SignUpActivity"
+            android:name=".ui.start.authentication.signUp.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

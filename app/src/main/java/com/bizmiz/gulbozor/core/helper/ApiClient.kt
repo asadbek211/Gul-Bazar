@@ -1,6 +1,8 @@
 package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.utils.Constant
+import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginService
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.core.RegistrationService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -28,14 +30,22 @@ class ApiClient {
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(15, TimeUnit.SECONDS)
                     .addInterceptor(interceptor)
-                .build()
-                retrofit =Retrofit.Builder()
+                    .build()
+                retrofit = Retrofit.Builder()
                     .baseUrl(Constant.BASE_URL)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             }
             return retrofit
+        }
+
+        fun getRegisterService(): RegistrationService {
+            return getClient().create(RegistrationService::class.java)
+        }
+
+        fun getLoginService(): LoginService {
+            return getClient().create(LoginService::class.java)
         }
     }
 }

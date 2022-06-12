@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.start.signUp
+package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.PhoneNumberHelper
 import com.bizmiz.gulbozor.databinding.FragmentSignUp1Binding
@@ -26,17 +26,26 @@ class SignUpFragment1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadViews(view)
+        loadViews()
         windowStatus()
     }
 
-    private fun loadViews(view: View) {
+    private fun loadViews() {
+        binding.flagUzb.setOnClickListener(View.OnClickListener {
+
+
+            Toast.makeText(
+                requireContext(),
+                PhoneNumberHelper.getHelper().phoneNumber,
+                Toast.LENGTH_LONG
+            ).show()
+        })
         binding.signUpToNext.setOnClickListener(View.OnClickListener {
             if (binding.editTextPhoneSignUp.rawText.length == 9) {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_signUpFragment1_to_signUpFragment2)
+                findNavController().navigate(R.id.action_signUpFragment1_to_signUpFragment2)
                 PhoneNumberHelper.getHelper().phoneNumber =
                     "+998 " + binding.editTextPhoneSignUp.text.toString()
+
             } else {
                 Toast.makeText(
                     requireContext(),

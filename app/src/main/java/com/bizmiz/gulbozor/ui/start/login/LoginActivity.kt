@@ -14,21 +14,20 @@ import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
-import com.bizmiz.gulbozor.databinding.ActivityLoginBinding
-import com.bizmiz.gulbozor.ui.start.signUp.SignUpActivity
-import kotlinx.android.synthetic.main.activity_login.*
+import com.bizmiz.gulbozor.databinding.FragmentLoginBinding
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private var mIsShowPass = false
 
     private var isFirstOpen: Boolean = LoginHelper.getHelper().login
 
-    private var _binding: ActivityLoginBinding? = null
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityLoginBinding.inflate(layoutInflater)
+        _binding = FragmentLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         SetUpHelper.getHelper().board = true
 
@@ -66,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         })
-        ivShowHidePass.setOnClickListener {
+        binding.ivShowHidePass.setOnClickListener {
             mIsShowPass = !mIsShowPass
             showPassword(mIsShowPass)
         }
@@ -77,10 +76,10 @@ class LoginActivity : AppCompatActivity() {
             binding.etPass.transformationMethod = HideReturnsTransformationMethod.getInstance()
             binding.ivShowHidePass.setImageResource(R.drawable.visibility_on)
         } else {
-            etPass.transformationMethod = PasswordTransformationMethod.getInstance()
-            ivShowHidePass.setImageResource(R.drawable.ic_eye_off)
+            binding.etPass.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.ivShowHidePass.setImageResource(R.drawable.ic_eye_off)
         }
-        etPass.setSelection(etPass.text.toString().length)
+        binding.etPass.setSelection(binding.etPass.text.toString().length)
     }
 
     // when you click the screen while typing in editText the keyboard will hide

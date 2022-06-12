@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.start.signUp
+package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
 import android.os.Bundle
 import android.view.LayoutInflater

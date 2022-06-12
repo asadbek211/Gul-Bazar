@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.start.signUp
+package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -9,18 +9,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.PhoneNumberHelper
 import com.bizmiz.gulbozor.databinding.FragmentSignUp3Binding
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.MVP.RegistrationMVP
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.MVP.RegistrationPresenter
 
-class SignUpFragment3 : Fragment() {
+class SignUpFragment3 : Fragment(), RegistrationMVP.View {
 
     private var mIsShowPass = false
     private var mIsShowPass1 = false
 
     private var _binding: FragmentSignUp3Binding? = null
     private val binding get() = _binding!!
+
+    private lateinit var presenter: RegistrationMVP.Presenter
+
+    private val phoneNumber: String = PhoneNumberHelper.getHelper().phoneNumber
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,33 +39,37 @@ class SignUpFragment3 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        presenter = RegistrationPresenter(this)
         windowStatus()
+        binding.phoneNumber.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), phoneNumber, Toast.LENGTH_LONG).show()
+        })
+        loadViews()
 
-        loadViews(view)
-
-        isItFillOrNot(view)
+        isItFillOrNot()
     }
 
-    private fun isItFillOrNot(view: View) {
+
+    private fun isItFillOrNot() {
+        val username = binding.username.text
         binding.registrationDone.setOnClickListener(View.OnClickListener {
-            if (binding.username.text.length >= 2) {
+            if (username.length >= 5) {
                 if ((binding.etPass1.text.contains(binding.etPass.text))
                     && (binding.etPass1.text.length == binding.etPass.text.length)
                     && (binding.etPass.text.length >= 5)
-                    && (binding.phoneNumber.text.contains(PhoneNumberHelper.getHelper().phoneNumber))
-                    && (binding.phoneNumber.text.length == PhoneNumberHelper.getHelper().phoneNumber.length)
                 ) {
-                    // TODO: check also phone number
-                    Navigation.findNavController(view)
-                        .navigate(R.id.action_signUpFragment3_to_signUpFragment4)
+                    presenter.sendRegisterData(
+                        phoneNumber = phoneNumber,
+                        userName = username.toString(),
+                        password = binding.etPass.text.toString()
+                    )
+
                 } else if ((!binding.etPass1.text.contains(binding.etPass.text))
                     || (binding.etPass1.text.length != binding.etPass.text.length)
                 ) {
                     Toast.makeText(
                         requireContext(),
-                        "Parolni tug'ri tasdiqlang",
+                        "Parolni tug'ri tasdiqlang ${binding.etPass1.text}",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else if ((binding.etPass1.text.contains(binding.etPass.text))
@@ -70,36 +81,31 @@ class SignUpFragment3 : Fragment() {
                         "Parol 5 ta harfdan oshsin!",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if ((!binding.phoneNumber.text.contains(PhoneNumberHelper.getHelper().phoneNumber))
-                    || (binding.phoneNumber.text.length != PhoneNumberHelper.getHelper().phoneNumber.length)
-                ) {
                     Toast.makeText(
                         requireContext(),
-                        "Telefon raqamni tekshiring",
+                        binding.etPass.text.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Toast.makeText(
+                        requireContext(),
+                        binding.etPass1.text.toString(),
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     Toast.makeText(requireContext(), "OOPS", Toast.LENGTH_SHORT).show()
-                    Toast.makeText(
-                        requireContext(),
-                        PhoneNumberHelper.getHelper().phoneNumber,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Toast.makeText(requireContext(), binding.phoneNumber.text, Toast.LENGTH_SHORT)
-                        .show()
                 }
             } else {
                 Toast.makeText(requireContext(), "Ismingizni kiriting", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), username, Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun loadViews(view: View) {
+    private fun loadViews() {
         binding.signUpToLogin.setOnClickListener(View.OnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_signUpFragment3_to_loginActivity)
+            findNavController().navigate(R.id.action_signUpFragment3_to_loginFragment)
         })
-        binding.phoneNumber.setText(PhoneNumberHelper.getHelper().phoneNumber)
+        binding.phoneNumber.text = phoneNumber
 
         binding.ivShowHidePass1.setOnClickListener {
             mIsShowPass1 = !mIsShowPass1
@@ -137,4 +143,20 @@ class SignUpFragment3 : Fragment() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
     }
+
+    override fun isRegister(isLoading: Boolean) {
+        if (isLoading) {
+            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_signUpFragment3_to_signUpFragment4)
+
+        } else {
+            Toast.makeText(context, "Bunday hisob mavjud!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

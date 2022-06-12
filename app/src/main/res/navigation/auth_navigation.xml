@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signUpFragment1"
-        android:name="com.bizmiz.gulbozor.ui.start.signUp.SignUpFragment1"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment1"
         android:label="SignUpFragment1"
         tools:layout="@layout/fragment_sign_up1">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
-        android:name="com.bizmiz.gulbozor.ui.start.signUp.SignUpFragment2"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment2"
         android:label="SignUpFragment2"
         tools:layout="@layout/fragment_sign_up2">
         <action
@@ -25,19 +25,19 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment3"
-        android:name="com.bizmiz.gulbozor.ui.start.signUp.SignUpFragment3"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment3"
         android:label="SignUpFragment3"
         tools:layout="@layout/fragment_sign_up3">
         <action
             android:id="@+id/action_signUpFragment3_to_signUpFragment4"
             app:destination="@id/signUpFragment4" />
         <action
-            android:id="@+id/action_signUpFragment3_to_loginActivity"
-            app:destination="@id/loginActivity" />
+            android:id="@+id/action_signUpFragment3_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment4"
-        android:name="com.bizmiz.gulbozor.ui.start.signUp.SignUpFragment4"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
         tools:layout="@layout/fragment_sign_up4">
         <action
@@ -45,13 +45,17 @@
             app:destination="@id/mainActivity" />
     </fragment>
     <activity
-        android:id="@+id/loginActivity"
-        android:name="com.bizmiz.gulbozor.ui.start.login.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
-    <activity
         android:id="@+id/mainActivity"
         android:name="com.bizmiz.gulbozor.MainActivity"
         android:label="MainActivity" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment1"
+            app:destination="@id/signUpFragment1" />
+    </fragment>
 
 </navigation>
