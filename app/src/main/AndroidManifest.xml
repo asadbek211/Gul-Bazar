@@ -26,10 +26,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.start.login.LoginActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.start.onBoard.SetUpActivity"
             android:exported="true"
             android:screenOrientation="portrait">

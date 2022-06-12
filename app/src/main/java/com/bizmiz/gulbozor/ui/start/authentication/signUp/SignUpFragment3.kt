@@ -58,6 +58,10 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
                     && (binding.etPass1.text.length == binding.etPass.text.length)
                     && (binding.etPass.text.length >= 5)
                 ) {
+                    binding.registrationDone.visibility = View.INVISIBLE
+                    binding.registrationDone.isEnabled = false
+                    binding.progressBarr.visibility = View.VISIBLE
+
                     presenter.sendRegisterData(
                         phoneNumber = phoneNumber,
                         userName = username.toString(),
@@ -146,11 +150,13 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
 
     override fun isRegister(isLoading: Boolean) {
         if (isLoading) {
-            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_signUpFragment3_to_signUpFragment4)
 
         } else {
             Toast.makeText(context, "Bunday hisob mavjud!", Toast.LENGTH_SHORT).show()
+            binding.registrationDone.isEnabled = true
+            binding.registrationDone.visibility = View.VISIBLE
+            binding.progressBarr.visibility = View.INVISIBLE
         }
     }
 

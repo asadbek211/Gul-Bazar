@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivitySetUpBinding
-import com.bizmiz.gulbozor.ui.start.login.LoginActivity
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpActivity
 
 class SetUpActivity : AppCompatActivity() {
     private lateinit var data: ArrayList<OnBoardData>
@@ -27,7 +27,7 @@ class SetUpActivity : AppCompatActivity() {
             loadBoardData()
             windowStatus()
         } else {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -38,7 +38,7 @@ class SetUpActivity : AppCompatActivity() {
 
         binding.nextBoardBtn.setOnClickListener {
             if (binding.onBoardPager.currentItem == data.size - 1) {
-                val intent = Intent(this, LoginActivity::class.java)
+                val intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

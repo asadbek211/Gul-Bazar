@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.FragmentSignUp4Binding
 
 class SignUpFragment4 : Fragment() {
@@ -27,6 +28,7 @@ class SignUpFragment4 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         binding.startAfterReg.setOnClickListener(View.OnClickListener {
+            LoginHelper.getHelper().login = true
             Navigation.findNavController(view).navigate(R.id.action_signUpFragment4_to_mainActivity)
         })
     }

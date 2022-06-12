@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        SetUpHelper.getHelper().board = true
         windowStatus()
     }
 

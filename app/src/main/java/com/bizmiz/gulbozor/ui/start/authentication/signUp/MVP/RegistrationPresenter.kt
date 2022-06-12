@@ -31,7 +31,7 @@ class RegistrationPresenter(val view: RegistrationMVP.View) : RegistrationMVP.Pr
             .subscribeWith(object : DisposableSingleObserver<Response<Any>>() {
                 override fun onSuccess(t: Response<Any>) {
 
-                    if (t.code() == 201) {
+                    if (t.code() == 200) {
                         view.isRegister(true)
                     } else {
                         view.isRegister(false)

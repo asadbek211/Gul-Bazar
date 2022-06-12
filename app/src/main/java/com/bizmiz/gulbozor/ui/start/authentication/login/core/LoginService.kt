@@ -8,5 +8,5 @@ import retrofit2.http.POST
 interface LoginService {
 
     @POST("/auth/login")
-    fun loginGetToken(@Body loginRequest: LoginRequest): Single<Response<LoginResponse>>
+    fun loginGetToken(@Body loginRequest: LoginRequest): Single<Response<Any>>
 }

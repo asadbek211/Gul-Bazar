@@ -17,9 +17,10 @@ class App : Application() {
         super.onCreate()
         val modules = listOf(dataModule, viewModelModule)
         SetUpHelper.init(this)
+        instance = this
         LoginHelper.init(this)
-        AppCache.init(this)
         PhoneNumberHelper.init(this)
+        AppCache.init(this)
         startKoin { // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()
 
@@ -32,5 +33,11 @@ class App : Application() {
             // module list
             koin.loadModules(modules)
         }
+
+    }
+
+    companion object {
+        var instance: Application? = null
+            private set
     }
 }
