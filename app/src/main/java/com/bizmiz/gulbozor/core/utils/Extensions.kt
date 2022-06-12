@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.core.utils
+package com.bizmiz.gulbozor.utils
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -24,7 +24,7 @@ fun Fragment.askPermission(permissions: Array<out String>, @IntRange(from = 0) r
     ActivityCompat.requestPermissions(requireActivity(), permissions, requestCode)
 
 fun File.toRequestBody(): RequestBody =
-    this.asRequestBody("image/*".toMediaTypeOrNull())
+    this.asRequestBody("image/png".toMediaTypeOrNull())
 
 fun File.toMultiPart(key: String) =
     MultipartBody.Part.createFormData(key, this.name, this.toRequestBody())

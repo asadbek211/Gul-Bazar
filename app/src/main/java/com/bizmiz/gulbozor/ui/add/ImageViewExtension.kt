@@ -54,6 +54,6 @@ fun Fragment.pickGalleryImage(code: Int) {
             )
         )
         .maxResultSize(1080, 1920)
-        .start(code)
+        .start()
 }
 

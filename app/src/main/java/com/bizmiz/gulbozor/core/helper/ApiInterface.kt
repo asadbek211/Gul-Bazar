@@ -1,7 +1,9 @@
-package com.bizmiz.gulbozor.core.helper
+package com.bizmiz.gulbozor.helper
 
-import com.bizmiz.gulbozor.core.models.AnnounceResponse
-import com.bizmiz.gulbozor.core.models.FlowerListResponse
+import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
+import com.bizmiz.gulbozor.ui.model.AnnounceResponse
+import com.bizmiz.gulbozor.ui.model.FlowerListResponse
+import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -10,22 +12,24 @@ interface ApiInterface {
 
     @GET("/announce/announceList")
     fun getAnnounce(
-    ): Call<List<FlowerListResponse>>
+    ): Call<List<AnnounceDataResponse>>
 
     @Headers("Content-Type:application/json")
     @POST("/announce")
     fun setAnnounce(
-        @Body flowerDataResponse: FlowerListResponse
+        @Body announceDataResponse: AnnounceDataResponse
     ): Call<AnnounceResponse>
 
     @Multipart
-    @POST("/attachment/uploadSystem")
+    @POST("/attachment/uploadImage")
     fun addFlowerImage(
-        @Part img1: MultipartBody.Part
-    ): Call<Any>
-
-    @GET("attachment/getMainAttachmentFromSystem/{imageId}")
-    fun getAnnounceImageById(
-        @Path("imageId")imageId:Int
-    ): Call<List<FlowerListResponse>>
+        @Part image1: MultipartBody.Part?,
+        @Part image2: MultipartBody.Part?,
+        @Part image3: MultipartBody.Part?,
+        @Part image4: MultipartBody.Part?,
+        @Part image5: MultipartBody.Part?,
+        @Part image6: MultipartBody.Part?,
+        @Part image7: MultipartBody.Part?,
+        @Part image8: MultipartBody.Part?
+    ): Call<ImageResponseData>
 }
