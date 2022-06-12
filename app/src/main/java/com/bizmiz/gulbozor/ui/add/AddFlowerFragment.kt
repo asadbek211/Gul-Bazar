@@ -21,20 +21,19 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.utils.NumberFormat
+import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
-import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.google.android.material.snackbar.Snackbar
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -233,33 +232,33 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             )
         }
         }
-        binding.btnViewAnnouncement.setOnClickListener {
-            if (checkAnnounce()) {
-                val bundle = bundleOf(
-                    "flowerData" to FlowerListResponse(
-                        active = true,
-                        allowed = true,
-                        createAt = System.currentTimeMillis().toString(),
-                        description = binding.etDescription.text.toString().trim(),
-                        diameter = binding.etWidth.text.toString().trim().toInt(),
-                        height = binding.etHeight.text.toString().trim().toInt(),
-                        mainAttachId = 23,
-                        price = binding.etPrice.text.trim().toString().replace("\\s".toRegex(), "")
-                            .toInt(),
-                        title = binding.etTitle.text.toString().trim(),
-                        weight = 23,
-                        withFertilizer = dungAdd,
-                        withPot = potAdd
-                    )
-                )
-                val navController =
-                    Navigation.findNavController(
-                        requireActivity(),
-                        R.id.mainContainer
-                    )
-                navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment, bundle)
-            }
-        }
+//        binding.btnViewAnnouncement.setOnClickListener {
+//            if (checkAnnounce()) {
+//                val bundle = bundleOf(
+//                    "flowerData" to AnnounceDataResponse(
+//                        active = true,
+//                        allowed = true,
+//                        createAt = System.currentTimeMillis().toString(),
+//                        description = binding.etDescription.text.toString().trim(),
+//                        diameter = binding.etWidth.text.toString().trim().toInt(),
+//                        height = binding.etHeight.text.toString().trim().toInt(),
+//                        mainAttachId = 23,
+//                        price = binding.etPrice.text.trim().toString().replace("\\s".toRegex(), "")
+//                            .toInt(),
+//                        title = binding.etTitle.text.toString().trim(),
+//                        weight = 23,
+//                        withFertilizer = dungAdd,
+//                        withPot = potAdd
+//                    )
+//                )
+//                val navController =
+//                    Navigation.findNavController(
+//                        requireActivity(),
+//                        R.id.mainContainer
+//                    )
+//                navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment, bundle)
+//            }
+//        }
         imageResultObserve()
         binding.image1.onClick {
             pickImage()
@@ -404,7 +403,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     Log.d("url", it.data?.image2.toString())
                     Log.d("url", it.data?.image3.toString())
                     addFlowerViewModel.setAnnounce(
-                        AnnounceDataResponse(
+                        AnnounceData(
                             active = true,
                             allowed = true,
                             description = binding.etDescription.text.toString().trim(),
@@ -442,7 +441,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private fun announceResultObserve() {
         addFlowerViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS -> {
+                ResourceState.SUCCESS-> {
                     Snackbar.make(binding.root, "E'lon saqlandi", Snackbar.LENGTH_SHORT).show()
                     val navController =
                         Navigation.findNavController(

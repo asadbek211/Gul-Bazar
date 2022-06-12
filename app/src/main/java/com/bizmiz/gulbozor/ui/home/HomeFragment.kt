@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
                     requireActivity(),
                     R.id.mainContainer
                 )
-            navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment)
+            navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment,bundle)
         }
         announceObserve()
         binding.swipeContainer.setOnRefreshListener {

@@ -4,22 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
-import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
-    var flowersList:List<AnnounceDataResponse> = listOf()
+    var flowersList:List<AnnounceData> = listOf()
        set(value) {
            field = value
            notifyDataSetChanged()
        }
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(flowerListResponse: AnnounceDataResponse) {
+        fun populateModel(flowerListResponse: AnnounceData) {
             Glide.with(binding.root.context).load(flowerListResponse.image1)
                 .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
@@ -37,8 +36,8 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
     }
 
-    private var onclick: (flowerListResponse: AnnounceDataResponse) -> Unit = {}
-    fun onClickListener(onclick: (flowerListResponse: AnnounceDataResponse) -> Unit) {
+    private var onclick: (flowerListResponse: AnnounceData) -> Unit = {}
+    fun onClickListener(onclick: (flowerListResponse: AnnounceData) -> Unit) {
         this.onclick = onclick
     }
 

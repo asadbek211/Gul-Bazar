@@ -1,16 +1,16 @@
-package com.bizmiz.gulbozor.ui.model
+package com.bizmiz.gulbozor.core.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class AnnounceDataResponse(
+data class AnnounceData(
     val active: Boolean,
     val allowed: Boolean,
-    val categoryId: Int,
+    val categoryId: Int?,
     val description: String,
     val diameter: Int,
-    val flowerType: Int,
+    val flowerType: Int?,
     val height: Int,
     val image1: String?,
     val image2: String?,
@@ -20,12 +20,12 @@ data class AnnounceDataResponse(
     val image6: String?,
     val image7: String?,
     val image8: String?,
-    val imageIds: String,
+    val imageIds: String?,
     val price: Int,
-    val sellerId: Int,
-    val shopId: Int,
+    val sellerId: Int?,
+    val shopId: Int?,
     val title: String,
-    val weight: Int,
+    val weight: Int?,
     val withFertilizer: Boolean,
     val withPot: Boolean
-): Parcelable
+):Parcelable

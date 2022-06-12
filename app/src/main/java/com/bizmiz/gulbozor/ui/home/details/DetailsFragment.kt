@@ -1,31 +1,21 @@
 package com.bizmiz.gulbozor.ui.home.details
 
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.databinding.FragmentDetailsBinding
-import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
-import com.bizmiz.gulbozor.utils.ResourceState
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
 class DetailsFragment : Fragment() {
     private var isFavourite = false
-    private lateinit var flowerData: AnnounceDataResponse
+    private lateinit var flowerData: AnnounceData
     private var flowerUrlList:ArrayList<String> = arrayListOf()
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var imageList: ArrayList<Int>
@@ -33,7 +23,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        flowerData = requireArguments().get("flowerData") as AnnounceDataResponse
+        flowerData = requireArguments().get("flowerData") as AnnounceData
         flowerData.image1?.let { flowerUrlList.add(it) }
         flowerData.image2?.let { flowerUrlList.add(it) }
         flowerData.image3?.let { flowerUrlList.add(it) }
@@ -42,7 +32,6 @@ class DetailsFragment : Fragment() {
         flowerData.image6?.let { flowerUrlList.add(it) }
         flowerData.image7?.let { flowerUrlList.add(it) }
         flowerData.image8?.let { flowerUrlList.add(it) }
-        Log.d("list",flowerUrlList.joinToString())
         imageList =
             arrayListOf(R.drawable.test0, R.drawable.img_1, R.drawable.img_2, R.drawable.img_3)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

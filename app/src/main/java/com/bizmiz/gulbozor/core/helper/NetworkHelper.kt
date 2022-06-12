@@ -1,9 +1,8 @@
-package com.bizmiz.gulbozor.helper
+package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
-import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
-import com.bizmiz.gulbozor.ui.model.AnnounceResponse
-import com.bizmiz.gulbozor.ui.model.FlowerListResponse
+import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponse
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -46,26 +45,26 @@ class NetworkHelper(
         })
     }
     fun getAnnounce(
-        onSuccess: (flowerList: List<AnnounceDataResponse>) -> Unit,
+        onSuccess: (flowerList: List<AnnounceData>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getAnnounce()
-        call.enqueue(object : Callback<List<AnnounceDataResponse>> {
-            override fun onResponse(call: Call<List<AnnounceDataResponse>>?, response: Response<List<AnnounceDataResponse>>?) {
+        call.enqueue(object : Callback<List<AnnounceData>> {
+            override fun onResponse(call: Call<List<AnnounceData>>?, response: Response<List<AnnounceData>>?) {
                 if (response != null) {
                     Log.d("listUrl", response.body().toString())
                     response.body()?.let { onSuccess.invoke(it) }
                 }
             }
 
-            override fun onFailure(call: Call<List<AnnounceDataResponse>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 
         })
     }
     fun setAnnounce(
-        announceDataResponse: AnnounceDataResponse,
+        announceDataResponse: AnnounceData,
         onSuccess: (announceResponse: AnnounceResponse) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
