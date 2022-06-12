@@ -1,37 +1,43 @@
 package com.bizmiz.gulbozor.ui.add
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
+import com.bizmiz.gulbozor.ui.model.AnnounceDataResponse
 import com.bizmiz.gulbozor.ui.model.FlowerListResponse
 import com.bizmiz.gulbozor.utils.*
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.github.dhaval2404.imagepicker.util.IntentUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
@@ -40,11 +46,15 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
-    private lateinit var imagePath:Uri
-    private var img1ImageUri: Uri? = null
-    private var img2ImageUri: Uri? = null
-    private var img3ImageUri: Uri? = null
-    private lateinit var partBody: MultipartBody.Part
+    private val imageUrlList: ArrayList<Uri> = arrayListOf()
+    private var file1:File? = null
+    private var file2:File? = null
+    private var file3:File? = null
+    private var file4:File? = null
+    private var file5:File? = null
+    private var file6:File? = null
+    private var file7:File? = null
+    private var file8:File? = null
     private val sectionList: ArrayList<String> = arrayListOf("so'm", "$")
     private lateinit var binding: FragmentAddFlowerBinding
 
@@ -68,7 +78,9 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             binding = FragmentAddFlowerBinding.bind(view)
         }
         if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ||
+                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
+                    READ_EXTERNAL_STORAGE
+                ) ||
                         !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             } else {
                 false
@@ -77,7 +89,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             askPermission(
                 arrayOf(
                     Manifest.permission.CAMERA,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ),
                 1003
@@ -155,57 +167,72 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         binding.btnAnnouncement.setOnClickListener {
             if (checkAnnounce()) {
             binding.progress.visibility = View.VISIBLE
-                val file = File(img1ImageUri?.path!!)
-            partBody =
-                MultipartBody.Part.createFormData(
-                    file.name,
-                    file.name,
-                    file.asRequestBody(
-                        "image/png".toMediaTypeOrNull()
-                    )
-                )
-            addFlowerViewModel.addFlower(partBody)
-                addFlowerViewModel.setAnnounce(
-                    FlowerListResponse(
-                        active = true,
-                        allowed = true,
-                        createAt = System.currentTimeMillis().toString(),
-                        description = binding.etDescription.text.toString().trim(),
-                        diameter = binding.etWidth.text.toString().trim().toInt(),
-                        height = binding.etHeight.text.toString().trim().toInt(),
-                        mainAttachId = 23,
-                        price = binding.etPrice.text.trim().toString()
-                            .replace("\\s".toRegex(), "").toInt(),
-                        title = binding.etTitle.text.toString().trim(),
-                        weight = 23,
-                        withFertilizer = dungAdd,
-                        withPot = potAdd
-                    )
-                )
-
-//            Glide.with(this)
-//                .asBitmap()
-//                .load("https://gulbazar.herokuapp.com/attachment/getMainAttachmentFromSystem/30.png")
-//                .into(object :CustomTarget<Bitmap>(){
-//                    override fun onResourceReady(
-//                        resource: Bitmap,
-//                        transition: Transition<in Bitmap>?
-//                    ) {
-//                        val fos: FileOutputStream? =
-//                            activity?.openFileOutput( "image1", AppCompatActivity.MODE_PRIVATE)
-//                        resource.compress(Bitmap.CompressFormat.PNG, 50, fos)
-//                        fos?.close()
-//                        imagePath = activity?.applicationContext?.getFileStreamPath("image1")?.absolutePath?.toUri()!!
-//                        Log.d("imagePath",imagePath.toString())
-//                        binding.image2.setImageURI(imagePath)
-//                    }
-//
-//                    override fun onLoadCleared(placeholder: Drawable?) {
-//
-//                    }
-//
-//                })
-        }}
+            when (imageUrlList.size) {
+                1 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                }
+                2 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                }
+                3 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                }
+                4 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                }
+                5 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                }
+                6 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                }
+                7 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                    file7 = uriToImageFile(imageUrlList[6])
+                }
+                8 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                    file7 = uriToImageFile(imageUrlList[6])
+                    file8 = uriToImageFile(imageUrlList[7])
+                }
+            }
+            addFlowerViewModel.addFlower(
+                file1?.let { it1 -> createFormData(it1, "image1") },
+                file2?.let { it1 -> createFormData(it1, "image2") },
+                file3?.let { it1 -> createFormData(it1, "image3") },
+                file4?.let { it1 -> createFormData(it1, "image4") },
+                file5?.let { it1 -> createFormData(it1, "image5") },
+                file6?.let { it1 -> createFormData(it1, "image6") },
+                file7?.let { it1 -> createFormData(it1, "image7") },
+                file8?.let { it1 -> createFormData(it1, "image8") }
+            )
+        }
+        }
         binding.btnViewAnnouncement.setOnClickListener {
             if (checkAnnounce()) {
                 val bundle = bundleOf(
@@ -235,8 +262,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         }
         imageResultObserve()
         binding.image1.onClick {
-            imageUploadDialog(IMG1)
-            showImage(this)
+            pickImage()
         }
         announceResultObserve()
         binding.etTitle.addTextChangedListener(object : TextWatcher {
@@ -303,43 +329,108 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST_CODE) {
+        val imageViewList:List<ImageView> = listOf(
+            binding.image1,
+            binding.image2,
+            binding.image3,
+            binding.image4,
+            binding.image5,
+            binding.image6,
+            binding.image7,
+            binding.image8
+        )
         when (resultCode) {
             Activity.RESULT_OK -> {
-                val uri: Uri? = data?.data!!
-                when (requestCode) {
-                    IMG1_GALLERY_REQ_CODE, IMG1_CAMERA_REQ_CODE -> {
-                        this.img1ImageUri = uri
-                        if (uri != null) {
-                            binding.image1.setLocalImage(uri)
+                imageUrlList.clear()
+                binding.image1.setImageResource(R.drawable.add)
+                binding.image2.setImageResource(R.drawable.ic_group_1)
+                binding.image3.setImageResource(R.drawable.ic_group_1)
+                binding.image4.setImageResource(R.drawable.ic_group_1)
+                binding.image5.setImageResource(R.drawable.ic_group_1)
+                binding.image6.setImageResource(R.drawable.ic_group_1)
+                binding.image7.setImageResource(R.drawable.ic_group_1)
+                binding.image8.setImageResource(R.drawable.ic_group_1)
+                if (data!!.clipData != null) {
+                    val count = data.clipData!!.itemCount
+                    for (i in 0 until count) {
+                        if (imageUrlList.size<8){
+                            val imageUrl = data.clipData!!.getItemAt(i).uri
+                            imageUrlList.add(imageUrl)
+                            val thumbnailRequest = Glide
+                                .with(requireContext())
+                                .load(R.drawable.ic_group_1)
+                            Glide.with(requireContext())
+                                .load(imageUrl)
+                                .transition(withCrossFade())
+                                .thumbnail(thumbnailRequest)
+                                .into(imageViewList[i])
                         }
-
                     }
-                    IMG2_GALLERY_REQ_CODE, IMG2_CAMERA_REQ_CODE -> {
-                        this.img2ImageUri = uri
-                        if (uri != null) {
-                            binding.image2.setLocalImage(uri)
-                        }
+                    if (count >8)
+                        Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT).show()
+                } else {
+                    val imageUrl = data.data
+                    if (imageUrl != null) {
+                        imageUrlList.add(imageUrl)
                     }
-                    IMG3_GALLERY_REQ_CODE, IMG3_CAMERA_REQ_CODE -> {
-                        this.img3ImageUri = uri
-                        if (uri != null) {
-                            binding.image3.setLocalImage(uri)
-                        }
-                    }
+                    val thumbnailRequest = Glide
+                        .with(requireContext())
+                        .load(R.drawable.ic_group_1)
+                    Glide.with(requireContext())
+                        .load(imageUrl)
+                        .transition(withCrossFade())
+                        .thumbnail(thumbnailRequest)
+                        .into(imageViewList[0])
                 }
             }
-            ImagePicker.RESULT_ERROR -> {
-                Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
-                    .show()
-            }
         }
+    }
     }
 
     private fun imageResultObserve() {
         addFlowerViewModel.result.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-
+                    val img1 = it.data?.image1
+                    val img2 = it.data?.image2
+                    val img3 = it.data?.image3
+                    val img4 = it.data?.image4
+                    val img5 = it.data?.image5
+                    val img6 = it.data?.image6
+                    val img7 = it.data?.image7
+                    val img8 = it.data?.image8
+                    Log.d("url", it.data?.image1.toString())
+                    Log.d("url", it.data?.image2.toString())
+                    Log.d("url", it.data?.image3.toString())
+                    addFlowerViewModel.setAnnounce(
+                        AnnounceDataResponse(
+                            active = true,
+                            allowed = true,
+                            description = binding.etDescription.text.toString().trim(),
+                            diameter = binding.etWidth.text.toString().trim().toInt(),
+                            height = binding.etHeight.text.toString().trim().toInt(),
+                            image1 = img1,
+                            image2 = img2,
+                            image3 = img3,
+                            image4 = img4,
+                            image5 = img5,
+                            image6 = img6,
+                            image7 = img7,
+                            image8 = img8,
+                            price = binding.etPrice.text.trim().toString()
+                                .replace("\\s".toRegex(), "").toInt(),
+                            title = binding.etTitle.text.toString().trim(),
+                            weight = 23,
+                            withFertilizer = dungAdd,
+                            withPot = potAdd,
+                            categoryId = 1,
+                            sellerId = 1,
+                            shopId = 1,
+                            flowerType = 1,
+                            imageIds = "1"
+                        )
+                    )
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -366,48 +457,9 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             }
         })
     }
-
-    private fun showImage(view: View) {
-        val uri = when (view) {
-            binding.image1 -> this.img1ImageUri
-            binding.image2 -> this.img2ImageUri
-            binding.image3 -> this.img3ImageUri
-            else -> null
-        }
-        uri?.let {
-            startActivity(IntentUtils.getUriViewIntent(requireContext(), uri))
-        }
-    }
-
-    private fun imageUploadDialog(type: Int) {
-        val dialog = ImageUploadDialog(this)
-        dialog.onGallerySelected {
-            when (type) {
-                IMG1 -> pickGalleryImage(IMG1_GALLERY_REQ_CODE)
-                IMG2 -> pickGalleryImage(IMG2_GALLERY_REQ_CODE)
-                IMG3 -> pickGalleryImage(IMG3_GALLERY_REQ_CODE)
-            }
-        }
-        dialog.onCameraSelected {
-            when (type) {
-                IMG1 -> pickCameraImage(IMG1_CAMERA_REQ_CODE)
-                IMG2 -> pickCameraImage(IMG2_CAMERA_REQ_CODE)
-                IMG3 -> pickCameraImage(IMG3_CAMERA_REQ_CODE)
-            }
-        }
-    }
-
     companion object {
-        private const val IMG1_GALLERY_REQ_CODE = 102
-        private const val IMG1_CAMERA_REQ_CODE = 103
-        private const val IMG2_GALLERY_REQ_CODE = 104
-        private const val IMG2_CAMERA_REQ_CODE = 105
-        private const val IMG3_GALLERY_REQ_CODE = 106
-        private const val IMG3_CAMERA_REQ_CODE = 107
-
-        private const val IMG1 = 0
-        private const val IMG2 = 1
-        private const val IMG3 = 2
+        const val PICK_IMAGE_REQUEST_CODE = 1000
+        const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
 
     private fun checkAnnounce(): Boolean {
@@ -417,7 +469,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 binding.etTitle.showSoftKeyboard()
                 false
             }
-            img1ImageUri == null -> {
+            imageUrlList.isEmpty() -> {
                 Toast.makeText(requireActivity(), "E'longa rasm qo'shing", Toast.LENGTH_SHORT)
                     .show()
                 false
@@ -446,5 +498,54 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 true
             }
         }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            1001 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // pick image after request permission success
+                    pickImage()
+                }
+            }
+        }
+    }
+    private fun pickImage() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            val intent = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI
+            )
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(READ_EXTERNAL_STORAGE),
+                READ_EXTERNAL_STORAGE_REQUEST_CODE
+            )
+        }
+    }
+    private fun uriToImageFile(uri: Uri): File? {
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = (activity as MainActivity).contentResolver.query(uri, filePathColumn, null, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                val filePath = cursor.getString(columnIndex)
+                cursor.close()
+                return File(filePath)
+            }
+            cursor.close()
+        }
+        return null
+    }
+    private fun createFormData(file: File,imgName:String): MultipartBody.Part {
+        val requestFile: RequestBody = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            file
+        )
+        return MultipartBody.Part.createFormData(imgName, file.name, requestFile)
     }
 }

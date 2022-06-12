@@ -11,13 +11,13 @@ class DetailsViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     val data: LiveData<Resource<ByteArray>>
         get() = getData
 
-    fun getData(
-        imageInt: Int
-    ) {
-        networkHelper.getFlowerImage(imageInt,{
-            getData.value = Resource.success(it)
-        }, {
-            getData.value = Resource.error(it)
-        })
-    }
+//    fun getData(
+//        imageInt: Int
+//    ) {
+//        networkHelper.getFlowerImage(imageInt,{
+//            getData.value = Resource.success(it)
+//        }, {
+//            getData.value = Resource.error(it)
+//        })
+//    }
 }
