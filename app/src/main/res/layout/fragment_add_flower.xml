@@ -497,7 +497,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="5dp"
-            android:src="@drawable/pot"
+            android:src="@drawable/ic_pot"
             app:layout_constraintBottom_toBottomOf="@+id/imageView13"
             app:layout_constraintStart_toEndOf="@+id/imageView14"
             app:layout_constraintTop_toTopOf="@+id/imageView13" />
@@ -581,7 +581,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="5dp"
-            android:src="@drawable/dung"
+            android:src="@drawable/ic_dung"
             app:layout_constraintBottom_toBottomOf="@+id/imageView18"
             app:layout_constraintStart_toEndOf="@+id/imageView17"
             app:layout_constraintTop_toTopOf="@+id/imageView18" />

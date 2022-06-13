@@ -40,14 +40,7 @@
         android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
         tools:layout="@layout/fragment_sign_up4">
-        <action
-            android:id="@+id/action_signUpFragment4_to_mainActivity"
-            app:destination="@id/mainActivity" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.bizmiz.gulbozor.MainActivity"
-        android:label="MainActivity" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"
@@ -56,9 +49,6 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment1"
             app:destination="@id/signUpFragment1" />
-        <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
     </fragment>
 
 </navigation>

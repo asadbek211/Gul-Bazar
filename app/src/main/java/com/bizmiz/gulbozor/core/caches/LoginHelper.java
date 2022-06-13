@@ -10,7 +10,7 @@ public class LoginHelper {
 
     private LoginHelper(Context context) {
         //context
-        preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences("savePhone", Context.MODE_PRIVATE);
     }
 
     public static void init(Context context) {
@@ -23,11 +23,11 @@ public class LoginHelper {
         return helper;
     }
 
-    public boolean getLogin() {
+    public Boolean getLogin() {
         return preferences.getBoolean("login", false);
     }
 
-    public void setLogin(boolean b) {
-        preferences.edit().putBoolean("login", b).apply();
+    public void setLogin(Boolean phoneNumber) {
+        preferences.edit().putBoolean("login", phoneNumber).apply();
     }
 }

@@ -1,12 +1,13 @@
 package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.FragmentSignUp4Binding
@@ -29,7 +30,9 @@ class SignUpFragment4 : Fragment() {
         windowStatus()
         binding.startAfterReg.setOnClickListener(View.OnClickListener {
             LoginHelper.getHelper().login = true
-            Navigation.findNavController(view).navigate(R.id.action_signUpFragment4_to_mainActivity)
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            onDestroy()
         })
     }
 

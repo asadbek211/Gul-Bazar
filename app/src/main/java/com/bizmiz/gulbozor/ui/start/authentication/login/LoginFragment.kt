@@ -1,5 +1,6 @@
 package com.bizmiz.gulbozor.ui.start.authentication.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
@@ -39,13 +41,16 @@ class LoginFragment : Fragment(), LoginMVP.View {
             presenter = LoginPresenter(this)
             setListeners()
         } else {
-            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun setListeners() {
         binding.logoGulbazar.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            //findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
         })
 
         binding.ivShowHidePass.setOnClickListener {
@@ -88,7 +93,8 @@ class LoginFragment : Fragment(), LoginMVP.View {
         if (message == "successful") {
 
             Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
             LoginHelper.getHelper().login = true
             AppCache.getHelper().password = binding.etPass.text.toString()
             requireActivity().finish()

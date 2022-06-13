@@ -33,7 +33,7 @@ class DetailsFragment : Fragment() {
         flowerData.image7?.let { flowerUrlList.add(it) }
         flowerData.image8?.let { flowerUrlList.add(it) }
         imageList =
-            arrayListOf(R.drawable.test0, R.drawable.img_1, R.drawable.img_2, R.drawable.img_3)
+            arrayListOf(R.drawable.img_7, R.drawable.img_1, R.drawable.img_2, R.drawable.img_3)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
                 0,
@@ -86,7 +86,7 @@ class DetailsFragment : Fragment() {
                 binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 isFavourite = false
             } else {
-                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on)
+                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
                 isFavourite = true
             }
         }
@@ -103,9 +103,9 @@ class DetailsFragment : Fragment() {
     }
     private fun checkPot(imageView: ImageView,boolean: Boolean){
         if(boolean){
-            imageView.setImageResource(R.drawable.img_yes)
+            imageView.setImageResource(R.drawable.ic_check_yes_24)
         }else{
-            imageView.setImageResource(R.drawable.img_no)
+            imageView.setImageResource(R.drawable.ic_check_no_24)
         }
     }
 }

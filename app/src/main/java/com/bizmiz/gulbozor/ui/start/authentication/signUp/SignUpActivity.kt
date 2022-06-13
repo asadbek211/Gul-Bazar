@@ -1,23 +1,35 @@
 package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
     private var _binding: ActivitySignUpBinding? = null
     private val binding get() = _binding!!
+
+    private val isFirstOpen: Boolean = LoginHelper.getHelper().login
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         SetUpHelper.getHelper().board = true
-        windowStatus()
+        if (!isFirstOpen) {
+            windowStatus()
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun windowStatus() {
