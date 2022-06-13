@@ -35,6 +35,7 @@
             android:layout_marginTop="35dp"
             android:layout_marginEnd="@dimen/margin_big"
             app:boxStrokeWidth="0dp"
+            android:gravity="center"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,6 +207,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
             app:boxStrokeWidth="0dp"
+            android:gravity="center"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/spPriceType"
@@ -275,12 +277,13 @@
             app:layout_constraintTop_toTopOf="@+id/spPriceType" />
 
         <ImageView
+            android:padding="5dp"
             android:id="@+id/imageView9"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="60dp"
-            android:src="@drawable/flower"
+            android:src="@drawable/ic_flover_icon"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/priceLayout" />
 
@@ -367,12 +370,13 @@
             app:layout_constraintTop_toTopOf="@+id/etWidth" />
 
         <ImageView
+            android:padding="5dp"
             android:id="@+id/imageView12"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/flower"
+            android:src="@drawable/ic_flover_icon"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
@@ -632,6 +636,7 @@
             android:layout_width="0dp"
             android:layout_height="188dp"
             app:boxStrokeWidth="0dp"
+            android:gravity="center"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             android:layout_marginTop="55dp"
