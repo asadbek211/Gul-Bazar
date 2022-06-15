@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -57,7 +58,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private val sectionList: ArrayList<String> = arrayListOf("so'm", "$")
     private lateinit var binding: FragmentAddFlowerBinding
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.statusBarColor =
@@ -76,14 +76,11 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         if (!::binding.isInitialized) {
             binding = FragmentAddFlowerBinding.bind(view)
         }
-        if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
-                    READ_EXTERNAL_STORAGE
-                ) ||
-                        !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            } else {
-                false
-            }
+        if (
+            !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
+                READ_EXTERNAL_STORAGE
+            ) ||
+                    !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ) {
             askPermission(
                 arrayOf(
@@ -235,14 +232,12 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
 //        binding.btnViewAnnouncement.setOnClickListener {
 //            if (checkAnnounce()) {
 //                val bundle = bundleOf(
-//                    "flowerData" to AnnounceDataResponse(
+//                    "flowerData" to AnnounceData(
 //                        active = true,
 //                        allowed = true,
-//                        createAt = System.currentTimeMillis().toString(),
 //                        description = binding.etDescription.text.toString().trim(),
 //                        diameter = binding.etWidth.text.toString().trim().toInt(),
 //                        height = binding.etHeight.text.toString().trim().toInt(),
-//                        mainAttachId = 23,
 //                        price = binding.etPrice.text.trim().toString().replace("\\s".toRegex(), "")
 //                            .toInt(),
 //                        title = binding.etTitle.text.toString().trim(),

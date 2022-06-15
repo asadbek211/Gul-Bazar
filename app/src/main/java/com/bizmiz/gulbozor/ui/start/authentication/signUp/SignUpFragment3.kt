@@ -63,7 +63,8 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
                     binding.progressBarr.visibility = View.VISIBLE
 
                     presenter.sendRegisterData(
-                        phoneNumber = phoneNumber,
+                        phoneNumber = phoneNumber.replace("\\s".toRegex(), "")
+                            .replace("(", "").replace(")", ""),
                         userName = username.toString(),
                         password = binding.etPass.text.toString()
                     )

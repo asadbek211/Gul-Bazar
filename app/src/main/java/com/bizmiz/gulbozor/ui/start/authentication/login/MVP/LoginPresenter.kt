@@ -25,6 +25,7 @@ class LoginPresenter(val view: LoginMVP.View) : LoginMVP.Presenter {
             phoneNumber = phoneNumber,
             password = password
         )
+        Log.d("tel",phoneNumber)
         val disposable = loginService.loginGetToken(loginRequest = body)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
