@@ -143,12 +143,16 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_add_flower.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_details.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up1.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up2.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up3.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_board.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.124" />
+        <entry key="..\:/Users/user/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

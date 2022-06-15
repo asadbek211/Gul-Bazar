@@ -83,7 +83,7 @@
                 android:textColor="@color/naturalDark"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                app:met_mask="#########" />
+                app:met_mask="## ### ## ##" />
 
         </LinearLayout>
 

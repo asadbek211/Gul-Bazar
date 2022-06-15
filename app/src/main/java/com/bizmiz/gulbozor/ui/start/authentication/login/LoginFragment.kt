@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.FragmentLoginBinding
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginMVP
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginPresenter
+import com.bizmiz.gulbozor.ui.start.onBoard.MiddleActivity
 
 class LoginFragment : Fragment(), LoginMVP.View {
     private var mIsShowPass = false
@@ -41,14 +41,14 @@ class LoginFragment : Fragment(), LoginMVP.View {
             presenter = LoginPresenter(this)
             setListeners()
         } else {
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            val intent = Intent(requireContext(), MiddleActivity::class.java)
             startActivity(intent)
         }
     }
 
     private fun setListeners() {
         binding.logoGulbazar.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            val intent = Intent(requireContext(), MiddleActivity::class.java)
             startActivity(intent)
         })
 
@@ -66,14 +66,17 @@ class LoginFragment : Fragment(), LoginMVP.View {
             binding.startLogin.visibility = View.INVISIBLE
             binding.startLogin.isEnabled = false
             presenter.loginWithPhoneNumber(
-                phoneNumber = binding.etPhoneNumber.text.toString(),
+                phoneNumber = binding.etPhoneNumber.text?.trim().toString()
+                    .replace(" ".toRegex(), "")
+                    .replace("(", "").replace(")", ""),
                 password = binding.etPass.text.toString()
             )
         })
         binding.justForToast.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 requireContext(),
-                binding.etPhoneNumber.text.toString() + binding.etPass.text.toString(),
+                binding.etPhoneNumber.text?.trim().toString()
+                    .replace(" ".toRegex(), "") + binding.etPass.text.toString(),
                 Toast.LENGTH_LONG
             ).show()
         })
@@ -92,15 +95,13 @@ class LoginFragment : Fragment(), LoginMVP.View {
     override fun setData(message: String) {
         if (message == "successful") {
             Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            val intent = Intent(requireContext(), MiddleActivity::class.java)
             startActivity(intent)
             LoginHelper.getHelper().login = true
             AppCache.getHelper().password = binding.etPass.text.toString()
             requireActivity().finish()
 
 
-        } else if (message == "networkError") {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Telefon raqam yoki parol xato", Toast.LENGTH_SHORT).show()
             binding.progressBarr.visibility = View.INVISIBLE
@@ -122,7 +123,7 @@ class LoginFragment : Fragment(), LoginMVP.View {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         presenter.cancelRequest()
+        super.onDestroy()
     }
 }

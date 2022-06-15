@@ -65,7 +65,7 @@
                 android:textColor="#9098B1"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:met_mask="+998#########" />
+                app:met_mask="+998 (##) ### ## ##" />
         </LinearLayout>
 
         <LinearLayout
