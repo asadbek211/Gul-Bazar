@@ -50,7 +50,6 @@ class LoginFragment : Fragment(), LoginMVP.View {
         binding.logoGulbazar.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
-            //findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
         })
 
         binding.ivShowHidePass.setOnClickListener {
@@ -89,9 +88,9 @@ class LoginFragment : Fragment(), LoginMVP.View {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+
     override fun setData(message: String) {
         if (message == "successful") {
-
             Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
@@ -100,6 +99,8 @@ class LoginFragment : Fragment(), LoginMVP.View {
             requireActivity().finish()
 
 
+        } else if (message == "networkError") {
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Telefon raqam yoki parol xato", Toast.LENGTH_SHORT).show()
             binding.progressBarr.visibility = View.INVISIBLE

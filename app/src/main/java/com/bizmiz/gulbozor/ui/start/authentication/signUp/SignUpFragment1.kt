@@ -44,7 +44,7 @@ class SignUpFragment1 : Fragment() {
             if (binding.editTextPhoneSignUp.rawText.length == 9) {
                 findNavController().navigate(R.id.action_signUpFragment1_to_signUpFragment2)
                 PhoneNumberHelper.getHelper().phoneNumber =
-                    "+998 " + binding.editTextPhoneSignUp.text.toString()
+                    "+998" + binding.editTextPhoneSignUp.text.toString()
 
             } else {
                 Toast.makeText(

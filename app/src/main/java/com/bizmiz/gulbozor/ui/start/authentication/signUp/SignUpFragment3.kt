@@ -47,6 +47,11 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
         loadViews()
 
         isItFillOrNot()
+
+        binding.logoApp.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), binding.phoneNumber.text.trim(), Toast.LENGTH_LONG)
+                .show()
+        })
     }
 
 

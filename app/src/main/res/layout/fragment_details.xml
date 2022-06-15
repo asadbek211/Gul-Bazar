@@ -151,7 +151,7 @@
                         android:id="@+id/imageView9"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/flower"
+                        android:src="@drawable/ic_frlower_but"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -283,7 +283,7 @@
                         android:id="@+id/imageView11"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/flower"
+                        android:src="@drawable/ic_frlower_but"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

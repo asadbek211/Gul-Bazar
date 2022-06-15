@@ -97,6 +97,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/button_shape_stroke.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/custom_input.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic__home.xml" value="0.156" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_add_24.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_add_circle.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_arrow_back.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_arrow_down.xml" value="0.156" />
@@ -112,6 +113,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_edit_text_profile_ic.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_eye_off.xml" value="0.124" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_frame.xml" value="0.156" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_group_1.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_gulbazar_logo.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_height.xml" value="0.124" />
@@ -136,6 +138,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/visibility_on.xml" value="0.124" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/activity_set_up.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/flower_item.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_add_flower.xml" value="0.264" />
         <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.11302083333333333" />

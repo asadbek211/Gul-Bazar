@@ -282,7 +282,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="60dp"
-            android:src="@drawable/flower"
+            android:src="@drawable/ic_frlower_but"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/priceLayout" />
 
@@ -374,7 +374,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/flower"
+            android:src="@drawable/ic_frlower_but"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
@@ -480,7 +480,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:padding="5dp"
-            android:src="@drawable/flower_bouquet"
+            android:src="@drawable/ic_flower_new"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/title7" />
 
@@ -489,7 +489,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="10dp"
-            android:src="@drawable/plus"
+            android:src="@drawable/ic_plus_24"
             app:layout_constraintBottom_toBottomOf="@+id/imageView13"
             app:layout_constraintStart_toEndOf="@+id/imageView13"
             app:layout_constraintTop_toTopOf="@+id/imageView13" />
@@ -564,7 +564,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:padding="5dp"
-            android:src="@drawable/flower_bouquet"
+            android:src="@drawable/ic_flower_new"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/title8" />
 
@@ -573,7 +573,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="10dp"
-            android:src="@drawable/plus"
+            android:src="@drawable/ic_plus_24"
             app:layout_constraintBottom_toBottomOf="@+id/imageView18"
             app:layout_constraintStart_toEndOf="@+id/imageView18"
             app:layout_constraintTop_toTopOf="@+id/imageView18" />

@@ -18,6 +18,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var flowersAdapter: FlowersAdapter
     private lateinit var binding: FragmentHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce()
