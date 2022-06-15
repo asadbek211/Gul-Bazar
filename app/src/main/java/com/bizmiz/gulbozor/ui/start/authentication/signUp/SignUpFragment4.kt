@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.FragmentSignUp4Binding
+import com.bizmiz.gulbozor.ui.start.onBoard.MiddleActivity
 
 class SignUpFragment4 : Fragment() {
     private var _binding: FragmentSignUp4Binding? = null
@@ -27,13 +27,18 @@ class SignUpFragment4 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        windowStatus()
-        binding.startAfterReg.setOnClickListener(View.OnClickListener {
-            LoginHelper.getHelper().login = true
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-            onDestroy()
-        })
+        if (LoginHelper.getHelper().login) {
+            startActivity(Intent(requireContext(), MiddleActivity::class.java))
+        } else {
+            windowStatus()
+            binding.startAfterReg.setOnClickListener(View.OnClickListener {
+                //LoginHelper.getHelper().login = true
+                val intent = Intent(requireContext(), MiddleActivity::class.java)
+                startActivity(intent)
+                // onDestroy()
+            })
+        }
+
     }
 
     private fun windowStatus() {

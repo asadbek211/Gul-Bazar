@@ -1,8 +1,10 @@
 package com.bizmiz.gulbozor.ui.start.authentication.login.MVP
 
 import android.util.Log
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.helper.ApiClient
 import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginRequest
+import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginResponse
 import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -25,19 +27,22 @@ class LoginPresenter(val view: LoginMVP.View) : LoginMVP.Presenter {
             phoneNumber = phoneNumber,
             password = password
         )
+        Log.d("tel",phoneNumber)
         val disposable = loginService.loginGetToken(loginRequest = body)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableSingleObserver<Response<Any>>() {
-                override fun onSuccess(t: Response<Any>) {
+            .subscribeWith(object : DisposableSingleObserver<Response<LoginResponse>>() {
+                override fun onSuccess(t: Response<LoginResponse>) {
 
                     Log.d("TAGAAA", t.code().toString())
 
                     if (t.code() == 200) {
                         view.setData("successful")
-                        /*AppCache.getHelper().token = t.body()?.token
-                        AppCache.getHelper().userId = t.body()?.id?.toInt()!!
-                        Log.d("TAGVVV", t.body()!!.id)*/
+                        AppCache.getHelper().token = t.body()?.token
+                        AppCache.getHelper().userId = t.body()?.user_id!!
+                        Log.d("TAGVVV", t.body()?.user_id.toString())
+                    } else if (t.code() in 400..499) {
+                        view.setData("networkError")
                     } else {
                         view.setData("Error")
                     }
@@ -45,6 +50,8 @@ class LoginPresenter(val view: LoginMVP.View) : LoginMVP.Presenter {
 
                 override fun onError(e: Throwable) {
                     view.onError(e.message.toString())
+
+                    Log.d("TAGAAAQ", e.message.toString())
                 }
 
             })

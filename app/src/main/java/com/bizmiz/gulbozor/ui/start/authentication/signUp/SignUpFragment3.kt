@@ -47,6 +47,11 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
         loadViews()
 
         isItFillOrNot()
+
+        binding.logoApp.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), binding.phoneNumber.text.trim(), Toast.LENGTH_LONG)
+                .show()
+        })
     }
 
 
@@ -63,7 +68,8 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
                     binding.progressBarr.visibility = View.VISIBLE
 
                     presenter.sendRegisterData(
-                        phoneNumber = phoneNumber,
+                        phoneNumber = phoneNumber.replace("\\s".toRegex(), "")
+                            .replace("(", "").replace(")", ""),
                         userName = username.toString(),
                         password = binding.etPass.text.toString()
                     )

@@ -4,6 +4,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/round_gul_bazar_logo" />
+            android:src="@drawable/ic_logo_round" />
     </item>
 </layer-list>

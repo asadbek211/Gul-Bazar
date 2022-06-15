@@ -3,10 +3,12 @@ package com.bizmiz.gulbozor.ui.start.authentication.login.core
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("phoneNumber")
-    val phoneNumber: String,
+    @SerializedName("success")
+    val success: Boolean,
     @SerializedName("token")
     val token: String,
-    @SerializedName("id")
-    val id: String
+    @SerializedName("user_id")
+    val user_id: Int,
+    @SerializedName("message")
+    val message: String? = null
 )

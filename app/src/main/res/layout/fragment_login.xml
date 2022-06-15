@@ -61,7 +61,7 @@
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
                 android:inputType="phone"
-                android:text="+998 ("
+                android:text="+998 "
                 android:textColor="#9098B1"
                 android:textSize="14sp"
                 android:textStyle="bold"
