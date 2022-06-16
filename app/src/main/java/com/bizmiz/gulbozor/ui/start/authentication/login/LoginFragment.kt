@@ -66,8 +66,7 @@ class LoginFragment : Fragment(), LoginMVP.View {
             binding.startLogin.visibility = View.INVISIBLE
             binding.startLogin.isEnabled = false
             presenter.loginWithPhoneNumber(
-                phoneNumber = binding.etPhoneNumber.text?.trim().toString()
-                    .replace(" ".toRegex(), "")
+                phoneNumber = binding.etPhoneNumber.text.toString().replace("\\s".toRegex(), "")
                     .replace("(", "").replace(")", ""),
                 password = binding.etPass.text.toString()
             )

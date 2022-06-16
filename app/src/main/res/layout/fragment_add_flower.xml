@@ -31,21 +31,20 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/titleLayout"
             android:layout_width="0dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_big"
             app:boxStrokeWidth="0dp"
-            android:gravity="center"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title">
+            app:layout_constraintTop_toBottomOf="@+id/title2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/text_shape2">
+                android:background="@drawable/text_shape2"
+                android:gravity="center">
 
                 <EditText
                     android:id="@+id/etTitle"
@@ -70,18 +69,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/varela_round_regular"
             android:text="Sarlavhani kiriting."
             android:textColor="#797979"
             android:textSize="10dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/titleLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintVertical_bias="0.51" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
         <TextView
             android:id="@+id/title3"
             android:layout_width="wrap_content"
@@ -203,21 +199,21 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/priceLayout"
             android:layout_width="0dp"
-            android:layout_height="88dp"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
+            android:gravity="center"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/spPriceType"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/image5">
+            app:layout_constraintTop_toBottomOf="@+id/title4">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/text_shape2">
+                android:background="@drawable/text_shape2"
+                android:gravity="center">
 
                 <EditText
                     android:id="@+id/etPrice"
@@ -253,6 +249,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image5" />
+
         <Spinner
             android:id="@+id/spPriceType"
             android:layout_width="100dp"
@@ -277,12 +274,13 @@
             app:layout_constraintTop_toTopOf="@+id/spPriceType" />
 
         <ImageView
+            android:padding="5dp"
             android:id="@+id/imageView9"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="60dp"
-            android:src="@drawable/ic_frlower_but"
+            android:src="@drawable/ic_flover_icon"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/priceLayout" />
 
@@ -369,12 +367,13 @@
             app:layout_constraintTop_toTopOf="@+id/etWidth" />
 
         <ImageView
+            android:padding="5dp"
             android:id="@+id/imageView12"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_frlower_but"
+            android:src="@drawable/ic_flover_icon"
             app:layout_constraintStart_toStartOf="@+id/priceLayout"
             app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
@@ -632,20 +631,22 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionLayout"
             android:layout_width="0dp"
-            android:layout_height="188dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:hintEnabled="false"
-            android:gravity="center"
-            android:layout_marginTop="55dp"
-            android:layout_marginEnd="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/imageView16">
+            app:layout_constraintTop_toBottomOf="@+id/title9">
+
             <LinearLayout
-                android:background="@drawable/text_shape2"
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="150dp"
+                android:background="@drawable/text_shape2"
+                android:gravity="center">
+
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etDescription"
                     android:layout_width="match_parent"
@@ -656,7 +657,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint_color"
                     android:textSize="14dp"
-                    android:theme="@style/editTextStyle"/>
+                    android:theme="@style/editTextStyle" />
             </LinearLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
