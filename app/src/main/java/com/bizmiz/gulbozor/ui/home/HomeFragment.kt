@@ -19,6 +19,7 @@ class HomeFragment : Fragment() {
     private lateinit var flowersAdapter: FlowersAdapter
     private lateinit var binding: FragmentHomeBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce()
@@ -61,7 +62,9 @@ class HomeFragment : Fragment() {
             homeViewModel.getAnnounce()
         }
         return binding.root
+
     }
+
 
     private fun announceObserve() {
         homeViewModel.announce.observe(viewLifecycleOwner, Observer {
@@ -77,5 +80,6 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
 }

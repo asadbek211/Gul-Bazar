@@ -28,4 +28,5 @@ data class AnnounceData(
     val weight: Int?,
     val withFertilizer: Boolean,
     val withPot: Boolean
+    //val priceType: String
 ):Parcelable
