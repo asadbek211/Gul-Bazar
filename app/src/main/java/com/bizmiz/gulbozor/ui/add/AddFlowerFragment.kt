@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
@@ -28,6 +29,7 @@ import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
@@ -40,6 +42,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
+import java.nio.charset.StandardCharsets
 
 
 class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
@@ -161,73 +164,79 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         }
         binding.progress.setOnClickListener {}
         binding.btnAnnouncement.setOnClickListener {
-            if (checkAnnounce()) {
-            binding.progress.visibility = View.VISIBLE
-            when (imageUrlList.size) {
-                1 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                }
-                2 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                }
-                3 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                }
-                4 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                }
-                5 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                }
-                6 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                }
-                7 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                    file7 = uriToImageFile(imageUrlList[6])
-                }
-                8 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                    file7 = uriToImageFile(imageUrlList[6])
-                    file8 = uriToImageFile(imageUrlList[7])
-                }
-            }
-            addFlowerViewModel.addFlower(
-                file1?.let { it1 -> createFormData(it1, "image1") },
-                file2?.let { it1 -> createFormData(it1, "image2") },
-                file3?.let { it1 -> createFormData(it1, "image3") },
-                file4?.let { it1 -> createFormData(it1, "image4") },
-                file5?.let { it1 -> createFormData(it1, "image5") },
-                file6?.let { it1 -> createFormData(it1, "image6") },
-                file7?.let { it1 -> createFormData(it1, "image7") },
-                file8?.let { it1 -> createFormData(it1, "image8") }
-            )
-        }
+//            if (checkAnnounce()) {
+//            binding.progress.visibility = View.VISIBLE
+//            when (imageUrlList.size) {
+//                1 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                }
+//                2 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                }
+//                3 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                }
+//                4 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                    file4 = uriToImageFile(imageUrlList[3])
+//                }
+//                5 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                    file4 = uriToImageFile(imageUrlList[3])
+//                    file5 = uriToImageFile(imageUrlList[4])
+//                }
+//                6 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                    file4 = uriToImageFile(imageUrlList[3])
+//                    file5 = uriToImageFile(imageUrlList[4])
+//                    file6 = uriToImageFile(imageUrlList[5])
+//                }
+//                7 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                    file4 = uriToImageFile(imageUrlList[3])
+//                    file5 = uriToImageFile(imageUrlList[4])
+//                    file6 = uriToImageFile(imageUrlList[5])
+//                    file7 = uriToImageFile(imageUrlList[6])
+//                }
+//                8 -> {
+//                    file1 = uriToImageFile(imageUrlList[0])
+//                    file2 = uriToImageFile(imageUrlList[1])
+//                    file3 = uriToImageFile(imageUrlList[2])
+//                    file4 = uriToImageFile(imageUrlList[3])
+//                    file5 = uriToImageFile(imageUrlList[4])
+//                    file6 = uriToImageFile(imageUrlList[5])
+//                    file7 = uriToImageFile(imageUrlList[6])
+//                    file8 = uriToImageFile(imageUrlList[7])
+//                }
+//            }
+//            addFlowerViewModel.addFlower(
+//                file1?.let { it1 -> createFormData(it1, "image1") },
+//                file2?.let { it1 -> createFormData(it1, "image2") },
+//                file3?.let { it1 -> createFormData(it1, "image3") },
+//                file4?.let { it1 -> createFormData(it1, "image4") },
+//                file5?.let { it1 -> createFormData(it1, "image5") },
+//                file6?.let { it1 -> createFormData(it1, "image6") },
+//                file7?.let { it1 -> createFormData(it1, "image7") },
+//                file8?.let { it1 -> createFormData(it1, "image8") }
+//            )
+//        }
+            val params = "m=62aab750c5c5a513f84a87ff;ac.user_id=2;a=50000"
+            val data = params.toByteArray(StandardCharsets.UTF_8)
+            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
+            val payMeUrl = "https://checkout.test.paycom.uz/$base64"
+            Log.d("urlPay",payMeUrl)
+            addFlowerViewModel.getPayment(payMeUrl)
         }
 //        binding.btnViewAnnouncement.setOnClickListener {
 //            if (checkAnnounce()) {

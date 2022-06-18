@@ -31,4 +31,8 @@ interface ApiInterface {
         @Part image7: MultipartBody.Part?,
         @Part image8: MultipartBody.Part?
     ): Call<ImageResponseData>
+    @GET
+    fun getPayment(
+        @Url url: String
+    ): Call<Any>
 }

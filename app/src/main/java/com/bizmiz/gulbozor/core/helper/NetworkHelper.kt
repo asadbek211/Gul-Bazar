@@ -89,4 +89,29 @@ class NetworkHelper(
 
         })
     }
+    fun getPayment(
+        url:String,
+        onSuccess: (paymentFormUrl: Any) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getPayment(url)
+        call.enqueue(object : Callback<Any> {
+            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
+                if (response != null) {
+                    Log.d("results", response.toString())
+                    Log.d("results", response.body().toString())
+                    Log.d("results", response.code().toString())
+                }
+//                if (response != null) {
+//                    response.body()?.let { onSuccess.invoke(it) }
+//                }
+            }
+
+            override fun onFailure(call: Call<Any>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+                Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
 }

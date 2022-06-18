@@ -18,6 +18,9 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
     private val setAnnounce: MutableLiveData<Resource<AnnounceResponse>> = MutableLiveData()
     val resultAnnounce: LiveData<Resource<AnnounceResponse>>
         get() = setAnnounce
+    private val getPayment: MutableLiveData<Resource<Any>> = MutableLiveData()
+    val paymentFormUrl: LiveData<Resource<Any>>
+        get() = getPayment
     fun addFlower(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -39,6 +42,13 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
             setAnnounce.value = Resource.success(it)
         }, {
             setAnnounce.value = Resource.error(it)
+        })
+    }
+    fun getPayment(url:String) {
+        networkHelper.getPayment(url, {
+            getPayment.value = Resource.success(it)
+        }, {
+            getPayment.value = Resource.error(it)
         })
     }
 }
