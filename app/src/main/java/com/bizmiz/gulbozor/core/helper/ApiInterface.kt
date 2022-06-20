@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.core.models.AnnounceResponse
+import com.bizmiz.gulbozor.core.models.announce.GetAnnounce
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -13,7 +14,12 @@ interface ApiInterface {
     fun getAnnounce(
     ): Call<List<AnnounceData>>
 
+    @GET("/announce")
+    fun getPageAnnounce(): Call<List<GetAnnounce>>
+
+
     @Headers("Content-Type:application/json")
+
     @POST("/announce")
     fun setAnnounce(
         @Body announceData: AnnounceData

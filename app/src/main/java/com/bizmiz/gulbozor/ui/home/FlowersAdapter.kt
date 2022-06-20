@@ -3,6 +3,7 @@ package com.bizmiz.gulbozor.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.databinding.ItemFlowerBinding
 import com.bumptech.glide.Glide
@@ -19,7 +20,10 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.MyHolder>() {
     inner class MyHolder(private val binding: ItemFlowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(flowerListResponse: AnnounceData) {
-            Glide.with(binding.root.context).load(flowerListResponse.image1)
+            Glide.with(binding.root.context)
+                .load(flowerListResponse.image1)
+                .placeholder(R.drawable.img_7)
+                .error(R.drawable.ic_logo_round)
                 .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
             binding.flowerDescription.text = flowerListResponse.description
@@ -27,8 +31,8 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.MyHolder>() {
             val number = df.format(flowerListResponse.price)
             binding.flowerPrice.text = "$number"
             binding.cardView.setOnClickListener {
-                 onclick.invoke(flowerListResponse)
-             }
+                onclick.invoke(flowerListResponse)
+            }
             /*binding.favourite.setOnClickListener {
                 binding.favourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
             }*/

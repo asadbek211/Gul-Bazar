@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/exFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -16,4 +16,9 @@
         android:name="com.bizmiz.gulbozor.ui.add.AddFlowerFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_add_flower" />
+    <fragment
+        android:id="@+id/exFragment"
+        android:name="com.bizmiz.gulbozor.ui.home.details.ExFragment"
+        android:label="ExFragment"
+        tools:layout="@layout/fragment_ex" />
 </navigation>
