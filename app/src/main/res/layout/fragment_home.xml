@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECEBEB"
-    tools:context=".ui.home.HomeFragment">
+    tools:context="com.bizmiz.gulbozor.ui.bottom_nav.home.HomeFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,8 +25,9 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,6 +68,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/txt_all_categories"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
@@ -79,12 +81,165 @@
 
                     <LinearLayout
                         android:id="@+id/category_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cons_cat" />
+                        app:layout_constraintTop_toBottomOf="@id/cons_cat">
+
+                        <HorizontalScrollView
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="7dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/bucket_cat" />
+
+                                    <TextView
+                                        android:id="@+id/cat_name"
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="@string/buketlar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/home_flowers_cat" />
+
+                                    <TextView
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="Xonaki gullar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/tree_flowers_cat" />
+
+                                    <TextView
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="Daraxtlar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/pot_dung_cat" />
+
+                                    <TextView
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="Tuvak va o'g'itlar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/customers_cat" />
+
+                                    <TextView
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="Haridorlar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="66dp"
+                                        android:layout_height="66dp"
+                                        android:src="@drawable/markets_cat" />
+
+                                    <TextView
+                                        android:layout_width="66dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:maxLines="2"
+                                        android:text="Do'konlar"
+                                        android:textColor="#5E5F63"
+                                        android:textSize="10sp"
+                                        tools:ignore="SmallSp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </HorizontalScrollView>
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/youtube_title"
@@ -138,7 +293,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

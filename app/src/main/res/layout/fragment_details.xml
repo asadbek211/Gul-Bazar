@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_main"
-    tools:context=".ui.home.details.DetailsFragment">
+    tools:context="com.bizmiz.gulbozor.ui.bottom_nav.home.details.DetailsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
