@@ -18,9 +18,14 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
        }
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(flowerListResponse: AnnounceData) {
-            Glide.with(binding.root.context).load(flowerListResponse.image1)
-                .into(binding.flowerImage)
+        fun populateModel(flowerListResponse: AnnounceData,position: Int) {
+            if (position%2!=0 && position!=0 && position!=1){
+               binding.flowerImage.layoutParams.height = 450
+            }else{
+                binding.flowerImage.layoutParams.height = 400
+            }
+                Glide.with(binding.root.context).load(flowerListResponse.image1)
+                    .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
             binding.flowerDescription.text = flowerListResponse.description
             val df = DecimalFormat("#,###.##")
@@ -48,7 +53,7 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     }
 
     override fun onBindViewHolder(holder: Myholder, position: Int) {
-        holder.populateModel(flowersList[position])
+        holder.populateModel(flowersList[position],position)
     }
 
     override fun getItemCount(): Int = flowersList.size

@@ -18,6 +18,12 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
     private val setAnnounce: MutableLiveData<Resource<AnnounceResponse>> = MutableLiveData()
     val resultAnnounce: LiveData<Resource<AnnounceResponse>>
         get() = setAnnounce
+    private val getRegion: MutableLiveData<Resource<List<String>>> = MutableLiveData()
+    val regionList: LiveData<Resource<List<String>>>
+        get() = getRegion
+    private val getCity: MutableLiveData<Resource<List<String>>> = MutableLiveData()
+    val cityData: LiveData<Resource<List<String>>>
+        get() = getCity
     fun addFlower(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -39,6 +45,20 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
             setAnnounce.value = Resource.success(it)
         }, {
             setAnnounce.value = Resource.error(it)
+        })
+    }
+    fun getRegion() {
+        networkHelper.getRegion({
+            getRegion.value = Resource.success(it)
+        }, {
+            getRegion.value = Resource.error(it)
+        })
+    }
+    fun getCity(id:Int) {
+        networkHelper.getCity(id,{
+            getCity.value = Resource.success(it)
+        }, {
+            getCity.value = Resource.error(it)
         })
     }
 }

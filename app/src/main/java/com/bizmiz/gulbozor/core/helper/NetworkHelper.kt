@@ -3,6 +3,8 @@ package com.bizmiz.gulbozor.core.helper
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.core.models.AnnounceResponse
+import com.bizmiz.gulbozor.core.models.CityData
+import com.bizmiz.gulbozor.core.models.RegionData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -34,6 +36,8 @@ class NetworkHelper(
                 }
                 if (response != null) {
                     response.body()?.let { onSuccess.invoke(it) }
+                }else{
+                    onFailure.invoke("Xatolik yuz berdi qaytadan urinib ko'ring")
                 }
             }
 
@@ -85,6 +89,53 @@ class NetworkHelper(
             override fun onFailure(call: Call<AnnounceResponse>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
+    fun getRegion(
+        onSuccess: (regionData: List<String>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getRegion()
+        val list:ArrayList<String> = arrayListOf()
+        call.enqueue(object : Callback<RegionData> {
+            override fun onResponse(call: Call<RegionData>?, response: Response<RegionData>?) {
+                if (response != null) {
+                    response.body()?.forEach {
+                        list.add(it.name)
+                    }
+                    response.body()?.let { onSuccess.invoke(list) }
+                }
+            }
+
+            override fun onFailure(call: Call<RegionData>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun getCity(
+        id:Int,
+        onSuccess: (cityData: List<String>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getCity()
+        val list:ArrayList<String> = arrayListOf()
+        call.enqueue(object : Callback<CityData> {
+            override fun onResponse(call: Call<CityData>?, response: Response<CityData>?) {
+                if (response != null) {
+                    response.body()?.forEach {
+                        if (it.regionId==id){
+                            list.add(it.name)
+                        }
+                    }
+                    response.body()?.let { onSuccess.invoke(list) }
+                }
+            }
+
+            override fun onFailure(call: Call<CityData>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
             }
 
         })
