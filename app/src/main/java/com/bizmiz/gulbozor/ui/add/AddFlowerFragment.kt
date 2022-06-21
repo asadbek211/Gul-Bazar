@@ -5,6 +5,7 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,9 +17,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -31,24 +30,34 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.NumberFormat
+import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.google.android.material.snackbar.Snackbar
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.nio.charset.StandardCharsets
+import java.util.Base64.getEncoder
 
 
 class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
+    private var regionId:Int = 1
+    private var cityId:Int = 1
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -58,9 +67,11 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private var file6:File? = null
     private var file7:File? = null
     private var file8:File? = null
-    private val sectionList: ArrayList<String> = arrayListOf("so'm", "$")
+    private val sectionList: List<String> = listOf("so'm", "$")
+    private val flowerList: List<String> = listOf("Ramashka", "Atirgul","Qandaydir gul")
     private lateinit var binding: FragmentAddFlowerBinding
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.statusBarColor =
@@ -71,6 +82,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
+        addFlowerViewModel.getRegion()
         requireActivity().window.setFlags(
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -94,9 +106,13 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 1003
             )
         }
-        val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, sectionList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spPriceType.adapter = adapter
+        setAdapter(binding.spPriceType,sectionList)
+        setAdapter(binding.spFlowerType,flowerList)
+        binding.etNumber.addTextChangedListener(
+            PhoneNumberTextWatcher(
+                binding.etNumber
+            )
+        )
         binding.etPrice.addTextChangedListener(
             NumberFormat(
                 binding.etPrice
@@ -164,79 +180,91 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         }
         binding.progress.setOnClickListener {}
         binding.btnAnnouncement.setOnClickListener {
-//            if (checkAnnounce()) {
-//            binding.progress.visibility = View.VISIBLE
-//            when (imageUrlList.size) {
-//                1 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                }
-//                2 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                }
-//                3 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                }
-//                4 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                    file4 = uriToImageFile(imageUrlList[3])
-//                }
-//                5 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                    file4 = uriToImageFile(imageUrlList[3])
-//                    file5 = uriToImageFile(imageUrlList[4])
-//                }
-//                6 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                    file4 = uriToImageFile(imageUrlList[3])
-//                    file5 = uriToImageFile(imageUrlList[4])
-//                    file6 = uriToImageFile(imageUrlList[5])
-//                }
-//                7 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                    file4 = uriToImageFile(imageUrlList[3])
-//                    file5 = uriToImageFile(imageUrlList[4])
-//                    file6 = uriToImageFile(imageUrlList[5])
-//                    file7 = uriToImageFile(imageUrlList[6])
-//                }
-//                8 -> {
-//                    file1 = uriToImageFile(imageUrlList[0])
-//                    file2 = uriToImageFile(imageUrlList[1])
-//                    file3 = uriToImageFile(imageUrlList[2])
-//                    file4 = uriToImageFile(imageUrlList[3])
-//                    file5 = uriToImageFile(imageUrlList[4])
-//                    file6 = uriToImageFile(imageUrlList[5])
-//                    file7 = uriToImageFile(imageUrlList[6])
-//                    file8 = uriToImageFile(imageUrlList[7])
-//                }
-//            }
-//            addFlowerViewModel.addFlower(
-//                file1?.let { it1 -> createFormData(it1, "image1") },
-//                file2?.let { it1 -> createFormData(it1, "image2") },
-//                file3?.let { it1 -> createFormData(it1, "image3") },
-//                file4?.let { it1 -> createFormData(it1, "image4") },
-//                file5?.let { it1 -> createFormData(it1, "image5") },
-//                file6?.let { it1 -> createFormData(it1, "image6") },
-//                file7?.let { it1 -> createFormData(it1, "image7") },
-//                file8?.let { it1 -> createFormData(it1, "image8") }
-//            )
-//        }
-            val params = "m=62aab750c5c5a513f84a87ff;ac.user_id=2;a=50000"
-            val data = params.toByteArray(StandardCharsets.UTF_8)
-            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
-            val payMeUrl = "https://checkout.test.paycom.uz/$base64"
-            Log.d("urlPay",payMeUrl)
-            addFlowerViewModel.getPayment(payMeUrl)
+            if (checkAnnounce()) {
+            binding.progress.visibility = View.VISIBLE
+            when (imageUrlList.size) {
+                1 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                }
+                2 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                }
+                3 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                }
+                4 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                }
+                5 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                }
+                6 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                }
+                7 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                    file7 = uriToImageFile(imageUrlList[6])
+                }
+                8 -> {
+                    file1 = uriToImageFile(imageUrlList[0])
+                    file2 = uriToImageFile(imageUrlList[1])
+                    file3 = uriToImageFile(imageUrlList[2])
+                    file4 = uriToImageFile(imageUrlList[3])
+                    file5 = uriToImageFile(imageUrlList[4])
+                    file6 = uriToImageFile(imageUrlList[5])
+                    file7 = uriToImageFile(imageUrlList[6])
+                    file8 = uriToImageFile(imageUrlList[7])
+                }
+            }
+             CoroutineScope(Dispatchers.IO).launch {
+                 val compressImage1 = compressImage(file1)
+                 val compressImage2 = compressImage(file2)
+                 val compressImage3 = compressImage(file3)
+                 val compressImage4 = compressImage(file4)
+                 val compressImage5 = compressImage(file5)
+                 val compressImage6 = compressImage(file6)
+                 val compressImage7 = compressImage(file7)
+                 val compressImage8 = compressImage(file8)
+                 withContext(Dispatchers.Main){
+                     addFlowerViewModel.addFlower(
+                         compressImage1?.let { it1 -> createFormData(it1, "image1") },
+                         compressImage2?.let { it1 -> createFormData(it1, "image2") },
+                         compressImage3?.let { it1 -> createFormData(it1, "image3") },
+                         compressImage4?.let { it1 -> createFormData(it1, "image4") },
+                         compressImage5?.let { it1 -> createFormData(it1, "image5") },
+                         compressImage6?.let { it1 -> createFormData(it1, "image6") },
+                         compressImage7?.let { it1 -> createFormData(it1, "image7") },
+                         compressImage8?.let { it1 -> createFormData(it1, "image8") }
+                     )
+                 }
+             }
+        }
+//            val params = "m=62ada9786a1a1d8d2dee422b;ac.order_id=2;a=50000"
+//            val data = params.toByteArray(StandardCharsets.UTF_8)
+//            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
+//            val payMeUrl = "https://checkout.test.paycom.uz/$base64"
+//            Log.d("urlPay",payMeUrl)
+//            addFlowerViewModel.getPayment(payMeUrl)
         }
 //        binding.btnViewAnnouncement.setOnClickListener {
 //            if (checkAnnounce()) {
@@ -325,9 +353,41 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             }
 
         })
+        binding.spVilList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                addFlowerViewModel.getCity(position+1)
+                regionId = position+1
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+        binding.spTumanList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                cityId = position+1
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+        addFlowerViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
         binding.titleLayout.isHintEnabled = false
         binding.priceLayout.isHintEnabled = false
         binding.descriptionLayout.isHintEnabled = false
+        regionResultObserve()
+        cityResultObserve()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -403,9 +463,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     val img6 = it.data?.image6
                     val img7 = it.data?.image7
                     val img8 = it.data?.image8
-                    Log.d("url", it.data?.image1.toString())
-                    Log.d("url", it.data?.image2.toString())
-                    Log.d("url", it.data?.image3.toString())
                     addFlowerViewModel.setAnnounce(
                         AnnounceData(
                             active = true,
@@ -422,7 +479,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             image7 = img7,
                             image8 = img8,
                             price = binding.etPrice.text.trim().toString()
-                                .replace("\\s".toRegex(), "").toInt(),
+                                .replace("\\s".toRegex(), "").toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = 23,
                             withFertilizer = dungAdd,
@@ -431,17 +488,25 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             sellerId = 1,
                             shopId = 1,
                             flowerType = 1,
-                            imageIds = "1"
+                            cityId = cityId,
+                            regionId = regionId,
+                            myAnnounce = true,
+                            topNumber = 0,
+                            phoneNumber =
+                                "+998${binding.etNumber.text.trim().toString()
+                                    .replace("\\s".toRegex(), "")
+                            }",
+                            seller = true
                         )
                     )
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
-
     private fun announceResultObserve() {
         addFlowerViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
@@ -464,7 +529,30 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         const val PICK_IMAGE_REQUEST_CODE = 1000
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
-
+    private fun regionResultObserve() {
+        addFlowerViewModel.regionList.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS-> {
+                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun cityResultObserve() {
+        addFlowerViewModel.cityData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS-> {
+                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
     private fun checkAnnounce(): Boolean {
         return when {
             binding.etTitle.text.isEmpty() -> {
@@ -490,6 +578,11 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             binding.etHeight.text.isEmpty() -> {
                 Toast.makeText(requireActivity(), "Balandlik kiriting", Toast.LENGTH_SHORT).show()
                 binding.etHeight.showSoftKeyboard()
+                false
+            }
+            binding.etNumber.text.isEmpty() -> {
+                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
+                binding.etNumber.showSoftKeyboard()
                 false
             }
             binding.etDescription.text?.isEmpty() == true -> {
@@ -550,5 +643,23 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             file
         )
         return MultipartBody.Part.createFormData(imgName, file.name, requestFile)
+    }
+    @OptIn(DelicateCoroutinesApi::class)
+    private suspend fun compressImage(file:File?): File? {
+            val compressedImageFile =
+                file?.let { it1 ->
+                    Compressor.compress(requireContext(), it1){
+                        resolution(1280, 720)
+                        quality(80)
+                        format(Bitmap.CompressFormat.WEBP)
+                        size(2_097_152)
+                    }
+                }
+            return compressedImageFile
+    }
+    private fun setAdapter(sp:Spinner,list:List<String>){
+        val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, list)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sp.adapter = adapter
     }
 }
