@@ -2,6 +2,8 @@ package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.AnnounceData
 import com.bizmiz.gulbozor.core.models.AnnounceResponse
+import com.bizmiz.gulbozor.core.models.CityData
+import com.bizmiz.gulbozor.core.models.RegionData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -31,4 +33,10 @@ interface ApiInterface {
         @Part image7: MultipartBody.Part?,
         @Part image8: MultipartBody.Part?
     ): Call<ImageResponseData>
+    @GET("/region")
+    fun getRegion(
+    ): Call<RegionData>
+    @GET("/city")
+    fun getCity(
+    ): Call<CityData>
 }
