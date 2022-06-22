@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/navigation_category"
-        android:icon="@drawable/ic_cat"
-        android:title="Kategoryalar" />
+        android:icon="@drawable/ic_bottom_category"
+        android:title="Kategorya" />
     <item
         android:id="@+id/navigation_add"
         android:icon="@drawable/ic_add_post"
@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/navigation_competition"
-        android:icon="@drawable/ic_tanlov_24"
+        android:icon="@drawable/ic_bottom_competition"
         android:title="Tanlov" />
 
     <!--    <item-->

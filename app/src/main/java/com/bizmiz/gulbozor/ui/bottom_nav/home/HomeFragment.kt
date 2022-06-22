@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -13,7 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModel()
@@ -58,8 +62,10 @@ class HomeFragment : Fragment() {
                 )
             navController.navigate(R.id.home_to_details, bundle)
         }
-
+        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
+        //youTubePlayer()
+
         binding.swipeContainer.setOnRefreshListener {
             homeViewModel.getAnnounce()
         }
@@ -70,6 +76,19 @@ class HomeFragment : Fragment() {
     private fun setListeners() {
         binding.txtAllCategories.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.home_to_categories)
+        })
+
+    }
+
+    private fun youTubePlayer() {
+        lifecycle.addObserver(binding.youtubePlayerView)
+        binding.youtubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
+            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                /*val videoId = "BZo7SxbZsgg"
+                youTubePlayer.loadVideo(videoId, 0f)
+                youTubePlayer.seekTo(10f)*/
+            }
         })
     }
 
@@ -94,5 +113,9 @@ class HomeFragment : Fragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.youtubePlayerView.release()
+    }
 
 }

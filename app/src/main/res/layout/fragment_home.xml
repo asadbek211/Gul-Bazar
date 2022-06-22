@@ -99,141 +99,82 @@
                                 android:orientation="horizontal">
 
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/bucket_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_buckets_cat"
+                                        android:src="@drawable/ic_cat_bucket" />
 
                                     <TextView
                                         android:id="@+id/cat_name"
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="@string/buketlar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/home_flowers_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_homemade_cat"
+                                        android:src="@drawable/ic_cat_home_made" />
 
                                     <TextView
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="Xonaki gullar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/tree_flowers_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_tree_cat"
+                                        android:src="@drawable/ic_cat_tree" />
 
                                     <TextView
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="Daraxtlar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/pot_dung_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_pot_dung_cat"
+                                        android:src="@drawable/ic_cat_pot_dung" />
 
                                     <TextView
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="Tuvak va o'g'itlar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/customers_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_people_cat"
+                                        android:src="@drawable/ic_cat_people" />
 
                                     <TextView
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="Haridorlar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:orientation="vertical">
+                                <LinearLayout style="@style/cat_layout">
 
                                     <ImageView
-                                        android:layout_width="66dp"
-                                        android:layout_height="66dp"
-                                        android:src="@drawable/markets_cat" />
+                                        style="@style/cat_image"
+                                        android:background="@drawable/oval_shop_cat"
+                                        android:src="@drawable/ic_cat_shop" />
 
                                     <TextView
-                                        android:layout_width="66dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:maxLines="2"
+                                        style="@style/cat_txtview"
                                         android:text="Do'konlar"
-                                        android:textColor="#5E5F63"
-                                        android:textSize="10sp"
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -252,13 +193,23 @@
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/category_group" />
 
-                    <ImageView
-                        android:id="@+id/youtube_image"
+                    <LinearLayout
+                        android:id="@+id/just"
                         android:layout_width="match_parent"
-                        android:layout_height="222dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/img_youtube"
-                        app:layout_constraintTop_toBottomOf="@id/youtube_title" />
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/youtube_title">
+
+                        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                            android:id="@+id/youtube_player_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:autoPlay="false"
+                            app:videoId="BZo7SxbZsgg" />
+                    </LinearLayout>
+
 
                     <ImageView
                         android:id="@+id/youtube_others"
@@ -267,7 +218,7 @@
                         android:src="@drawable/youtube_others"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/youtube_image" />
+                        app:layout_constraintTop_toBottomOf="@id/just" />
 
                     <TextView
                         android:id="@+id/txt_all_post"

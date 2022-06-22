@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/gray_main">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Categories"
-        android:textSize="29sp"
+        android:text="Kategoriyalar"
+        android:textColor="#505050"
+        android:textSize="27sp"
         android:textStyle="bold" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="28dp"
+        android:background="@drawable/button_shape_container"
+        android:drawableEnd="@drawable/ic_search"
+        android:fontFamily="sans-serif"
+        android:hint="Nima qidiryapsiz?"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:textStyle="normal"
+        tools:ignore="RtlSymmetry" />
+</LinearLayout>
