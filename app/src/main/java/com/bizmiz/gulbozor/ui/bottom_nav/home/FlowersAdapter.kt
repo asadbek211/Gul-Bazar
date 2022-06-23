@@ -19,18 +19,13 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(flowerListResponse: AnnounceData,position: Int) {
-            if (position%2!=0 && position!=0 && position!=1){
-               binding.flowerImage.layoutParams.height = 450
-            }else{
-                binding.flowerImage.layoutParams.height = 400
-            }
                 Glide.with(binding.root.context).load(flowerListResponse.image1)
                     .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
             binding.flowerDescription.text = flowerListResponse.description
             val df = DecimalFormat("#,###.##")
             val number = df.format(flowerListResponse.price)
-            binding.flowerPrice.text = "$$number"
+            binding.flowerPrice.text = number
              binding.cardView.setOnClickListener {
                  onclick.invoke(flowerListResponse)
              }
