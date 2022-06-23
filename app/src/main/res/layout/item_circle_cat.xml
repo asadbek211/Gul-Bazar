@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buckets_cat"
+    android:layout_width="65dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="15dp"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/cat_image"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:src="@drawable/rec_image" />
+
+    <TextView
+        android:id="@+id/cat_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="Buketlar"
+        android:textColor="#5E5F63"
+        android:textSize="10sp" />
+
+</LinearLayout>

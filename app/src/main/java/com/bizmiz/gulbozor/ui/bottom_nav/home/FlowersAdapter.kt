@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.home
+package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -34,9 +34,6 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
              binding.cardView.setOnClickListener {
                  onclick.invoke(flowerListResponse)
              }
-            binding.favourite.setOnClickListener {
-                binding.favourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
-            }
         }
 
     }

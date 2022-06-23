@@ -11,12 +11,12 @@
         android:label="BottomNavFragment"
         tools:layout="@layout/fragment_bottom_nav">
         <action
-            android:id="@+id/action_bottomNavFragment_to_detailsFragment"
+            android:id="@+id/home_to_details"
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.bizmiz.gulbozor.ui.home.details.DetailsFragment"
-        android:label="fragment_details"
+        android:label="DetailsFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.DetailsFragment"
         tools:layout="@layout/fragment_details" />
 </navigation>

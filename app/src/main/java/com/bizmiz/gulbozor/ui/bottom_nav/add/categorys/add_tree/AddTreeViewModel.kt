@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.add
+package com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_tree
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,11 +7,12 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponse
 import com.bizmiz.gulbozor.core.utils.Resource
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
 import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.FlowerTypeData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 
 
-class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
+class AddTreeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     private val setImage: MutableLiveData<Resource<ImageResponseData>> = MutableLiveData()
     val result: LiveData<Resource<ImageResponseData>>
         get() = setImage

@@ -14,4 +14,6 @@
     <color name="menu_non_select">#9F9FA1</color>
     <color name="gray_main">#ECEBEB</color>
     <color name="naturalDark">#0D680B</color>
+    <color name="homeGreen">#00541D</color>
+    <color name="cost_color">#00B83F</color>
 </resources>

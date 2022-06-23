@@ -7,22 +7,23 @@
         android:title="Asosiy" />
 
     <item
-        android:id="@+id/navigation_favourite"
-        android:icon="@drawable/ic_baseline_favorite_border"
-        android:title="Yoqtirgan" />
-
-    <item
-        android:id="@+id/navigation_add"
-        android:icon="@drawable/ic_add_circle"
-        android:title="Qo'shish" />
-    <item
         android:id="@+id/navigation_category"
         android:icon="@drawable/ic_cat"
         android:title="Kategoryalar" />
-<!--    <item-->
-<!--        android:id="@+id/navigation_rating"-->
-<!--        android:icon="@drawable/ic_rating"-->
-<!--        android:title="Reyting" />-->
+    <item
+        android:id="@+id/container"
+        android:icon="@drawable/ic_add_post"
+        android:title="Qo'shish" />
+
+    <item
+        android:id="@+id/navigation_competition"
+        android:icon="@drawable/ic_tanlov_24"
+        android:title="Tanlov" />
+
+    <!--    <item-->
+    <!--        android:id="@+id/navigation_rating"-->
+    <!--        android:icon="@drawable/ic_rating"-->
+    <!--        android:title="Reyting" />-->
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/ic_user"

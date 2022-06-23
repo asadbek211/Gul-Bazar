@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_main"
-    tools:context=".ui.add.AddFlowerFragment">
+    tools:context=".ui.bottom_nav.add.categorys.add_houseplants.AddFlowerFragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -276,6 +276,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="end|center_vertical"
                         android:hint="0"
+                        android:maxLength="17"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingStart="5dp"
@@ -353,6 +354,7 @@
                 android:background="@drawable/text_shape2"
                 android:gravity="end|center_vertical"
                 android:hint="0"
+                android:maxLength="4"
                 android:imeOptions="actionSearch"
                 android:inputType="number"
                 android:maxLines="1"
@@ -368,41 +370,17 @@
                 app:layout_constraintStart_toStartOf="@+id/etHeight"
                 app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/etWidth"
-                app:layout_constraintEnd_toEndOf="@+id/etWidth"
-                app:layout_constraintTop_toTopOf="@+id/etWidth">
-
-                <ImageView
-                    android:id="@+id/widthUp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_arrow_up" />
-
-                <ImageView
-                    android:id="@+id/widthDown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_arrow_down" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/widthType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="sm"
                 android:textColor="@color/hint_color"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/etWidth"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="@+id/etWidth"
+                app:layout_constraintHorizontal_bias="0.66"
+                app:layout_constraintStart_toStartOf="@+id/etWidth"
                 app:layout_constraintTop_toTopOf="@+id/etWidth" />
 
             <ImageView
@@ -447,6 +425,7 @@
                 android:background="@drawable/text_shape2"
                 android:gravity="end|center_vertical"
                 android:hint="0"
+                android:maxLength="4"
                 android:imeOptions="actionSearch"
                 android:inputType="number"
                 android:maxLines="1"
@@ -462,41 +441,17 @@
                 app:layout_constraintStart_toEndOf="@+id/title6"
                 app:layout_constraintTop_toTopOf="@+id/imageView12" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/etHeight"
-                app:layout_constraintEnd_toEndOf="@+id/etHeight"
-                app:layout_constraintTop_toTopOf="@+id/etHeight">
-
-                <ImageView
-                    android:id="@+id/heightUp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_arrow_up" />
-
-                <ImageView
-                    android:id="@+id/heightDown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_arrow_down" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/heightType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
                 android:text="sm"
                 android:textColor="@color/hint_color"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/etHeight"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                app:layout_constraintEnd_toEndOf="@+id/etHeight"
+                app:layout_constraintHorizontal_bias="0.66"
+                app:layout_constraintStart_toStartOf="@+id/etHeight"
                 app:layout_constraintTop_toTopOf="@+id/etHeight" />
 
             <TextView
