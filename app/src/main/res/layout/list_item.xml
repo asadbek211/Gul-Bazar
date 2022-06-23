@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_main"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="188dp"
+        android:layout_marginStart="55dp">
+
+        <ImageView
+            android:id="@+id/just_green"
+            android:layout_width="4dp"
+            android:layout_height="166dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"
+            android:background="@color/green_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="66dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/just_green"
+            app:layout_constraintStart_toEndOf="@id/just_green"
+            app:layout_constraintTop_toTopOf="@id/just_green">
+
+            <TextView
+                android:id="@+id/bucket_flowers_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="Buket gullar"
+                android:textColor="#626262"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/homemade_flowers_cat_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:text="Yer gullar"
+                android:textColor="#626262"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pot_flowers_cat_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:text="Tuvakli gullar"
+                android:textColor="#626262"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

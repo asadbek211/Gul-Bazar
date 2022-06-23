@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/gray_main">
+    android:background="@color/gray_main"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -31,4 +31,13 @@
         android:paddingBottom="10dp"
         android:textStyle="normal"
         tools:ignore="RtlSymmetry" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        tools:listitem="@layout/list_group" />
 </LinearLayout>

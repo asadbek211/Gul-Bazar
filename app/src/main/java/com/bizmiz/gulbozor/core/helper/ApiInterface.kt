@@ -10,8 +10,7 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("/announce/announceList")
-    fun getAnnounce(
-    ): Call<List<AnnounceData>>
+    fun getAnnounce(): Call<List<AnnounceData>>
 
     @Headers("Content-Type:application/json")
     @POST("/announce")

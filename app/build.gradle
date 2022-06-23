@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.bizmiz.gulbozor"
-        minSdk 23
+        minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -41,6 +41,9 @@ dependencies {
     implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.7'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+
+    //expandable
     def koin_version = "3.1.2"
     // Koin core features
     implementation "io.insert-koin:koin-core:$koin_version"
