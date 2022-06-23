@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.add
+package com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_pots
 
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -12,27 +12,24 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceData
-import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -48,14 +45,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.nio.charset.StandardCharsets
-import java.util.Base64.getEncoder
 
 
-class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
-    private val addFlowerViewModel: AddFlowerViewModel by viewModel()
-    private var potAdd = true
-    private var dungAdd = true
+class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
+    private val addPotViewModel: AddPotViewModel by viewModel()
     private var regionId:Int = 1
     private var cityId:Int = 1
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
@@ -67,30 +60,28 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private var file6:File? = null
     private var file7:File? = null
     private var file8:File? = null
-    private val sectionList: List<String> = listOf("so'm", "$")
-    private val flowerList: List<String> = listOf("Ramashka", "Atirgul","Qandaydir gul")
-    private lateinit var binding: FragmentAddFlowerBinding
+    private val sectionList: List<String> = listOf("so'm")
+    private var departmentId:Int? = null
+    private var isSeller:Boolean? = null
+    private lateinit var binding: FragmentAddPotBinding
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), R.color.white)
+        isSeller = requireArguments().getBoolean("isSeller")
+        departmentId = requireArguments().getInt("department")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        addFlowerViewModel.getRegion()
+        addPotViewModel.getRegion()
         requireActivity().window.setFlags(
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-
-        if (!::binding.isInitialized) {
-            binding = FragmentAddFlowerBinding.bind(view)
-        }
+            binding = FragmentAddPotBinding.bind(view)
         if (
             !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
                 READ_EXTERNAL_STORAGE
@@ -107,7 +98,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             )
         }
         setAdapter(binding.spPriceType,sectionList)
-        setAdapter(binding.spFlowerType,flowerList)
         binding.etNumber.addTextChangedListener(
             PhoneNumberTextWatcher(
                 binding.etNumber
@@ -118,66 +108,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 binding.etPrice
             )
         )
-        binding.widthUp.setOnClickListener {
-            if (binding.etWidth.text.isNotEmpty()) {
-                val price = binding.etWidth.text.toString().replace(" ", "").toInt() + 1
-                binding.etWidth.setText("$price")
-            } else {
-                binding.etWidth.setText("1")
-            }
-        }
-        binding.widthDown.setOnClickListener {
-            if (binding.etWidth.text.isNotEmpty()) {
-                if (binding.etWidth.text.toString().trim().toInt() >= 1) {
-                    val price = binding.etWidth.text.toString().replace(" ", "").toInt() - 1
-                    binding.etWidth.setText("$price")
-                }
-            }
-        }
-        binding.heightUp.setOnClickListener {
-            if (binding.etHeight.text.isNotEmpty()) {
-                val price = binding.etHeight.text.toString().replace(" ", "").toInt() + 1
-                binding.etHeight.setText("$price")
-            } else {
-                binding.etHeight.setText("1")
-            }
-        }
-        binding.heightDown.setOnClickListener {
-            if (binding.etHeight.text.isNotEmpty()) {
-                if (binding.etHeight.text.toString().trim().toInt() >= 1) {
-                    val price = binding.etHeight.text.toString().replace(" ", "").toInt() - 1
-                    binding.etHeight.setText("$price")
-                }
-            }
-        }
-        binding.potButtonNo.setOnClickListener {
-            binding.potButtonNo.setBackgroundResource(R.drawable.button_shape)
-            binding.potButtonNo.setTextColor(resources.getColor(R.color.white))
-            binding.potButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
-            binding.potButtonYes.setTextColor(resources.getColor(R.color.purple_500))
-            potAdd = false
-        }
-        binding.potButtonYes.setOnClickListener {
-            binding.potButtonYes.setBackgroundResource(R.drawable.button_shape)
-            binding.potButtonYes.setTextColor(resources.getColor(R.color.white))
-            binding.potButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
-            binding.potButtonNo.setTextColor(resources.getColor(R.color.purple_500))
-            potAdd = true
-        }
-        binding.dungButtonNo.setOnClickListener {
-            binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape)
-            binding.dungButtonNo.setTextColor(resources.getColor(R.color.white))
-            binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
-            binding.dungButtonYes.setTextColor(resources.getColor(R.color.purple_500))
-            dungAdd = false
-        }
-        binding.dungButtonYes.setOnClickListener {
-            binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape)
-            binding.dungButtonYes.setTextColor(resources.getColor(R.color.white))
-            binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
-            binding.dungButtonNo.setTextColor(resources.getColor(R.color.purple_500))
-            dungAdd = true
-        }
         binding.progress.setOnClickListener {}
         binding.btnAnnouncement.setOnClickListener {
             if (checkAnnounce()) {
@@ -246,7 +176,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                  val compressImage7 = compressImage(file7)
                  val compressImage8 = compressImage(file8)
                  withContext(Dispatchers.Main){
-                     addFlowerViewModel.addFlower(
+                     addPotViewModel.addFlower(
                          compressImage1?.let { it1 -> createFormData(it1, "image1") },
                          compressImage2?.let { it1 -> createFormData(it1, "image2") },
                          compressImage3?.let { it1 -> createFormData(it1, "image3") },
@@ -259,12 +189,13 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                  }
              }
         }
-//            val params = "m=62ada9786a1a1d8d2dee422b;ac.order_id=2;a=50000"
+//            val params = "m=62ada9786a231d8d2dee422b;ac.order_id=2;a=50000"
 //            val data = params.toByteArray(StandardCharsets.UTF_8)
 //            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
 //            val payMeUrl = "https://checkout.test.paycom.uz/$base64"
 //            Log.d("urlPay",payMeUrl)
-//            addFlowerViewModel.getPayment(payMeUrl)
+//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(payMeUrl))
+//            startActivity(browserIntent)
         }
 //        binding.btnViewAnnouncement.setOnClickListener {
 //            if (checkAnnounce()) {
@@ -360,7 +291,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                addFlowerViewModel.getCity(position+1)
+                addPotViewModel.getCity(position+1)
                 regionId = position+1
             }
 
@@ -382,14 +313,13 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             }
 
         }
-        addFlowerViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
+        addPotViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
         binding.titleLayout.isHintEnabled = false
         binding.priceLayout.isHintEnabled = false
         binding.descriptionLayout.isHintEnabled = false
         regionResultObserve()
         cityResultObserve()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE) {
@@ -452,7 +382,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     }
 
     private fun imageResultObserve() {
-        addFlowerViewModel.result.observe(viewLifecycleOwner, Observer {
+        addPotViewModel.result.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     val img1 = it.data?.image1
@@ -463,7 +393,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     val img6 = it.data?.image6
                     val img7 = it.data?.image7
                     val img8 = it.data?.image8
-                    addFlowerViewModel.setAnnounce(
+                    addPotViewModel.setAnnounce(
                         AnnounceData(
                             active = true,
                             allowed = true,
@@ -481,13 +411,13 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             price = binding.etPrice.text.trim().toString()
                                 .replace("\\s".toRegex(), "").toLong(),
                             title = binding.etTitle.text.toString().trim(),
-                            weight = 23,
-                            withFertilizer = dungAdd,
-                            withPot = potAdd,
-                            categoryId = 1,
+                            weight = null,
+                            withFertilizer = null,
+                            withPot = null,
+                            categoryId = null,
                             sellerId = 1,
+                            department = departmentId,
                             shopId = 1,
-                            flowerType = 1,
                             cityId = cityId,
                             regionId = regionId,
                             myAnnounce = true,
@@ -496,7 +426,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                                 "+998${binding.etNumber.text.trim().toString()
                                     .replace("\\s".toRegex(), "")
                             }",
-                            seller = true
+                            seller = isSeller
                         )
                     )
                 }
@@ -508,16 +438,15 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun announceResultObserve() {
-        addFlowerViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
+        addPotViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    Snackbar.make(binding.root, "E'lon saqlandi", Snackbar.LENGTH_SHORT).show()
                     val navController =
                         Navigation.findNavController(
                             requireActivity(),
-                            R.id.nav_host_fragment_activity_main
+                            R.id.addContainer
                         )
-                    navController.popBackStack()
+                    navController.navigate(R.id.action_addPot_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -530,7 +459,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
     private fun regionResultObserve() {
-        addFlowerViewModel.regionList.observe(viewLifecycleOwner, Observer {
+        addPotViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
                     it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
@@ -542,7 +471,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun cityResultObserve() {
-        addFlowerViewModel.cityData.observe(viewLifecycleOwner, Observer {
+        addPotViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
                     it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
@@ -625,7 +554,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     }
     private fun uriToImageFile(uri: Uri): File? {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = (activity as MainActivity).contentResolver.query(uri, filePathColumn, null, null, null)
+        val cursor = (activity as AddAnnounceActivity).contentResolver.query(uri, filePathColumn, null, null, null)
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 val columnIndex = cursor.getColumnIndex(filePathColumn[0])

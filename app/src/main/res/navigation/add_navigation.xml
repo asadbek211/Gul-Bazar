@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/navigation_add">
+
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_navigation.AddNavigationFragment"
+        android:label="fragment_add_navigation"
+        tools:layout="@layout/fragment_add_navigation">
+        <action
+            android:id="@+id/action_navigation_add_to_categoryAddFlowerFragment"
+            app:destination="@id/categoryAddFlowerFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryAddFlowerFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.category_add_flower.CategoryAddFlowerFragment"
+        android:label="CategoryAddFlowerFragment"
+        tools:layout="@layout/fragment_category_add_flower">
+        <action
+            android:id="@+id/categoryAddFlower_to_addFlower"
+            app:destination="@id/addFlowerFragment2"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/categoryAddFlower_to_addBuket"
+            app:destination="@id/addBuketFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/categoryAddFlower_to_addTree"
+            app:destination="@id/addTree"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/categoryAddFlower_to_addPot"
+            app:destination="@id/addPot"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/categoryAddFlower_to_addFertilizers"
+            app:destination="@id/addFertilizers"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFlowerFragment2"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_houseplants.AddFlowerFragment"
+        android:label="fragment_add_flower"
+        tools:layout="@layout/fragment_add_flower" >
+        <action
+            android:id="@+id/action_addFlowerFragment2_to_addSuccess"
+            app:destination="@id/addSuccess" />
+    </fragment>
+    <fragment
+        android:id="@+id/addBuketFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_buket.AddBuketFragment"
+        android:label="AddBuketFragment"
+        tools:layout="@layout/fragment_add_buket" >
+        <action
+            android:id="@+id/action_addBuketFragment_to_addSuccess"
+            app:destination="@id/addSuccess" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTree"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_tree.AddTreeFragment"
+        android:label="AddTreeFragment"
+        tools:layout="@layout/fragment_add_tree" >
+        <action
+            android:id="@+id/action_addTree_to_addSuccess"
+            app:destination="@id/addSuccess" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPot"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_pots.AddPotFragment"
+        android:label="AddPotFragment"
+        tools:layout="@layout/fragment_add_pot" >
+        <action
+            android:id="@+id/action_addPot_to_addSuccess"
+            app:destination="@id/addSuccess" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFertilizers"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_fertilizers.AddFertilizersFragment"
+        android:label="AddFertilizersFragment"
+        tools:layout="@layout/fragment_add_fertilizers" >
+        <action
+            android:id="@+id/action_addFertilizers_to_addSuccess"
+            app:destination="@id/addSuccess" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_add_success"
+        android:id="@+id/addSuccess"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_success.AddSuccessFragment"
+        android:label="AddSuccessFragment" />
+</navigation>

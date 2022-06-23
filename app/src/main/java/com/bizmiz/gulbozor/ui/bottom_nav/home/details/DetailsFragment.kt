@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.home.details
+package com.bizmiz.gulbozor.ui.bottom_nav.home.details
 
 import android.os.Build
 import android.os.Bundle
@@ -97,8 +97,8 @@ class DetailsFragment : Fragment() {
         binding.flowerPrice.text = number.toString()
         binding.flowerWidth.text = "${flowerData.diameter} sm"
         binding.flowerHeight.text = "${flowerData.height} sm"
-        checkPot(binding.potCheck,flowerData.withPot)
-        checkPot(binding.dungCheck,flowerData.withFertilizer)
+        flowerData.withPot?.let { checkPot(binding.potCheck, it) }
+        flowerData.withFertilizer?.let { checkPot(binding.dungCheck, it) }
         return binding.root
     }
     private fun checkPot(imageView: ImageView,boolean: Boolean){

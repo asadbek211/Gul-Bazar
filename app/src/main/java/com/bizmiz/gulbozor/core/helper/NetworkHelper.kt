@@ -1,10 +1,7 @@
 package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
-import com.bizmiz.gulbozor.core.models.AnnounceData
-import com.bizmiz.gulbozor.core.models.AnnounceResponse
-import com.bizmiz.gulbozor.core.models.CityData
-import com.bizmiz.gulbozor.core.models.RegionData
+import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -135,6 +132,23 @@ class NetworkHelper(
             }
 
             override fun onFailure(call: Call<CityData>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun getFlowerType(
+        onSuccess: (typeData: FlowerTypeData) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getFlowerType()
+        call.enqueue(object : Callback<FlowerTypeData> {
+            override fun onResponse(call: Call<FlowerTypeData>?, response: Response<FlowerTypeData>?) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+            override fun onFailure(call: Call<FlowerTypeData>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 
