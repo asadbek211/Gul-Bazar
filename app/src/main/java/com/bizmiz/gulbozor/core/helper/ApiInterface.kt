@@ -9,13 +9,13 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("/announce/announceList")
-    fun getAnnounce(): Call<List<AnnounceData>>
+    fun getAnnounce(): Call<List<AnnounceResponseData>>
 
     @Headers("Content-Type:application/json")
     @POST("/announce")
     fun setAnnounce(
-        @Body announceData: AnnounceData
-    ): Call<AnnounceResponse>
+        @Body announceRequestData: AnnounceRequestData
+    ): Call<AnnounceBaseResponse>
 
     @Multipart
     @POST("/attachment/uploadImage")
@@ -40,4 +40,9 @@ interface ApiInterface {
     @GET("/category/allParentCategory")
     fun getFlowerType(
     ): Call<FlowerTypeData>
+
+    @GET("/category/{id}")
+    fun getFlowerTypeById(
+        @Path("id")id:Int
+    ): Call<BaseResponse<FlowerTypeDataItem>>
 }

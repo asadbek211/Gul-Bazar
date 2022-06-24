@@ -54,15 +54,12 @@ class HomeFragment : Fragment() {
         binding.homeRecyclerview.adapter = flowersAdapter
 
         flowersAdapter.onClickListener {
-            val bundle = bundleOf(
-                "flowerData" to it
-            )
-            val navController =
-                Navigation.findNavController(
-                    requireActivity(),
-                    R.id.mainContainer
+            if (it.department!=null){
+                val bundle = bundleOf(
+                    "flowerData" to it,
                 )
-            navController.navigate(R.id.home_to_details, bundle)
+                destination(it.department,bundle)
+            }
         }
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
@@ -74,7 +71,31 @@ class HomeFragment : Fragment() {
         return binding.root
 
     }
+private fun destination(categoryId:Int,bundle: Bundle){
+    val navController =
+        Navigation.findNavController(
+            requireActivity(),
+            R.id.mainContainer
+        )
+    when(categoryId){
+        1->{
+            navController.navigate(R.id.home_to_buketDetails, bundle)
+        }
+        2->{
+            navController.navigate(R.id.home_to_flowerDetails, bundle)
+        }
+        3->{
+            navController.navigate(R.id.home_to_treeDetails, bundle)
+        }
+        4->{
+            navController.navigate(R.id.home_to_potDetails, bundle)
+        }
+        5->{
+            navController.navigate(R.id.home_to_fetilizersDetails, bundle)
+        }
+    }
 
+}
     private fun setListeners() {
         binding.txtAllCategories.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.home_to_categories)

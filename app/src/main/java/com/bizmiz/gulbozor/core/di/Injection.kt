@@ -8,6 +8,11 @@ import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_houseplants.AddFlower
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_pots.AddPotViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_tree.AddTreeViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.HomeViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.home.details.buket_details.BuketDetailsViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.FetilizersDetailsViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,4 +27,9 @@ val viewModelModule = module {
     viewModel { AddPotViewModel(get()) }
     viewModel { AddFertilizersViewModel(get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { FlowerDetailsViewModel(get()) }
+    viewModel { TreeDetailsViewModel(get()) }
+    viewModel { PotDetailsViewModel(get()) }
+    viewModel { FetilizersDetailsViewModel(get()) }
+    viewModel { BuketDetailsViewModel(get()) }
 }

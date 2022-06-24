@@ -3,26 +3,29 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
-    var flowersList:List<AnnounceData> = listOf()
+    var flowersList:List<AnnounceResponseData> = listOf()
        set(value) {
            field = value
            notifyDataSetChanged()
        }
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(flowerListResponse: AnnounceData,position: Int) {
+        fun populateModel(flowerListResponse: AnnounceResponseData, position: Int) {
                 Glide.with(binding.root.context).load(flowerListResponse.image1)
                     .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
-            binding.flowerDescription.text = flowerListResponse.description
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val date: Date = dateFormat.parse(flowerListResponse.createAt)
+            binding.flowerDescription.text = date.toString()
             val df = DecimalFormat("#,###.##")
             val number = df.format(flowerListResponse.price)
             binding.flowerPrice.text = number
@@ -33,8 +36,8 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
     }
 
-    private var onclick: (flowerListResponse: AnnounceData) -> Unit = {}
-    fun onClickListener(onclick: (flowerListResponse: AnnounceData) -> Unit) {
+    private var onclick: (flowerListResponse: AnnounceResponseData) -> Unit = {}
+    fun onClickListener(onclick: (flowerListResponse: AnnounceResponseData) -> Unit) {
         this.onclick = onclick
     }
 

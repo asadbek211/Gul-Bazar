@@ -11,12 +11,44 @@
         android:label="BottomNavFragment"
         tools:layout="@layout/fragment_bottom_nav">
         <action
-            android:id="@+id/home_to_details"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/home_to_flowerDetails"
+            app:destination="@id/flowerDetails" />
+        <action
+            android:id="@+id/home_to_buketDetails"
+            app:destination="@id/buketDetails" />
+        <action
+            android:id="@+id/home_to_fetilizersDetails"
+            app:destination="@id/fetilizersDetails" />
+        <action
+            android:id="@+id/home_to_potDetails"
+            app:destination="@id/potDetails" />
+        <action
+            android:id="@+id/home_to_treeDetails"
+            app:destination="@id/treeDetails" />
     </fragment>
     <fragment
-        android:id="@+id/detailsFragment"
+        android:id="@+id/flowerDetails"
         android:label="DetailsFragment"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.DetailsFragment"
-        tools:layout="@layout/fragment_details" />
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsFragment"
+        tools:layout="@layout/fragment_flower_details" />
+    <fragment
+        tools:layout="@layout/fragment_buket_details"
+        android:id="@+id/buketDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.buket_details.BuketDetailsFragment"
+        android:label="BuketDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_fetilizers_details"
+        android:id="@+id/fetilizersDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.FetilizersDetailsFragment"
+        android:label="FetilizersDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_pot_details"
+        android:id="@+id/potDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsFragment"
+        android:label="PotDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_tree_details"
+        android:id="@+id/treeDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsFragment"
+        android:label="TreeDetailsFragment" />
 </navigation>

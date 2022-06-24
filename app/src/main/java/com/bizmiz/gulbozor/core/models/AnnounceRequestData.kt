@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class AnnounceData(
+data class AnnounceRequestData(
     val active: Boolean,
     val allowed: Boolean,
     val categoryId: Int?,

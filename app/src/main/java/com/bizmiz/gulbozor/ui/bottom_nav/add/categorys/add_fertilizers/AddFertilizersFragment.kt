@@ -17,23 +17,19 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentAddFertilizersBinding
-import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.google.android.material.snackbar.Snackbar
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -83,10 +79,14 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
         )
             binding = FragmentAddFertilizersBinding.bind(view)
         if (
-            !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
-                READ_EXTERNAL_STORAGE
-            ) ||
-                    !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
+                    READ_EXTERNAL_STORAGE
+                ) ||
+                        !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                false
+            }
         ) {
             askPermission(
                 arrayOf(
@@ -394,9 +394,9 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
                     val img7 = it.data?.image7
                     val img8 = it.data?.image8
                     addFertilizersViewModel.setAnnounce(
-                        AnnounceData(
-                            active = true,
-                            allowed = true,
+                        AnnounceRequestData(
+                            active = false,
+                            allowed = false,
                             description = binding.etDescription.text.toString().trim(),
                             diameter = null,
                             height = null,
