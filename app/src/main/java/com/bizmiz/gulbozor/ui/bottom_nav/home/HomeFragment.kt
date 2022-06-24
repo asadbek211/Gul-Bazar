@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).destinationId = 0
         flowersAdapter = FlowersAdapter()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)

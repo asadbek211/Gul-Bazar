@@ -12,11 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_add"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.AddFlowerFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_add_flower" />
-    <fragment
         android:id="@+id/navigation_user"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.ProfileFragment"
         android:label="ProfileFragment"
@@ -31,4 +26,8 @@
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.competition.CompetitionFragment"
         android:label="CompetitionFragment"
         tools:layout="@layout/fragment_competition" />
+    <fragment
+        android:id="@+id/container"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_container.ContainerFragment"
+        android:label="ContainerFragment" />
 </navigation>

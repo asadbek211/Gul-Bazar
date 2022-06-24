@@ -1,13 +1,17 @@
 package com.bizmiz.gulbozor
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.ActivityMainBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 
 class MainActivity : AppCompatActivity() {
+    var destinationId = 0
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -28,6 +32,17 @@ class MainActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
+//    override fun onBackPressed() {
+//        when(destinationId){
+//            0->{
+//                super.onBackPressed()
+//            }
+//            1->{
+//               startActivity(Intent(this,AddAnnounceActivity::class.java))
+//                finish()
+//            }
+//        }
+//    }
     private fun closeKeyboard() {
         val view = this.currentFocus
         if (view != null) {
