@@ -276,7 +276,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="end|center_vertical"
                         android:hint="0"
-                        android:maxLength="17"
+                        android:maxLength="11"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingStart="5dp"

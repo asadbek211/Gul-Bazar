@@ -1,29 +1,36 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.home.details
+package com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
-import com.bizmiz.gulbozor.databinding.FragmentDetailsBinding
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.databinding.FragmentPotDetailsBinding
 import com.bumptech.glide.Glide
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
-class DetailsFragment : Fragment() {
+class PotDetailsFragment : Fragment() {
     private var isFavourite = false
-    private lateinit var flowerData: AnnounceData
+    private lateinit var flowerData: AnnounceResponseData
     private var flowerUrlList:ArrayList<String> = arrayListOf()
-    private lateinit var binding: FragmentDetailsBinding
-    private lateinit var imageList: ArrayList<Int>
+    private lateinit var binding: FragmentPotDetailsBinding
+    private val potDetailsViewModel:PotDetailsViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        flowerData = requireArguments().get("flowerData") as AnnounceData
+        flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
         flowerData.image2?.let { flowerUrlList.add(it) }
         flowerData.image3?.let { flowerUrlList.add(it) }
@@ -32,27 +39,20 @@ class DetailsFragment : Fragment() {
         flowerData.image6?.let { flowerUrlList.add(it) }
         flowerData.image7?.let { flowerUrlList.add(it) }
         flowerData.image8?.let { flowerUrlList.add(it) }
-        imageList =
-            arrayListOf(R.drawable.img_7, R.drawable.img_1, R.drawable.img_2, R.drawable.img_3)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
-                0,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        binding = FragmentDetailsBinding.bind(
-            inflater.inflate(
-                R.layout.fragment_details,
+        binding = FragmentPotDetailsBinding.inflate(
+           inflater,
                 container,
                 false
             )
-        )
+        flowerData.categoryId?.let { potDetailsViewModel.getFlowerType(it) }
         binding.carouselView.setImageListener { position, imageView ->
-            Glide.with(imageView).load(flowerUrlList[position])
+            Glide.with(imageView).load(flowerUrlList[position].toUri())
                 .into(imageView)
             imageView.scaleType = ImageView.ScaleType.FIT_XY
             imageView.setPadding(0, 0, 0, 110)
@@ -90,6 +90,11 @@ class DetailsFragment : Fragment() {
                 isFavourite = true
             }
         }
+        binding.btnPhone.setOnClickListener {
+            val phone = flowerData.phoneNumber.toString()
+            val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
+            startActivity(intent)
+        }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description
         val df = DecimalFormat("#,###.##")
@@ -97,15 +102,19 @@ class DetailsFragment : Fragment() {
         binding.flowerPrice.text = number.toString()
         binding.flowerWidth.text = "${flowerData.diameter} sm"
         binding.flowerHeight.text = "${flowerData.height} sm"
-        flowerData.withPot?.let { checkPot(binding.potCheck, it) }
-        flowerData.withFertilizer?.let { checkPot(binding.dungCheck, it) }
+        flowerTypeObserve()
         return binding.root
     }
-    private fun checkPot(imageView: ImageView,boolean: Boolean){
-        if(boolean){
-            imageView.setImageResource(R.drawable.ic_check_yes_24)
-        }else{
-            imageView.setImageResource(R.drawable.ic_check_no_24)
-        }
+    private fun flowerTypeObserve() {
+        potDetailsViewModel.flowerType.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+//                    binding.flowerType.text = it.data?.name
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 }

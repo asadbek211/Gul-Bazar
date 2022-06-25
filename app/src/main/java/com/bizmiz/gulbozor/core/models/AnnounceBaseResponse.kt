@@ -1,6 +1,6 @@
 package com.bizmiz.gulbozor.core.models
 
-data class AnnounceResponse(
+data class AnnounceBaseResponse(
     val attachContactId: Any,
     val mainAttachId: Any,
     val massage: String,

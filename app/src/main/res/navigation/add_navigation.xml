@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_addFlowerFragment2_to_addSuccess"
             app:destination="@id/addSuccess" />
+        <action
+            android:id="@+id/action_addFlowerFragment2_to_detailsFragment2"
+            app:destination="@id/detailsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/addBuketFragment"
@@ -91,4 +94,9 @@
         android:id="@+id/addSuccess"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_success.AddSuccessFragment"
         android:label="AddSuccessFragment" />
+    <fragment
+        android:id="@+id/detailsFragment2"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_flower_details" />
 </navigation>
