@@ -1,5 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -83,6 +85,11 @@ class TreeDetailsFragment : Fragment() {
                 binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
                 isFavourite = true
             }
+        }
+        binding.btnPhone.setOnClickListener {
+            val phone = flowerData.phoneNumber.toString()
+            val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
+            startActivity(intent)
         }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description
