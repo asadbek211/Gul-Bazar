@@ -289,27 +289,65 @@
                 app:layout_constraintEnd_toEndOf="@+id/spPriceType"
                 app:layout_constraintTop_toTopOf="@+id/spPriceType" />
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/varela_round_regular"
+                android:text="O’g’it turini tanlang."
+                android:textColor="#797979"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/priceLayout" />
+
+            <Spinner
+                android:id="@+id/spFetilizerType"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/text_shape2"
+                android:gravity="center_vertical"
+                android:paddingEnd="25dp"
+                android:spinnerMode="dropdown"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/priceLayout"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/spFetilizerType"
+                app:layout_constraintEnd_toEndOf="@+id/spFetilizerType"
+                app:layout_constraintTop_toTopOf="@+id/spFetilizerType" />
+
             <EditText
                 android:id="@+id/etWeight"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="end|center_vertical"
                 android:hint="0"
-                android:maxLength="3"
                 android:imeOptions="actionSearch"
                 android:inputType="number"
+                android:maxLength="4"
                 android:maxLines="1"
                 android:paddingStart="5dp"
-                android:paddingEnd="68dp"
+                android:paddingEnd="50dp"
                 android:singleLine="true"
                 android:textColor="@color/hint_color"
                 android:textColorHint="@color/hint_color"
                 android:textSize="14dp"
                 android:theme="@style/editTextStyle"
-                app:layout_constraintEnd_toEndOf="@+id/image6"
-                app:layout_constraintStart_toStartOf="@+id/priceLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/spPriceType"
                 app:layout_constraintTop_toBottomOf="@+id/title10" />
 
             <TextView
@@ -321,7 +359,7 @@
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/etWeight"
                 app:layout_constraintEnd_toEndOf="@+id/etWeight"
-                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintHorizontal_bias="0.67"
                 app:layout_constraintStart_toStartOf="@+id/etWeight"
                 app:layout_constraintTop_toTopOf="@+id/etWeight" />
 

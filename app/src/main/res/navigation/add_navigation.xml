@@ -47,10 +47,10 @@
         android:label="fragment_add_flower"
         tools:layout="@layout/fragment_add_flower" >
         <action
-            android:id="@+id/action_addFlowerFragment2_to_addSuccess"
+            android:id="@+id/addFlowerFragment2_to_addSuccess"
             app:destination="@id/addSuccess" />
         <action
-            android:id="@+id/action_addFlowerFragment2_to_detailsFragment2"
+            android:id="@+id/addFlowerFragment2_to_detailsFragment2"
             app:destination="@id/detailsFragment2" />
     </fragment>
     <fragment
@@ -59,8 +59,11 @@
         android:label="AddBuketFragment"
         tools:layout="@layout/fragment_add_buket" >
         <action
-            android:id="@+id/action_addBuketFragment_to_addSuccess"
+            android:id="@+id/addBuketFragment_to_addSuccess"
             app:destination="@id/addSuccess" />
+        <action
+            android:id="@+id/addBuketFragment_to_buketDetails"
+            app:destination="@id/buketDetails" />
     </fragment>
     <fragment
         android:id="@+id/addTree"
@@ -68,8 +71,11 @@
         android:label="AddTreeFragment"
         tools:layout="@layout/fragment_add_tree" >
         <action
-            android:id="@+id/action_addTree_to_addSuccess"
+            android:id="@+id/addTree_to_addSuccess"
             app:destination="@id/addSuccess" />
+        <action
+            android:id="@+id/addTree_to_treeDetails"
+            app:destination="@id/treeDetails" />
     </fragment>
     <fragment
         android:id="@+id/addPot"
@@ -77,8 +83,11 @@
         android:label="AddPotFragment"
         tools:layout="@layout/fragment_add_pot" >
         <action
-            android:id="@+id/action_addPot_to_addSuccess"
+            android:id="@+id/addPot_to_addSuccess"
             app:destination="@id/addSuccess" />
+        <action
+            android:id="@+id/addPot_to_potDetails"
+            app:destination="@id/potDetails" />
     </fragment>
     <fragment
         android:id="@+id/addFertilizers"
@@ -86,8 +95,11 @@
         android:label="AddFertilizersFragment"
         tools:layout="@layout/fragment_add_fertilizers" >
         <action
-            android:id="@+id/action_addFertilizers_to_addSuccess"
+            android:id="@+id/addFertilizers_to_addSuccess"
             app:destination="@id/addSuccess" />
+        <action
+            android:id="@+id/addFertilizers_to_fetilizersDetails"
+            app:destination="@id/fetilizersDetails" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_add_success"
@@ -99,4 +111,24 @@
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_flower_details" />
+    <fragment
+        tools:layout="@layout/fragment_buket_details"
+        android:id="@+id/buketDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.buket_details.BuketDetailsFragment"
+        android:label="BuketDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_fetilizers_details"
+        android:id="@+id/fetilizersDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.FetilizersDetailsFragment"
+        android:label="FetilizersDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_pot_details"
+        android:id="@+id/potDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsFragment"
+        android:label="PotDetailsFragment" />
+    <fragment
+        tools:layout="@layout/fragment_tree_details"
+        android:id="@+id/treeDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsFragment"
+        android:label="TreeDetailsFragment" />
 </navigation>

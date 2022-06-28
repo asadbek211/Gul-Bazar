@@ -16,12 +16,15 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentFlowerDetailsBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
+import com.bizmiz.gulbozor.ui.start.onBoard.MiddleActivity
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
 class FlowerDetailsFragment : Fragment() {
     private var isFavourite = false
+    private  var desId:Int? = null
     private lateinit var flowerData: AnnounceResponseData
     private var flowerUrlList:ArrayList<String> = arrayListOf()
     private lateinit var binding: FragmentFlowerDetailsBinding
@@ -30,6 +33,7 @@ class FlowerDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        desId = requireArguments().getInt("desId")
         flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
         flowerData.image2?.let { flowerUrlList.add(it) }
@@ -77,9 +81,15 @@ class FlowerDetailsFragment : Fragment() {
         })
         binding.carouselView.pageCount = flowerUrlList.size
         binding.ivBack.setOnClickListener {
-            val navController =
-                Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.popBackStack()
+            if (desId==1){
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.addContainer)
+                navController.popBackStack()
+            }else{
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.mainContainer)
+                navController.popBackStack()
+            }
         }
         binding.ivFavourite.setOnClickListener {
             if (isFavourite) {
@@ -93,6 +103,11 @@ class FlowerDetailsFragment : Fragment() {
         binding.btnPhone.setOnClickListener {
             val phone = flowerData.phoneNumber.toString()
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
+            startActivity(intent)
+        }
+        binding.btnAds.setOnClickListener {
+            val intent = Intent(requireActivity(), PaymentActivity::class.java)
+            intent.putExtra("flowerData",flowerData)
             startActivity(intent)
         }
         binding.flowerTitle.text = flowerData.title

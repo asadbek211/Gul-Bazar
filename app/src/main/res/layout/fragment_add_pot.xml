@@ -199,6 +199,43 @@
                 app:layout_constraintTop_toTopOf="@+id/image7" />
 
             <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/varela_round_regular"
+                android:text="Tuvak materiali"
+                android:textColor="#797979"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image5" />
+
+            <Spinner
+                android:id="@+id/spMaterialType"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/text_shape2"
+                android:gravity="center_vertical"
+                android:paddingEnd="25dp"
+                android:spinnerMode="dropdown"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/priceLayout"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/spMaterialType"
+                app:layout_constraintEnd_toEndOf="@+id/spMaterialType"
+                app:layout_constraintTop_toTopOf="@+id/spMaterialType" />
+
+            <TextView
                 android:id="@+id/title4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,7 +248,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image5" />
+                app:layout_constraintTop_toBottomOf="@+id/spMaterialType" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/priceLayout"

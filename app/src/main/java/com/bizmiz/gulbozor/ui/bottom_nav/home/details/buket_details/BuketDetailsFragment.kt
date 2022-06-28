@@ -16,6 +16,7 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentBuketDetailsBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
@@ -23,6 +24,7 @@ import java.text.DecimalFormat
 class BuketDetailsFragment : Fragment() {
     private var isFavourite = false
     private lateinit var flowerData: AnnounceResponseData
+    private  var desId:Int? = null
     private var flowerUrlList:ArrayList<String> = arrayListOf()
     private lateinit var binding: FragmentBuketDetailsBinding
     private val buketDetailsViewModel:BuketDetailsViewModel by viewModel()
@@ -30,6 +32,7 @@ class BuketDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        desId = requireArguments().getInt("desId")
         flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
         flowerData.image2?.let { flowerUrlList.add(it) }
@@ -73,9 +76,15 @@ class BuketDetailsFragment : Fragment() {
         })
         binding.carouselView.pageCount = flowerUrlList.size
         binding.ivBack.setOnClickListener {
-            val navController =
-                Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.popBackStack()
+            if (desId==1){
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.addContainer)
+                navController.popBackStack()
+            }else{
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.mainContainer)
+                navController.popBackStack()
+            }
         }
         binding.ivFavourite.setOnClickListener {
             if (isFavourite) {

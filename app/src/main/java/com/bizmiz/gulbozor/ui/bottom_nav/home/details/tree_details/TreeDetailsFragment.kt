@@ -22,6 +22,7 @@ import java.text.DecimalFormat
 
 class TreeDetailsFragment : Fragment() {
     private var isFavourite = false
+    private  var desId:Int? = null
     private lateinit var flowerData: AnnounceResponseData
     private var flowerUrlList:ArrayList<String> = arrayListOf()
     private lateinit var binding: FragmentTreeDetailsBinding
@@ -30,6 +31,7 @@ class TreeDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        desId = requireArguments().getInt("desId")
         flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
         flowerData.image2?.let { flowerUrlList.add(it) }
@@ -73,9 +75,15 @@ class TreeDetailsFragment : Fragment() {
         })
         binding.carouselView.pageCount = flowerUrlList.size
         binding.ivBack.setOnClickListener {
-            val navController =
-                Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.popBackStack()
+            if (desId==1){
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.addContainer)
+                navController.popBackStack()
+            }else{
+                val navController =
+                    Navigation.findNavController(requireActivity(), R.id.mainContainer)
+                navController.popBackStack()
+            }
         }
         binding.ivFavourite.setOnClickListener {
             if (isFavourite) {

@@ -39,8 +39,7 @@
         android:id="@+id/signUpFragment4"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
-        tools:layout="@layout/fragment_sign_up4">
-    </fragment>
+        tools:layout="@layout/fragment_sign_up4" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"

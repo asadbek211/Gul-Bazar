@@ -22,11 +22,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
@@ -46,9 +48,8 @@ import java.io.File
 
 
 class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
+
     private val addPotViewModel: AddPotViewModel by viewModel()
-    private var potAdd = true
-    private var dungAdd = true
     private var regionId:Int = 1
     private var cityId:Int = 1
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
@@ -60,19 +61,21 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
     private var file6:File? = null
     private var file7:File? = null
     private var file8:File? = null
-    private var img1:Uri? = null
-    private var img2:Uri? = null
-    private var img3:Uri? = null
-    private var img4:Uri? = null
-    private var img5:Uri? = null
-    private var img6:Uri? = null
-    private var img7:Uri? = null
-    private var img8:Uri? = null
+    private var img1:String? = null
+    private var img2:String? = null
+    private var img3:String? = null
+    private var img4:String? = null
+    private var img5:String? = null
+    private var img6:String? = null
+    private var img7:String? = null
+    private var img8:String? = null
     private var imageViewList:List<ImageView> = listOf()
     private val sectionList: List<String> = listOf("so'm")
     private var departmentId:Int? = null
     private var isSeller:Boolean? = null
+    private var flowerTypeList:ArrayList<Int> = arrayListOf()
     private var flowerTypeId:Int? = null
+    private var spFlowerPosition:Int = 0
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
@@ -80,6 +83,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPotViewModel.getRegion()
+        addPotViewModel.getFlowerType()
         flowerNameList = arrayListOf()
     }
     @OptIn(DelicateCoroutinesApi::class)
@@ -231,68 +235,62 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                     }
                 }
             }
-//            val params = "m=62ada9786a231d8d2dee422b;ac.order_id=2;a=50000"
-//            val data = params.toByteArray(StandardCharsets.UTF_8)
-//            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
-//            val payMeUrl = "https://checkout.test.paycom.uz/$base64"
-//            Log.d("urlPay",payMeUrl)
-//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(payMeUrl))
-//            startActivity(browserIntent)
+
         }
         binding.btnViewAnnouncement.setOnClickListener {
             if (checkAnnounce()) {
                 when (imageUrlList.size) {
                     1 -> {
-                        img1 = imageUrlList[0]
+                        img1 = imageUrlList[0].toString()
                     }
                     2 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
                     }
                     3 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
                     }
                     4 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
-                        img4 = imageUrlList[3]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
                     }
                     5 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
-                        img4 = imageUrlList[3]
-                        img5 = imageUrlList[4]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
                     }
                     6 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
-                        img4 = imageUrlList[3]
-                        img5 = imageUrlList[4]
-                        img6 = imageUrlList[5]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
                     }
                     7 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
-                        img4 = imageUrlList[3]
-                        img5 = imageUrlList[4]
-                        img6 = imageUrlList[5]
-                        img7 = imageUrlList[6]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
+                        img7 = imageUrlList[6].toString()
                     }
                     8 -> {
-                        img1 = imageUrlList[0]
-                        img2 = imageUrlList[1]
-                        img3 = imageUrlList[2]
-                        img4 = imageUrlList[3]
-                        img5 = imageUrlList[4]
-                        img6 = imageUrlList[5]
-                        img7 = imageUrlList[6]
-                        img8 = imageUrlList[7]
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
+                        img7 = imageUrlList[6].toString()
+                        img8 = imageUrlList[7].toString()
                     }
                 }
                 val bundle = bundleOf(
@@ -300,22 +298,22 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                         description = binding.etDescription.text.toString().trim(),
                         diameter = binding.etWidth.text.toString().trim().toInt(),
                         height = binding.etHeight.text.toString().trim().toInt(),
-                        image1 = img1.toString(),
-                        image2 = img2.toString(),
-                        image3 = img3.toString(),
-                        image4 = img4.toString(),
-                        image5 = img5.toString(),
-                        image6 = img6.toString(),
-                        image7 = img7.toString(),
-                        image8 = img8.toString(),
+                        image1 = img1,
+                        image2 = img2,
+                        image3 = img3,
+                        image4 = img4,
+                        image5 = img5,
+                        image6 = img6,
+                        image7 = img7,
+                        image8 = img8,
                         price = binding.etPrice.text.trim().toString()
-                            .replace("\\s".toRegex(), "").toLong(),
+                            .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
                         title = binding.etTitle.text.toString().trim(),
                         weight = null,
-                        withFertilizer = dungAdd,
-                        withPot = potAdd,
+                        withFertilizer = null,
+                        withPot = null,
                         categoryId = flowerTypeId,
-                        sellerId = null,
+                        sellerId = AppCache.getHelper().userId,
                         department = departmentId,
                         shopId = null,
                         cityId = cityId,
@@ -328,20 +326,22 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                         }",
                         seller = isSeller,
                         id = null,
-                        createAt = null
-                    )
+                        createAt = null,
+                    ),
+                    "desId" to 1,
                 )
                 val navController =
                     Navigation.findNavController(
                         requireActivity(),
                         R.id.addContainer
                     )
-                navController.navigate(R.id.action_addFlowerFragment2_to_detailsFragment2, bundle)
+                navController.navigate(R.id.addPot_to_potDetails, bundle)
             }
         }
         imageResultObserve()
         regionResultObserve()
         cityResultObserve()
+        typeResultObserve()
         binding.image1.onClick {
             pickImage()
         }
@@ -419,6 +419,21 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
 
         }
+        binding.spMaterialType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                flowerTypeId = flowerTypeList[position]
+                spFlowerPosition = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
         binding.spTumanList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -442,6 +457,16 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     imageUrlList.clear()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        img1 = null
+                        img2 = null
+                        img3 = null
+                        img4 = null
+                        img5 = null
+                        img6 = null
+                        img7 = null
+                        img8 = null
+                    }
                     binding.image1.setImageResource(R.drawable.add)
                     binding.image2.setImageResource(R.drawable.ic_group_1)
                     binding.image3.setImageResource(R.drawable.ic_group_1)
@@ -515,13 +540,13 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                             image7 = img7,
                             image8 = img8,
                             price = binding.etPrice.text.trim().toString()
-                                .replace("\\s".toRegex(), "").toLong(),
+                                .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = null,
-                            withFertilizer = dungAdd,
-                            withPot = potAdd,
+                            withFertilizer = null,
+                            withPot = null,
                             categoryId = flowerTypeId,
-                            sellerId = null,
+                            sellerId = AppCache.getHelper().userId,
                             department = departmentId,
                             shopId = null,
                             cityId = cityId,
@@ -552,7 +577,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                             requireActivity(),
                             R.id.addContainer
                         )
-                    navController.navigate(R.id.action_addFlowerFragment2_to_addSuccess)
+                    navController.navigate(R.id.addPot_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -563,6 +588,24 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
     companion object {
         const val PICK_IMAGE_REQUEST_CODE = 1000
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
+    }
+    private fun typeResultObserve() {
+        addPotViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS-> {
+                    it.data?.forEach {
+                        flowerNameList.add(it.name)
+                        flowerTypeList.add(it.id)
+                    }
+                    setAdapter(binding.spMaterialType,flowerNameList)
+                    flowerTypeId = flowerTypeList[0]
+                    binding.spMaterialType.setSelection(spFlowerPosition)
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
     private fun regionResultObserve() {
         addPotViewModel.regionList.observe(viewLifecycleOwner, Observer {

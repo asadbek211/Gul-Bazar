@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
             if (it.department!=null){
                 val bundle = bundleOf(
                     "flowerData" to it,
+                    "desId" to 0,
                 )
                 destination(it.department,bundle)
             }

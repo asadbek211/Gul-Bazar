@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.BottomNavFragment
 
 class ProfileFragment : Fragment() {
 
@@ -18,12 +19,8 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+//        BottomNavFragment().visibility()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
 }
