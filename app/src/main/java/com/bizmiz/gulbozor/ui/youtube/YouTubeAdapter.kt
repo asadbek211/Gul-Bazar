@@ -3,13 +3,14 @@ package com.bizmiz.gulbozor.ui.youtube
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.databinding.ItemYoutubeBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
-    var flowersList: List<YouTubeLinkPage> = listOf()
+    var flowersList: List<Content> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -17,12 +18,12 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: ItemYoutubeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: YouTubeLinkPage, position: Int) {
+        fun workWithModel(response: Content, position: Int) {
             ///binding.youtubeTitle.text=response.videoID.categoryId.toString()
             binding.youTubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
-                    val videoID = response.content[position].videoLink
+                    val videoID = response.videoLink
                     youTubePlayer.loadVideo(videoID, 0f)
                     youTubePlayer.pause()
                 }

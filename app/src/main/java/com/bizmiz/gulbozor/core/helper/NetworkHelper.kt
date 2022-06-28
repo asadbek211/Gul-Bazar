@@ -77,14 +77,14 @@ class NetworkHelper(
 
     fun getYouTubePage(
         page: Int,
-        onSuccess: (flowerList: List<YouTubeLinkPage>) -> Unit,
+        onSuccess: (flowerList: YouTubeLinkPage) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getVideoLinkPage(page)
-        call.enqueue(object : Callback<List<YouTubeLinkPage>> {
+        call.enqueue(object : Callback<YouTubeLinkPage> {
             override fun onResponse(
-                call: Call<List<YouTubeLinkPage>>?,
-                response: Response<List<YouTubeLinkPage>>?
+                call: Call<YouTubeLinkPage>?,
+                response: Response<YouTubeLinkPage>?
             ) {
                 Log.d("TAGPAGE", response?.body().toString())
                 if (response != null) {
@@ -92,7 +92,7 @@ class NetworkHelper(
                 }
             }
 
-            override fun onFailure(call: Call<List<YouTubeLinkPage>>?, t: Throwable?) {
+            override fun onFailure(call: Call<YouTubeLinkPage>?, t: Throwable?) {
                 onFailure.invoke("OnOn " + t?.localizedMessage)
             }
 

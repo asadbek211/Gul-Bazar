@@ -50,5 +50,5 @@ interface ApiInterface {
     @GET("videoLink?")
     fun getVideoLinkPage(
         @Query("page") page: Int
-    ): Call<List<YouTubeLinkPage>>
+    ): Call<YouTubeLinkPage>
 }

@@ -9,8 +9,8 @@ import com.bizmiz.gulbozor.core.utils.Resource
 
 class YouTubeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
 
-    private val getYouTubePage: MutableLiveData<Resource<List<YouTubeLinkPage>>> = MutableLiveData()
-    val announcePage: LiveData<Resource<List<YouTubeLinkPage>>>
+    private val getYouTubePage: MutableLiveData<Resource<YouTubeLinkPage>> = MutableLiveData()
+    val announcePage: LiveData<Resource<YouTubeLinkPage>>
         get() = getYouTubePage
 
     fun getYouTubePage() {

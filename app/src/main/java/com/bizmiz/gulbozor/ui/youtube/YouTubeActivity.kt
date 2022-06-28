@@ -46,7 +46,7 @@ class YouTubeActivity : AppCompatActivity() {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     Toast.makeText(this, "Success" + it.data, Toast.LENGTH_SHORT).show()
-                    adapter.flowersList = it.data!!
+                    adapter.flowersList = it.data?.content!!
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
