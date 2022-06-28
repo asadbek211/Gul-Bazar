@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
@@ -95,6 +95,7 @@
                 <ImageView
                     android:id="@+id/favourite"
                     android:layout_width="0dp"
+                    android:padding="3dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_star_coin"
                     app:layout_constraintDimensionRatio="1"

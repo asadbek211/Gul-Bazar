@@ -34,41 +34,109 @@
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/layout/spinner_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
-        <entry key="app/src/main/res/drawable/button_bg.xml" value="0.1845" />
-        <entry key="app/src/main/res/drawable/button_shape.xml" value="0.1845" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_bg.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_shape.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_shape_container.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic__home.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_add_post.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_bottom_competition.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_search_gray.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_user.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/item_background.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_buckets_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_homemade_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_people_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_pot_dung_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_shop_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_tree_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/progress_bar.xml" value="0.1635" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/shape.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/youtube_others_back.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_category.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_you_tube.xml" value="0.23282442748091603" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/dialog_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/expandable_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/flower_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_buket.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_fertilizers.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_flower.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_navigation.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_pot.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_success.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_add_tree.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_categories.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_category_add_flower.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_competition.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up3.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up4.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_board.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_circle_cat.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_flower.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_youtube.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/list_group.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/oval_bucket_back.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic__home.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_add_post.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_gulbazar_logo.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_logo_round.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_tanlov_24.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/drawable/ic_user.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/activity_set_up.xml" value="0.2462962962962963" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/flower_item.xml" value="0.536" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_add_flower.xml" value="0.2462962962962963" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_categories.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_competition.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_details.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_ex.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_home.xml" value="0.235862735621073" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_login.xml" value="0.2361111111111111" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up1.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up3.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/fragment_sign_up4.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_board.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_circle_cat.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_flower.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_group.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/item_group_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/GulBazarStartUpProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/btn_default.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/editbox_background.xml" value="0.1665" />
+        <entry key="..\:/Users/user/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.25025641025641027" />
         <entry key="app/src/main/res/drawable/ic_gulbazar_logo.xml" value="0.143" />
         <entry key="app/src/main/res/drawable/ic_logo_round.xml" value="0.143" />
-        <entry key="app/src/main/res/drawable/ic_pot.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_splash_screen.xml" value="0.143" />
-        <entry key="app/src/main/res/drawable/item_background.xml" value="0.167" />
-        <entry key="app/src/main/res/drawable/shadow.xml" value="0.176" />
         <entry key="app/src/main/res/drawable/splash_screen_back.xml" value="0.143" />
-        <entry key="app/src/main/res/layout/activity_add_announce.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_set_up.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/dialog_image_upload.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/dialog_item.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/flower_item.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/fragment_add_buket.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_add_fertilizers.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_add_flower.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_add_navigation.xml" value="0.2390625" />
-        <entry key="app/src/main/res/layout/fragment_add_pot.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_add_success.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/fragment_add_tree.xml" value="0.2390625" />
+        <entry key="app/src/main/res/layout/flower_item.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_add_flower.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_bottom_nav.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/fragment_category_add_flower.xml" value="0.125" />
-        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_sign_up1.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_sign_up2.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_sign_up3.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/fragment_sign_up4.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_sign_up4.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/item_board.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2390625" />
       </map>
     </option>
   </component>

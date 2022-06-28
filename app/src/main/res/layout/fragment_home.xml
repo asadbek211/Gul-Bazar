@@ -4,16 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECEBEB"
+    android:background="#FFFFFF"
     tools:context="com.bizmiz.gulbozor.ui.bottom_nav.home.HomeFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="110dp"
+        android:layout_height="?actionBarSize"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_gulbazar_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/text_shape"
+        android:drawableEnd="@drawable/ic_search"
+        android:hint="qidirish"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_color"
+        android:textSize="18dp"
+        android:theme="@style/editTextStyle"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/et_search">
 
 
         <androidx.core.widget.NestedScrollView
@@ -66,17 +104,6 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/txt_all_categories"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="end"
-                            android:text="Barchasi"
-                            android:textColor="@color/cost_color"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
@@ -99,7 +126,9 @@
                                 android:orientation="horizontal">
 
 
-                                <LinearLayout style="@style/cat_layout">
+                                <LinearLayout
+                                    style="@style/cat_layout"
+                                    android:layout_marginStart="7dp">
 
                                     <ImageView
                                         style="@style/cat_image"
@@ -165,7 +194,9 @@
                                         tools:ignore="SmallSp" />
                                 </LinearLayout>
 
-                                <LinearLayout style="@style/cat_layout">
+                                <LinearLayout
+                                    style="@style/cat_layout"
+                                    android:layout_marginEnd="7dp">
 
                                     <ImageView
                                         style="@style/cat_image"
@@ -193,7 +224,7 @@
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/category_group" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/just"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -207,15 +238,39 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             app:autoPlay="false"
-                            app:videoId="BZo7SxbZsgg" />
-                    </LinearLayout>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_yu"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:indeterminateDrawable="@drawable/progress_bar"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="@id/youtube_player_view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/youtube_others"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/youtube_others"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginBottom="9dp"
+                        android:background="@drawable/youtube_others_back"
+                        android:paddingStart="22dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="22dp"
+                        android:paddingBottom="12dp"
+                        android:text="Boshqalari  "
+                        android:textColor="@color/homeGreen"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:drawableEndCompat="@drawable/ic_round_arrow_forward_24"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/just" />

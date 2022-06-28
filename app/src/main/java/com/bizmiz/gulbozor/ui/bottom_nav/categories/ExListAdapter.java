@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,10 +99,16 @@ public class ExListAdapter extends BaseExpandableListAdapter {
         TextView bucketCat = view.findViewById(R.id.bucket_flowers_txt);
         TextView homemadeCat = view.findViewById(R.id.homemade_flowers_cat_txt);
         TextView potCat = view.findViewById(R.id.pot_flowers_cat_txt);
-        bucketCat.setText(contacto.getChildRaw1());
-        homemadeCat.setText(contacto.getChildRaw2());
-        potCat.setText(contacto.getChildRaw3());
+        ImageView greenLine = view.findViewById(R.id.just_green);
 
+        if (contacto.getChildRaw3() == null) {
+            potCat.setVisibility(View.GONE);
+        } else {
+            potCat.setVisibility(View.VISIBLE);
+            bucketCat.setText(contacto.getChildRaw1());
+            homemadeCat.setText(contacto.getChildRaw2());
+            potCat.setText(contacto.getChildRaw3());
+        }
         bucketCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
