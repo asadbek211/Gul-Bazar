@@ -2,6 +2,8 @@ package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YoutubeLinkID
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -64,6 +66,31 @@ class NetworkHelper(
 
         })
     }
+
+    fun getYouTubePage(
+        page: Int,
+        onSuccess: (flowerList: YouTubeLinkPage) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getVideoLinkPage(page)
+        call.enqueue(object : Callback<YouTubeLinkPage> {
+            override fun onResponse(
+                call: Call<YouTubeLinkPage>?,
+                response: Response<YouTubeLinkPage>?
+            ) {
+                Log.d("TAGPAGE", response?.body().toString())
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<YouTubeLinkPage>?, t: Throwable?) {
+                onFailure.invoke("OnOn " + t?.localizedMessage)
+            }
+
+        })
+    }
+
     fun setAnnounce(
         announceRequestDataResponse: AnnounceRequestData,
         onSuccess: (announceBaseResponse: AnnounceBaseResponse) -> Unit,
@@ -168,4 +195,32 @@ class NetworkHelper(
 
         })
     }
+
+    fun getYouTubeById(
+        id: Int,
+        onSuccess: (typeData: YoutubeLinkID?) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getVideoLinkById(id)
+        call.enqueue(object : Callback<YoutubeLinkID> {
+            override fun onResponse(
+                call: Call<YoutubeLinkID>?,
+                response: Response<YoutubeLinkID>?
+            ) {
+                if (response != null) {
+                    response.body()?.let {
+                        onSuccess.invoke(it)
+                    }
+                    Log.d("YUTAG", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<YoutubeLinkID>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+
 }

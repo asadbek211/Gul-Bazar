@@ -13,6 +13,7 @@ import com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.Fetiliz
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsViewModel
+import com.bizmiz.gulbozor.ui.youtube.YouTubeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -21,6 +22,7 @@ val dataModule = module {
     single { NetworkHelper(get()) }
 }
 val viewModelModule = module {
+    viewModel { YouTubeViewModel(get()) }
     viewModel { AddFlowerViewModel(get()) }
     viewModel { AddBuketViewModel(get()) }
     viewModel { AddTreeViewModel(get()) }

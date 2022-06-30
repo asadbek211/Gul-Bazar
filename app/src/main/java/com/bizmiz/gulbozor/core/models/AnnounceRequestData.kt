@@ -22,16 +22,16 @@ data class AnnounceRequestData(
     val image7: String?,
     val image8: String?,
     val myAnnounce: Boolean?,
-    val phoneNumber:String?,
-val price:Long,
-val regionId:Int?,
-val seller:Boolean?,
-val sellerId:Int?,
-val shopId:Int?,
-val title:String,
-val topNumber:Int?,
+    val phoneNumber: String?,
+    val price: Long,
+    val regionId: Int?,
+    val seller: Boolean?,
+    val sellerId: Int?,
+    val shopId: Int?,
+    val title: String,
+    val topNumber: Int?,
     val weight: Int?,
     val withFertilizer: Boolean?,
     val withPot: Boolean?
     //val priceType: String
-):Parcelable
+) : Parcelable

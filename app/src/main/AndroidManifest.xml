@@ -30,6 +30,9 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.youtube.YouTubeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.bottom_nav.add.AddAnnounceActivity"
             android:exported="false" />
         <activity

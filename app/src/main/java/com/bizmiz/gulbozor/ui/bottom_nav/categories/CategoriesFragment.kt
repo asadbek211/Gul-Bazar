@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bizmiz.gulbozor.databinding.FragmentCategoriesBinding
 
+
 class CategoriesFragment : Fragment() {
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
+
+
     private var adapter: ExListAdapter? = null
     private var listNumbers: List<String>? = null
     private var listContacts: HashMap<String, Contacto>? = null
     private var lastExpandedPosition = -1
-
-    private var _binding: FragmentCategoriesBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +31,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        windowStatus()
         initM()
         binding.expandableListView.setAdapter(adapter)
         binding.expandableListView.setOnGroupExpandListener { grPosition ->
@@ -35,18 +40,31 @@ class CategoriesFragment : Fragment() {
             }
             lastExpandedPosition = grPosition
         }
-
-        // TODO: expandable 
+        /*binding.expandableListView.setOnGroupExpandListener { groupPosition ->
+            Toast.makeText(
+                requireContext(),
+                " expanded",
+                Toast.LENGTH_SHORT
+            ).show()
+            // TODO: expandable
+        }*/
 
     }
 
     private fun initM() {
-
         listContacts = getContacts()
         listNumbers = ArrayList(listContacts!!.keys)
         adapter = ExListAdapter(requireContext(), listNumbers, listContacts)
+        binding.homRoomTxt.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), "IssiqXona qurish", Toast.LENGTH_SHORT).show()
+        })
+        binding.takeCareTxt.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), "Parvarishlash", Toast.LENGTH_SHORT).show()
+        })
+        binding.shopsTxt.setOnClickListener(View.OnClickListener {
+            Toast.makeText(requireContext(), "Do'konlar", Toast.LENGTH_SHORT).show()
+        })
     }
-
     private fun getContacts(): java.util.HashMap<String, Contacto> {
         val listC = java.util.HashMap<String, Contacto>()
         listC["Gullar"] = Contacto(
@@ -54,18 +72,25 @@ class CategoriesFragment : Fragment() {
             "Buketli gullar", "Yer gullar",
             "Tuvak gullar"
         )
+        listC["O'g'it"] = Contacto(
+            "O'g'it va tuvaklar",
+            "O'g'itlar", "Tuvaklar",
+            null
+        )
         listC["Daraxt"] = Contacto(
             "Daraxt ko'chatlari",
             "Archalar",
             "Mevali daraxtlar",
             "Manzarali daraxtlar"
         )
-        listC["O'g'it"] = Contacto(
-            "O'g'it va tuvaklar",
-            "O'g'itlar", "Tuvaklar",
-            "Last one"
-        )
 
         return listC
     }
+
+    private fun windowStatus() {
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
+    }
+
+
 }

@@ -1,20 +1,20 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
+import com.bizmiz.gulbozor.ui.youtube.YouTubeActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce()
+        homeViewModel.getVideoLInkByID()
     }
 
     override fun onCreateView(
@@ -64,10 +65,10 @@ class HomeFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
-        //youTubePlayer()
 
         binding.swipeContainer.setOnRefreshListener {
             homeViewModel.getAnnounce()
+            homeViewModel.getVideoLInkByID()
         }
         return binding.root
 
@@ -98,23 +99,13 @@ private fun destination(categoryId:Int,bundle: Bundle){
 
 }
     private fun setListeners() {
-        binding.txtAllCategories.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.home_to_categories)
+
+        binding.youtubeOthers.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(requireContext(), YouTubeActivity::class.java))
         })
 
     }
 
-    private fun youTubePlayer() {
-        lifecycle.addObserver(binding.youtubePlayerView)
-        binding.youtubePlayerView.addYouTubePlayerListener(object :
-            AbstractYouTubePlayerListener() {
-            override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                /*val videoId = "BZo7SxbZsgg"
-                youTubePlayer.loadVideo(videoId, 0f)
-                youTubePlayer.seekTo(10f)*/
-            }
-        })
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -132,6 +123,35 @@ private fun destination(categoryId:Int,bundle: Bundle){
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    it.let {
+                        lifecycle.addObserver(binding.youtubePlayerView)
+                        binding.youtubePlayerView.addYouTubePlayerListener(object :
+                            AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
+                                binding.progressBarYu.visibility = View.GONE
+                                binding.swipeContainer.isRefreshing = false
+                                youTubePlayer.loadVideo(it.data!!.videoID!!.videoLink, 0f)
+                            }
+                        })
+                    }
+                }
+                ResourceState.ERROR -> {
+                    binding.progressBarYu.visibility = View.GONE
+                    binding.swipeContainer.isRefreshing = false
+                    Toast.makeText(
+                        requireContext(),
+                        "Youtube Error" + it.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                ResourceState.LOADING -> {
+                    binding.progressBarYu.visibility = View.VISIBLE
                 }
             }
         })
