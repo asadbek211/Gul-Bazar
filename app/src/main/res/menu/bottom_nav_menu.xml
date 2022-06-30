@@ -11,9 +11,7 @@
         android:icon="@drawable/ic_bottom_category"
         android:title="Kategorya" />
     <item
-        android:id="@+id/container"
-        android:icon="@drawable/ic_add_post"
-        android:title="Qo'shish" />
+        android:title="" />
 
     <item
         android:id="@+id/navigation_competition"

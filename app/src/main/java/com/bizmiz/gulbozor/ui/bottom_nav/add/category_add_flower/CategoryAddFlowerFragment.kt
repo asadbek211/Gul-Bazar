@@ -22,7 +22,6 @@ class CategoryAddFlowerFragment : Fragment() ,View.OnClickListener{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AddAnnounceActivity).destinationId = 0
         isSeller = requireArguments().getBoolean("isSeller")
         _binding = FragmentCategoryAddFlowerBinding.inflate(inflater, container, false)
         instalization()

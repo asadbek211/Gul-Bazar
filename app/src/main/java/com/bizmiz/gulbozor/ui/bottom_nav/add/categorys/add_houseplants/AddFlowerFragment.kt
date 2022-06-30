@@ -51,8 +51,10 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
-    private var regionId:Int = 1
-    private var cityId:Int = 1
+    private var regionIdList:ArrayList<Int> = arrayListOf()
+    private var cityIdList:ArrayList<Int> = arrayListOf()
+    private var regionId:Int? = null
+    private var cityId:Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -469,8 +471,10 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                addFlowerViewModel.getCity(position+1)
-                regionId = position+1
+                if (regionIdList.isNotEmpty()){
+                    regionId = regionIdList[position]
+                    addFlowerViewModel.getCity(regionId!!)
+                }
                 spRegionPosition = position
             }
 
@@ -500,7 +504,9 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                cityId = position+1
+                if (cityIdList.isNotEmpty()){
+                    cityId = cityIdList[position]
+                }
                 spCityPosition = position
             }
 
@@ -508,7 +514,10 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             }
 
         }
-        addFlowerViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
+        if (regionIdList.isNotEmpty()){
+            regionId = regionIdList[spRegionPosition]
+            addFlowerViewModel.getCity(regionId!!)
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -669,11 +678,18 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun regionResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFlowerViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
-
+                    it.data?.forEach {
+                        list.add(it.name)
+                        regionIdList.add(it.id)
+                    }
+                    if (regionIdList.isNotEmpty()){
+                        regionId = regionIdList[0]
+                    }
+                    setAdapter(binding.spVilList, list)
                     binding.spVilList.setSelection(spRegionPosition)
                 }
                 ResourceState.ERROR -> {
@@ -683,10 +699,18 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun cityResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFlowerViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
+                    it.data?.forEach {
+                        list.add(it.name)
+                        cityIdList.add(it.id)
+                    }
+                    if (cityIdList.isNotEmpty()){
+                        cityId = cityIdList[0]
+                    }
+                    setAdapter(binding.spTumanList, list)
                     binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {

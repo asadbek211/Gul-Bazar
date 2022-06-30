@@ -16,6 +16,7 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentPotDetailsBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
@@ -101,6 +102,11 @@ class PotDetailsFragment : Fragment() {
         binding.btnPhone.setOnClickListener {
             val phone = flowerData.phoneNumber.toString()
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
+            startActivity(intent)
+        }
+        binding.btnAds.setOnClickListener {
+            val intent = Intent(requireActivity(), PaymentActivity::class.java)
+            intent.putExtra("flowerData",flowerData)
             startActivity(intent)
         }
         binding.flowerTitle.text = flowerData.title

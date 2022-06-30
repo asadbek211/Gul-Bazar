@@ -3,11 +3,9 @@ package com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_fertilizers
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bizmiz.gulbozor.core.models.AnnounceBaseResponse
 import com.bizmiz.gulbozor.core.utils.Resource
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceRequestData
-import com.bizmiz.gulbozor.core.models.FlowerTypeData
+import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 
@@ -19,11 +17,11 @@ class AddFertilizersViewModel(private val networkHelper: NetworkHelper) : ViewMo
     private val setAnnounce: MutableLiveData<Resource<AnnounceBaseResponse>> = MutableLiveData()
     val resultAnnounce: LiveData<Resource<AnnounceBaseResponse>>
         get() = setAnnounce
-    private val getRegion: MutableLiveData<Resource<List<String>>> = MutableLiveData()
-    val regionList: LiveData<Resource<List<String>>>
+    private val getRegion: MutableLiveData<Resource<RegionData>> = MutableLiveData()
+    val regionList: LiveData<Resource<RegionData>>
         get() = getRegion
-    private val getCity: MutableLiveData<Resource<List<String>>> = MutableLiveData()
-    val cityData: LiveData<Resource<List<String>>>
+    private val getCity: MutableLiveData<Resource<ArrayList<CityDataItem>>> = MutableLiveData()
+    val cityData: LiveData<Resource<ArrayList<CityDataItem>>>
         get() = getCity
     private val getType: MutableLiveData<Resource<FlowerTypeData>> = MutableLiveData()
     val getTypeData: LiveData<Resource<FlowerTypeData>>

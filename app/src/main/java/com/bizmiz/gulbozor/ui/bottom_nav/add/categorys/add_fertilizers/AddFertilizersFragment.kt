@@ -49,8 +49,10 @@ import java.io.File
 
 class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
     private val addFertilizersViewModel: AddFertilizersViewModel by viewModel()
-    private var regionId:Int = 1
-    private var cityId:Int = 1
+    private var regionIdList:ArrayList<Int> = arrayListOf()
+    private var cityIdList:ArrayList<Int> = arrayListOf()
+    private var regionId:Int? = null
+    private var cityId:Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -408,8 +410,10 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
                 position: Int,
                 id: Long
             ) {
-                addFertilizersViewModel.getCity(position+1)
-                regionId = position+1
+                if (regionIdList.isNotEmpty()){
+                    regionId = regionIdList[position]
+                    addFertilizersViewModel.getCity(regionId!!)
+                }
                 spRegionPosition = position
             }
 
@@ -439,7 +443,9 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
                 position: Int,
                 id: Long
             ) {
-                cityId = position+1
+                if (cityIdList.isNotEmpty()){
+                    cityId = cityIdList[position]
+                }
                 spCityPosition = position
             }
 
@@ -447,7 +453,10 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
             }
 
         }
-        addFertilizersViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
+        if (regionIdList.isNotEmpty()){
+            regionId = regionIdList[spRegionPosition]
+            addFertilizersViewModel.getCity(regionId!!)
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -606,11 +615,18 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
         })
     }
     private fun regionResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFertilizersViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
-
+                    it.data?.forEach {
+                        list.add(it.name)
+                        regionIdList.add(it.id)
+                    }
+                    if (regionIdList.isNotEmpty()){
+                        regionId = regionIdList[0]
+                    }
+                    setAdapter(binding.spVilList, list)
                     binding.spVilList.setSelection(spRegionPosition)
                 }
                 ResourceState.ERROR -> {
@@ -620,10 +636,18 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
         })
     }
     private fun cityResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFertilizersViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
+                    it.data?.forEach {
+                        list.add(it.name)
+                        cityIdList.add(it.id)
+                    }
+                    if (cityIdList.isNotEmpty()){
+                        cityId = cityIdList[0]
+                    }
+                    setAdapter(binding.spTumanList, list)
                     binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {

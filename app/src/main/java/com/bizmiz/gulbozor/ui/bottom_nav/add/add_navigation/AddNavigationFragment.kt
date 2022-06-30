@@ -19,7 +19,6 @@ class AddNavigationFragment : Fragment(R.layout.fragment_add_navigation) {
     private val binding get() = _binding!!
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AddAnnounceActivity).destinationId = 1
         _binding = FragmentAddNavigationBinding.bind(view)
        binding.btnSeller.setOnClickListener {
            navigation()

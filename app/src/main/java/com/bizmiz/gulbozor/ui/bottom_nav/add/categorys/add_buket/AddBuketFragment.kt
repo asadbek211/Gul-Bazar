@@ -50,8 +50,10 @@ import java.io.File
 
 class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
     private val addBuketViewModel: AddBuketViewModel by viewModel()
-    private var regionId:Int = 1
-    private var cityId:Int = 1
+    private var regionIdList:ArrayList<Int> = arrayListOf()
+    private var cityIdList:ArrayList<Int> = arrayListOf()
+    private var regionId:Int? = null
+    private var cityId:Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -409,8 +411,10 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 position: Int,
                 id: Long
             ) {
-                addBuketViewModel.getCity(position+1)
-                regionId = position+1
+                if (regionIdList.isNotEmpty()){
+                    regionId = regionIdList[position]
+                    addBuketViewModel.getCity(regionId!!)
+                }
                 spRegionPosition = position
             }
 
@@ -440,7 +444,9 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 position: Int,
                 id: Long
             ) {
-                cityId = position+1
+                if (cityIdList.isNotEmpty()){
+                    cityId = cityIdList[position]
+                }
                 spCityPosition = position
             }
 
@@ -448,7 +454,10 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
 
         }
-        addBuketViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
+        if (regionIdList.isNotEmpty()){
+            regionId = regionIdList[spRegionPosition]
+            addBuketViewModel.getCity(regionId!!)
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -607,11 +616,18 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
         })
     }
     private fun regionResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addBuketViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
-
+                    it.data?.forEach {
+                        list.add(it.name)
+                        regionIdList.add(it.id)
+                    }
+                    if (regionIdList.isNotEmpty()){
+                        regionId = regionIdList[0]
+                    }
+                    setAdapter(binding.spVilList, list)
                     binding.spVilList.setSelection(spRegionPosition)
                 }
                 ResourceState.ERROR -> {
@@ -621,10 +637,18 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
         })
     }
     private fun cityResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addBuketViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
+                    it.data?.forEach {
+                        list.add(it.name)
+                        cityIdList.add(it.id)
+                    }
+                    if (cityIdList.isNotEmpty()){
+                        cityId = cityIdList[0]
+                    }
+                setAdapter(binding.spTumanList, list)
                     binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {

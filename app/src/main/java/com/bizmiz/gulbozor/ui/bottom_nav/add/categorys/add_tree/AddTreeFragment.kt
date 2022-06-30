@@ -48,8 +48,10 @@ import java.io.File
 
 class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
     private val addTreeViewModel: AddTreeViewModel by viewModel()
-    private var regionId:Int = 1
-    private var cityId:Int = 1
+    private var regionIdList:ArrayList<Int> = arrayListOf()
+    private var cityIdList:ArrayList<Int> = arrayListOf()
+    private var regionId:Int? = null
+    private var cityId:Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -423,8 +425,10 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                 position: Int,
                 id: Long
             ) {
-                addTreeViewModel.getCity(position+1)
-                regionId = position+1
+                if (regionIdList.isNotEmpty()){
+                    regionId = regionIdList[position]
+                    addTreeViewModel.getCity(regionId!!)
+                }
                 spRegionPosition = position
             }
 
@@ -439,7 +443,9 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                 position: Int,
                 id: Long
             ) {
-                cityId = position+1
+                if (cityIdList.isNotEmpty()){
+                    cityId = cityIdList[position]
+                }
                 spCityPosition = position
             }
 
@@ -447,7 +453,10 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
             }
 
         }
-        addTreeViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
+        if (regionIdList.isNotEmpty()){
+            regionId = regionIdList[spRegionPosition]
+            addTreeViewModel.getCity(regionId!!)
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -588,12 +597,40 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
     private fun regionResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addTreeViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
-
+                    it.data?.forEach {
+                        list.add(it.name)
+                        regionIdList.add(it.id)
+                    }
+                    if (regionIdList.isNotEmpty()){
+                        regionId = regionIdList[0]
+                    }
+                    setAdapter(binding.spVilList, list)
                     binding.spVilList.setSelection(spRegionPosition)
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun cityResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
+        addTreeViewModel.cityData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS-> {
+                    it.data?.forEach {
+                        list.add(it.name)
+                        cityIdList.add(it.id)
+                    }
+                    if (cityIdList.isNotEmpty()){
+                        cityId = cityIdList[0]
+                    }
+                    setAdapter(binding.spTumanList, list)
+                    binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -612,19 +649,6 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                     setAdapter(binding.spFlowerType,flowerNameList)
                     flowerTypeId = flowerTypeList[0]
                     binding.spFlowerType.setSelection(spFlowerPosition)
-                }
-                ResourceState.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }
-    private fun cityResultObserve() {
-        addTreeViewModel.cityData.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
-                    binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

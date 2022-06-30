@@ -91,18 +91,14 @@ class NetworkHelper(
         })
     }
     fun getRegion(
-        onSuccess: (regionData: List<String>) -> Unit,
+        onSuccess: (regionData: RegionData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getRegion()
-        val list:ArrayList<String> = arrayListOf()
         call.enqueue(object : Callback<RegionData> {
             override fun onResponse(call: Call<RegionData>?, response: Response<RegionData>?) {
                 if (response != null) {
-                    response.body()?.forEach {
-                        list.add(it.name)
-                    }
-                    response.body()?.let { onSuccess.invoke(list) }
+                    response.body()?.let { onSuccess.invoke(it) }
                 }
             }
 
@@ -114,17 +110,17 @@ class NetworkHelper(
     }
     fun getCity(
         id:Int,
-        onSuccess: (cityData: List<String>) -> Unit,
+        onSuccess: (cityData: ArrayList<CityDataItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getCity()
-        val list:ArrayList<String> = arrayListOf()
+        val list:ArrayList<CityDataItem> = arrayListOf()
         call.enqueue(object : Callback<CityData> {
             override fun onResponse(call: Call<CityData>?, response: Response<CityData>?) {
                 if (response != null) {
                     response.body()?.forEach {
                         if (it.regionId==id){
-                            list.add(it.name)
+                            list.add(it)
                         }
                     }
                     response.body()?.let { onSuccess.invoke(list) }

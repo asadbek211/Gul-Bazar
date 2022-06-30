@@ -18,10 +18,8 @@ class AddSuccessFragment : Fragment(R.layout.fragment_add_success) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.white)
-        (activity as AddAnnounceActivity).destinationId = 1
         _binding = FragmentAddSuccessBinding.bind(view)
         binding.btnHome.setOnClickListener {
-            startActivity(Intent(requireActivity(),MainActivity::class.java))
             requireActivity().finish()
         }
     }
