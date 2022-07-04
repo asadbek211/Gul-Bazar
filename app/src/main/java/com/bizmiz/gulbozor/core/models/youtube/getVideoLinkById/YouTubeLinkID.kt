@@ -1,13 +1,10 @@
 package com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class YoutubeLinkID(
-    //val massage: Any,
+data class YouTubeLinkID(
+    val massage: Any,
     @SerializedName("object")
-    val videoID: VideoID,
+    val videoID: Object,
     val success: Boolean
-) : Parcelable
+)

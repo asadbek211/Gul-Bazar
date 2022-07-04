@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.databinding.FragmentCompetitionBinding
 
 class CompetitionFragment : Fragment() {
@@ -23,7 +24,7 @@ class CompetitionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.txtToken.text = AppCache.getHelper().token
 
     }
 }

@@ -2,7 +2,7 @@ package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
-import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YoutubeLinkID
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
@@ -47,29 +47,6 @@ class NetworkHelper(
             override fun onFailure(call: Call<ImageResponseData>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
-            }
-
-        })
-    }
-
-    fun getAnnounce(
-        onSuccess: (flowerList: List<AnnounceData>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
-        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
-        call.enqueue(object : Callback<List<AnnounceData>> {
-            override fun onResponse(
-                call: Call<List<AnnounceData>>?,
-                response: Response<List<AnnounceData>>?
-            ) {
-                if (response != null) {
-                    Log.d("listUrl", response.body().toString())
-                    response.body()?.let { onSuccess.invoke(it) }
-                }
-            }
-
-            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
-                onFailure.invoke(t?.localizedMessage)
             }
 
         })
@@ -202,14 +179,14 @@ class NetworkHelper(
 
     fun getYouTubeById(
         id: Int,
-        onSuccess: (typeData: YoutubeLinkID?) -> Unit,
+        onSuccess: (typeData: YouTubeLinkID?) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getVideoLinkById(id)
-        call.enqueue(object : Callback<YoutubeLinkID> {
+        call.enqueue(object : Callback<YouTubeLinkID> {
             override fun onResponse(
-                call: Call<YoutubeLinkID>?,
-                response: Response<YoutubeLinkID>?
+                call: Call<YouTubeLinkID>?,
+                response: Response<YouTubeLinkID>?
             ) {
                 if (response != null) {
                     response.body()?.let {
@@ -219,7 +196,56 @@ class NetworkHelper(
                 }
             }
 
-            override fun onFailure(call: Call<YoutubeLinkID>?, t: Throwable?) {
+            override fun onFailure(call: Call<YouTubeLinkID>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getByParentCatID(
+        id: Int,
+        onSuccess: (typeData: List<AnnounceData>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(id)
+        call.enqueue(object : Callback<List<AnnounceData>> {
+            override fun onResponse(
+                call: Call<List<AnnounceData>>?,
+                response: Response<List<AnnounceData>>?
+            ) {
+                if (response != null) {
+                    response.body()?.let {
+                        onSuccess.invoke(it)
+                    }
+                    Log.d("YUTAG", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getAnnounce(
+        onSuccess: (flowerList: List<AnnounceData>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
+        call.enqueue(object : Callback<List<AnnounceData>> {
+            override fun onResponse(
+                call: Call<List<AnnounceData>>?,
+                response: Response<List<AnnounceData>>?
+            ) {
+                if (response != null) {
+                    Log.d("listUrl", response.body().toString())
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

@@ -34,26 +34,53 @@
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/layout/spinner_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/proyekt/gulbozor/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_bg.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_shape.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_shape_container.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/button_shape_stroke.xml" value="0.124" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic__home.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_add_post.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_bottom_competition.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_filter_dark.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_group_1.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_gulbazar_logo.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_height.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_search.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_search_gray.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_tanlov_24.xml" value="0.124" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_user.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_view_pager_1.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_view_pager_2.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_view_pager_3.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_width.xml" value="0.124" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_youtube_icon.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/item_background.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/login_shadow.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_buckets_cat.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_homemade_cat.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_people_cat.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_pot_dung_cat.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_shop_cat.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/oval_tree_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/product_view_button_shape.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/progress_bar.xml" value="0.1635" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/search_green.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/search_shop_back.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/shape.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/shops_back.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/splash_screen_back.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/text_shape.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/text_shape2.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/text_shape_border.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/visibility_on.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/youtube_others_back.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_add_announce.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_category.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_you_tube.xml" value="0.23282442748091603" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/dialog_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/expandable_list.xml" value="0.25416666666666665" />
@@ -70,15 +97,20 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_category_add_flower.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_competition.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_details.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_category.xml" value="0.264" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_shops.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up1.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up2.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up3.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_sign_up4.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/freagment_one_category.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_board.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_circle_cat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_flower.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_shops.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_youtube.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/list_group.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />

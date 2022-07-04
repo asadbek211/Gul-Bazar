@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.categories
+package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,7 +54,12 @@ class CategoriesFragment : Fragment() {
     private fun initM() {
         listContacts = getContacts()
         listNumbers = ArrayList(listContacts!!.keys)
-        adapter = ExListAdapter(requireContext(), listNumbers, listContacts)
+        adapter =
+            ExListAdapter(
+                requireContext(),
+                listNumbers,
+                listContacts
+            )
         binding.homRoomTxt.setOnClickListener(View.OnClickListener {
             Toast.makeText(requireContext(), "IssiqXona qurish", Toast.LENGTH_SHORT).show()
         })
@@ -67,22 +72,25 @@ class CategoriesFragment : Fragment() {
     }
     private fun getContacts(): java.util.HashMap<String, Contacto> {
         val listC = java.util.HashMap<String, Contacto>()
-        listC["Gullar"] = Contacto(
-            "Gullar",
-            "Buketli gullar", "Yer gullar",
-            "Tuvak gullar"
-        )
-        listC["O'g'it"] = Contacto(
-            "O'g'it va tuvaklar",
-            "O'g'itlar", "Tuvaklar",
-            null
-        )
-        listC["Daraxt"] = Contacto(
-            "Daraxt ko'chatlari",
-            "Archalar",
-            "Mevali daraxtlar",
-            "Manzarali daraxtlar"
-        )
+        listC["Gullar"] =
+            Contacto(
+                "Gullar",
+                "Buketli gullar", "Yer gullar",
+                "Tuvak gullar"
+            )
+        listC["O'g'it"] =
+            Contacto(
+                "O'g'it va tuvaklar",
+                "O'g'itlar", "Tuvaklar",
+                null
+            )
+        listC["Daraxt"] =
+            Contacto(
+                "Daraxt ko'chatlari",
+                "Archalar",
+                "Mevali daraxtlar",
+                "Manzarali daraxtlar"
+            )
 
         return listC
     }

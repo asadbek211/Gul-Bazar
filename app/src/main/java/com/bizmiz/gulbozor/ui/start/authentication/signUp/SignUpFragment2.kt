@@ -29,6 +29,9 @@ class SignUpFragment2 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadView(view)
         windowStatus()
+        binding.signUpToLogin.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.sign_up2_login)
+        })
     }
 
     private fun loadView(view: View) {

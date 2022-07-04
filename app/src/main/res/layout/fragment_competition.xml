@@ -5,6 +5,7 @@
     android:background="@color/gray_main">
 
     <TextView
+        android:id="@+id/txt_token"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

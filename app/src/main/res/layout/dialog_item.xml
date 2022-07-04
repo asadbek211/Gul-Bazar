@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/shadow_dialog"
     android:layout_height="500dp">
@@ -130,7 +129,7 @@
         android:paddingStart="25dp"
         android:gravity="center_vertical"
         android:text="Daraxt ko'chatlari"
-        app:drawableStartCompat="@drawable/tree"
+        app:drawableStartCompat="@drawable/ic_cat_tree"
         android:drawablePadding="12dp"
         android:textColor="@color/white"
         android:textSize="16dp"

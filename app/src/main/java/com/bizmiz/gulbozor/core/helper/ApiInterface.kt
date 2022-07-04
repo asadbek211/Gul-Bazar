@@ -1,7 +1,7 @@
 package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.*
-import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YoutubeLinkID
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
@@ -44,8 +44,11 @@ interface ApiInterface {
     fun getFlowerType(
     ): Call<FlowerTypeData>
 
-    @GET("videoLink/{id}")
-    fun getVideoLinkById(@Path("id") id: Int): Call<YoutubeLinkID>
+    @GET("/videoLink/{id}")
+    fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
+
+    @GET("/category/byParentCategoryId/{parentId}")
+    fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceData>>
 
     @GET("videoLink?")
     fun getVideoLinkPage(

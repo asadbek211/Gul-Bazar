@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.categories;
+package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -125,6 +125,7 @@ public class ExListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(), homemadeCat.getText(), Toast.LENGTH_SHORT).show();
+
             }
         });
         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);

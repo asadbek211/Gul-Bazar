@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.CategoriesFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.CategoriesFragment"
         android:label="CategoriesFragment"
         tools:layout="@layout/fragment_categories" />
 </navigation>

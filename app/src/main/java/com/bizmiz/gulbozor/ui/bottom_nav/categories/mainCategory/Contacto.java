@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.categories;
+package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory;
 
 public class Contacto {
     private String txtCategory;

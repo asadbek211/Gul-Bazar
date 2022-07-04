@@ -11,9 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.ActivityYouTubeBinding
-import com.bizmiz.gulbozor.ui.bottom_nav.categories.CategoriesFragment
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.CategoriesFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class YouTubeActivity : AppCompatActivity() {
@@ -45,8 +46,8 @@ class YouTubeActivity : AppCompatActivity() {
         youTubeVM.announcePage.observe(this, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-                    Toast.makeText(this, "Success" + it.data, Toast.LENGTH_SHORT).show()
-                    adapter.flowersList = it.data?.content!!
+                    /*Toast.makeText(this, "Success" + it.data, Toast.LENGTH_SHORT).show()*/
+                    adapter.youTubeList = (it.data?.content as ArrayList<Content>?)!!
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
