@@ -12,7 +12,13 @@ import java.util.*
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
-    var flowersList:List<AnnounceResponseData> = listOf()
+    var flowersList:List<AnnounceResponseData> = listOf(
+        AnnounceResponseData(1,"12-05-2020",1,1,2,"dwndwdnjdn j dwkjed wjd  jdjd ked we"
+        ,43,54,"wewadewdwe","weewwefe","dfsddsdd","dsfsdfdsd","dsfdfd",
+        "fweff","efe","wewf",true,"+998907366402",232032232,1,
+        true,11,1,"dweda dwef efew f ewf",0,32, withFertilizer = false, withPot = false
+        )
+    )
        set(value) {
            field = value
            notifyDataSetChanged()

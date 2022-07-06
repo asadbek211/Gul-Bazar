@@ -48,7 +48,9 @@
         tools:layout="@layout/fragment_add_flower" >
         <action
             android:id="@+id/addFlowerFragment2_to_addSuccess"
-            app:destination="@id/addSuccess" />
+            app:destination="@id/addSuccess"
+            app:popUpTo="@id/addFlowerFragment2"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/addFlowerFragment2_to_detailsFragment2"
             app:destination="@id/detailsFragment2" />
@@ -60,7 +62,9 @@
         tools:layout="@layout/fragment_add_buket" >
         <action
             android:id="@+id/addBuketFragment_to_addSuccess"
-            app:destination="@id/addSuccess" />
+            app:destination="@id/addSuccess"
+            app:popUpTo="@id/addBuketFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/addBuketFragment_to_buketDetails"
             app:destination="@id/buketDetails" />
@@ -72,7 +76,9 @@
         tools:layout="@layout/fragment_add_tree" >
         <action
             android:id="@+id/addTree_to_addSuccess"
-            app:destination="@id/addSuccess" />
+            app:destination="@id/addSuccess"
+            app:popUpTo="@id/addTree"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/addTree_to_treeDetails"
             app:destination="@id/treeDetails" />
@@ -84,7 +90,9 @@
         tools:layout="@layout/fragment_add_pot" >
         <action
             android:id="@+id/addPot_to_addSuccess"
-            app:destination="@id/addSuccess" />
+            app:destination="@id/addSuccess"
+            app:popUpTo="@id/addPot"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/addPot_to_potDetails"
             app:destination="@id/potDetails" />
@@ -96,7 +104,9 @@
         tools:layout="@layout/fragment_add_fertilizers" >
         <action
             android:id="@+id/addFertilizers_to_addSuccess"
-            app:destination="@id/addSuccess" />
+            app:destination="@id/addSuccess"
+            app:popUpTo="@id/addFertilizers"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/addFertilizers_to_fetilizersDetails"
             app:destination="@id/fetilizersDetails" />

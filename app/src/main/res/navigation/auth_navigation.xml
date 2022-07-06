@@ -30,7 +30,9 @@
         tools:layout="@layout/fragment_sign_up3">
         <action
             android:id="@+id/action_signUpFragment3_to_signUpFragment4"
-            app:destination="@id/signUpFragment4" />
+            app:destination="@id/signUpFragment4"
+            app:popUpTo="@id/signUpFragment3"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signUpFragment3_to_loginFragment"
             app:destination="@id/loginFragment" />

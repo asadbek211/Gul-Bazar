@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -108,6 +109,14 @@ class PotDetailsFragment : Fragment() {
             val intent = Intent(requireActivity(), PaymentActivity::class.java)
             intent.putExtra("flowerData",flowerData)
             startActivity(intent)
+        }
+        binding.btnEdit.setOnClickListener {
+            val bundle = bundleOf(
+                "data" to flowerData
+            )
+            val navController =
+                Navigation.findNavController(requireActivity(), R.id.mainContainer)
+            navController.navigate(R.id.action_potDetails_to_editPot,bundle)
         }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description

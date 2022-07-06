@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_back_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="140dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Profilni o'zgartirish"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/naturalDark"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:padding="1dp"
+                android:src="@drawable/ic_edit_text_profile_ic" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="Ism Familiya"
+                android:inputType="text"
+                android:padding="8dp"
+                android:textColor="@color/naturalDark"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_outline_phone_login" />
+            <TextView
+                android:text="+998"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="@color/naturalDark"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:inputType="number"
+                android:padding="8dp"
+                android:text="90 736 64 02"
+                android:textColor="@color/naturalDark"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:met_mask="## ### ## ##" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_outline_lock_login" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_pass"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Eski parol"
+                    android:inputType="textPassword"
+                    android:textColor="@color/naturalDark"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/ivShowHidePass"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivShowHidePass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_eye_off"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_outline_lock_login" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_pass1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Yangi parol"
+                    android:inputType="textPassword"
+                    android:textColor="@color/naturalDark"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/ivShowHidePass1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivShowHidePass1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_eye_off"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_outline_lock_login" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_pass2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="Yangi parolni qayta kiriting"
+                    android:inputType="textPassword"
+                    android:textColor="@color/naturalDark"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@id/ivShowHidePass2"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivShowHidePass2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_eye_off"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="60dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/button_bg"
+                android:fontFamily="@font/varela_round_regular"
+                android:gravity="center"
+                android:text="Keyingisi"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_barr"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:indeterminateDrawable="@drawable/progress_bar"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

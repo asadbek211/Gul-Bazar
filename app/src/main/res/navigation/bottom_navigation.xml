@@ -26,8 +26,4 @@
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.competition.CompetitionFragment"
         android:label="CompetitionFragment"
         tools:layout="@layout/fragment_competition" />
-    <fragment
-        android:id="@+id/container"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_container.ContainerFragment"
-        android:label="ContainerFragment" />
 </navigation>

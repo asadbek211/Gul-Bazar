@@ -78,7 +78,8 @@ class AdsCostsFragment : Fragment() {
         }
         binding.btnPay.setOnClickListener {
             val bundle = bundleOf(
-                "price" to price
+                "price" to price,
+                "paymentId" to data.id
             )
             val navController =
                 Navigation.findNavController(
