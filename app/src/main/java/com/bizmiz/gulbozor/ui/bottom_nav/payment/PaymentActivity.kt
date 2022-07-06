@@ -8,6 +8,7 @@ import com.bizmiz.gulbozor.databinding.ActivityPaymentBinding
 class PaymentActivity : AppCompatActivity() {
     private var _binding: ActivityPaymentBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityPaymentBinding.inflate(layoutInflater)

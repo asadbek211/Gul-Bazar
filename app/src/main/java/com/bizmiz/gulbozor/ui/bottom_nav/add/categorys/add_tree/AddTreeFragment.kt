@@ -28,6 +28,8 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddTreeBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
@@ -47,6 +49,7 @@ import java.io.File
 
 
 class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
+    private val binding by viewBinding { FragmentAddTreeBinding.bind(it) }
     private val addTreeViewModel: AddTreeViewModel by viewModel()
     private var regionIdList:ArrayList<Int> = arrayListOf()
     private var cityIdList:ArrayList<Int> = arrayListOf()
@@ -79,7 +82,6 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentAddTreeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addTreeViewModel.getRegion()
@@ -101,7 +103,6 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding = FragmentAddTreeBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(

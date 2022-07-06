@@ -3,42 +3,35 @@ package com.bizmiz.gulbozor.ui.bottom_nav.profile.edit
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentEditProfileBinding
-import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
 
-class EditProfileFragment : Fragment() {
+class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
-    private var _binding: FragmentEditProfileBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding { FragmentEditProfileBinding.bind(it) }
     private var mIsShowPass = false
     private var mIsShowPass1 = false
     private var mIsShowPass2 = false
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.ivShowHidePass1.setOnClickListener {
             mIsShowPass1 = !mIsShowPass1
-            showPassword(binding.etPass1,binding.ivShowHidePass1,mIsShowPass1)
+            showPassword(binding.etPass1, binding.ivShowHidePass1, mIsShowPass1)
         }
         binding.ivShowHidePass.setOnClickListener {
             mIsShowPass = !mIsShowPass
-            showPassword(binding.etPass,binding.ivShowHidePass,mIsShowPass)
+            showPassword(binding.etPass, binding.ivShowHidePass, mIsShowPass)
         }
         binding.ivShowHidePass2.setOnClickListener {
             mIsShowPass2 = !mIsShowPass2
-            showPassword(binding.etPass2,binding.ivShowHidePass2,mIsShowPass2)
+            showPassword(binding.etPass2, binding.ivShowHidePass2, mIsShowPass2)
         }
         binding.btnNext.setOnClickListener {
             val navController =
@@ -56,9 +49,9 @@ class EditProfileFragment : Fragment() {
                 )
             navController.popBackStack()
         }
-        return binding.root
     }
-    private fun showPassword(et:EditText,img:ImageView,isShow: Boolean) {
+
+    private fun showPassword(et: EditText, img: ImageView, isShow: Boolean) {
         if (isShow) {
             et.transformationMethod = HideReturnsTransformationMethod.getInstance()
             img.setImageResource(R.drawable.visibility_on)

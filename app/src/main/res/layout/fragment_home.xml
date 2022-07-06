@@ -77,11 +77,11 @@
                         app:layout_constraintTop_toBottomOf="@id/cons_cat">
 
                         <HorizontalScrollView
-                            android:scrollbars="none"
                             android:layout_width="wrap_content"
                             android:layout_height="100dp"
                             android:layout_marginTop="7dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:scrollbars="none">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -158,8 +158,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_marginEnd="15dp"
-                                    style="@style/cat_layout">
+                                    style="@style/cat_layout"
+                                    android:layout_marginEnd="15dp">
 
                                     <ImageView
                                         style="@style/cat_image"
@@ -253,7 +253,7 @@
                         android:id="@+id/homeRecyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                       android:paddingBottom="10dp"
+                        android:paddingBottom="80dp"
                         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

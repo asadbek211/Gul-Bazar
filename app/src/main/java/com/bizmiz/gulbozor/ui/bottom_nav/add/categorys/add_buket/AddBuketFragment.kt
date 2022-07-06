@@ -29,8 +29,10 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddBuketBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
+import com.bizmiz.gulbozor.databinding.FragmentCategoryAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
@@ -49,6 +51,7 @@ import java.io.File
 
 
 class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
+    private val binding by viewBinding { FragmentAddBuketBinding.bind(it) }
     private val addBuketViewModel: AddBuketViewModel by viewModel()
     private var regionIdList:ArrayList<Int> = arrayListOf()
     private var cityIdList:ArrayList<Int> = arrayListOf()
@@ -81,7 +84,6 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentAddBuketBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addBuketViewModel.getRegion()
@@ -103,7 +105,6 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding = FragmentAddBuketBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(

@@ -1,28 +1,19 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.profile
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
-import com.bizmiz.gulbozor.ui.bottom_nav.BottomNavFragment
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
+    private val binding by viewBinding { FragmentProfileBinding.bind(it) }
 
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-//        BottomNavFragment().visibility()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //        BottomNavFragment().visibility()
         binding.editProfile.setOnClickListener {
             val navController =
                 Navigation.findNavController(
@@ -39,7 +30,6 @@ class ProfileFragment : Fragment() {
                 )
             navController.navigate(R.id.bottomNavFragment_to_createShop)
         }
-        return binding.root
     }
 
 }

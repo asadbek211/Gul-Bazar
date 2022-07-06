@@ -28,6 +28,8 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddBuketBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddFertilizersBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
@@ -48,6 +50,7 @@ import java.io.File
 
 
 class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
+    private val binding by viewBinding { FragmentAddFertilizersBinding.bind(it) }
     private val addFertilizersViewModel: AddFertilizersViewModel by viewModel()
     private var regionIdList:ArrayList<Int> = arrayListOf()
     private var cityIdList:ArrayList<Int> = arrayListOf()
@@ -80,7 +83,6 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentAddFertilizersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addFertilizersViewModel.getRegion()
@@ -102,7 +104,6 @@ class AddFertilizersFragment : Fragment(R.layout.fragment_add_fertilizers) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding = FragmentAddFertilizersBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(

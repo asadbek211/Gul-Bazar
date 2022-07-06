@@ -28,10 +28,13 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
-import com.bizmiz.gulbozor.utils.*
+import com.bizmiz.gulbozor.utils.askPermission
+import com.bizmiz.gulbozor.utils.isHasPermission
+import com.bizmiz.gulbozor.utils.onClick
+import com.bizmiz.gulbozor.utils.showSoftKeyboard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -48,46 +51,46 @@ import java.io.File
 
 
 class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
-
+    private val binding by viewBinding { FragmentAddPotBinding.bind(it) }
     private val addPotViewModel: AddPotViewModel by viewModel()
-    private var regionIdList:ArrayList<Int> = arrayListOf()
-    private var cityIdList:ArrayList<Int> = arrayListOf()
-    private var regionId:Int? = null
-    private var cityId:Int? = null
+    private var regionIdList: ArrayList<Int> = arrayListOf()
+    private var cityIdList: ArrayList<Int> = arrayListOf()
+    private var regionId: Int? = null
+    private var cityId: Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
-    private var file1:File? = null
-    private var file2:File? = null
-    private var file3:File? = null
-    private var file4:File? = null
-    private var file5:File? = null
-    private var file6:File? = null
-    private var file7:File? = null
-    private var file8:File? = null
-    private var img1:String? = null
-    private var img2:String? = null
-    private var img3:String? = null
-    private var img4:String? = null
-    private var img5:String? = null
-    private var img6:String? = null
-    private var img7:String? = null
-    private var img8:String? = null
-    private var imageViewList:List<ImageView> = listOf()
+    private var file1: File? = null
+    private var file2: File? = null
+    private var file3: File? = null
+    private var file4: File? = null
+    private var file5: File? = null
+    private var file6: File? = null
+    private var file7: File? = null
+    private var file8: File? = null
+    private var img1: String? = null
+    private var img2: String? = null
+    private var img3: String? = null
+    private var img4: String? = null
+    private var img5: String? = null
+    private var img6: String? = null
+    private var img7: String? = null
+    private var img8: String? = null
+    private var imageViewList: List<ImageView> = listOf()
     private val sectionList: List<String> = listOf("so'm")
-    private var departmentId:Int? = null
-    private var isSeller:Boolean? = null
-    private var flowerTypeList:ArrayList<Int> = arrayListOf()
-    private var flowerTypeId:Int? = null
-    private var spFlowerPosition:Int = 0
-    private var spRegionPosition:Int = 0
-    private var spCityPosition:Int = 0
-    private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentAddPotBinding
+    private var departmentId: Int? = null
+    private var isSeller: Boolean? = null
+    private var flowerTypeList: ArrayList<Int> = arrayListOf()
+    private var flowerTypeId: Int? = null
+    private var spFlowerPosition: Int = 0
+    private var spRegionPosition: Int = 0
+    private var spCityPosition: Int = 0
+    private lateinit var flowerNameList: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPotViewModel.getRegion()
         addPotViewModel.getFlowerType()
         flowerNameList = arrayListOf()
     }
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,7 +106,6 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding = FragmentAddPotBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
@@ -123,7 +125,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                 1003
             )
         }
-        setAdapter(binding.spPriceType,sectionList)
+        setAdapter(binding.spPriceType, sectionList)
         imageViewList = listOf(
             binding.image1,
             binding.image2,
@@ -134,8 +136,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             binding.image7,
             binding.image8
         )
-        if (imageUrlList.isNotEmpty()){
-            for (i in 0 until imageUrlList.size){
+        if (imageUrlList.isNotEmpty()) {
+            for (i in 0 until imageUrlList.size) {
                 val thumbnailRequest = Glide
                     .with(requireContext())
                     .load(R.drawable.ic_group_1)
@@ -223,7 +225,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                     val compressImage6 = compressImage(file6)
                     val compressImage7 = compressImage(file7)
                     val compressImage8 = compressImage(file8)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         addPotViewModel.addFlower(
                             compressImage1?.let { it1 -> createFormData(it1, "image1") },
                             compressImage2?.let { it1 -> createFormData(it1, "image2") },
@@ -309,7 +311,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                         image7 = img7,
                         image8 = img8,
                         price = binding.etPrice.text.trim().toString()
-                            .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
+                            .replace("\\s".toRegex(), "").replace(",", "").replace(".", "")
+                            .toLong(),
                         title = binding.etTitle.text.toString().trim(),
                         weight = null,
                         withFertilizer = null,
@@ -323,8 +326,9 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                         myAnnounce = true,
                         topNumber = 0,
                         phoneNumber =
-                        "+998${binding.etNumber.text.trim().toString()
-                            .replace("\\s".toRegex(), "")
+                        "+998${
+                            binding.etNumber.text.trim().toString()
+                                .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
@@ -405,14 +409,14 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
 
         })
-        binding.spVilList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spVilList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if (regionIdList.isNotEmpty()){
+                if (regionIdList.isNotEmpty()) {
                     regionId = regionIdList[position]
                     addPotViewModel.getCity(regionId!!)
                 }
@@ -423,29 +427,30 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
 
         }
-        binding.spMaterialType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spMaterialType.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    flowerTypeId = flowerTypeList[position]
+                    spFlowerPosition = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+            }
+        binding.spTumanList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                flowerTypeId = flowerTypeList[position]
-                spFlowerPosition = position
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-        }
-        binding.spTumanList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (cityIdList.isNotEmpty()){
+                if (cityIdList.isNotEmpty()) {
                     cityId = cityIdList[position]
                 }
                 spCityPosition = position
@@ -455,11 +460,12 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
 
         }
-        if (regionIdList.isNotEmpty()){
+        if (regionIdList.isNotEmpty()) {
             regionId = regionIdList[spRegionPosition]
             addPotViewModel.getCity(regionId!!)
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE) {
@@ -487,7 +493,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                     if (data!!.clipData != null) {
                         val count = data.clipData!!.itemCount
                         for (i in 0 until count) {
-                            if (imageUrlList.size<8){
+                            if (imageUrlList.size < 8) {
                                 val imageUrl = data.clipData!!.getItemAt(i).uri
                                 imageUrlList.add(imageUrl)
                                 val thumbnailRequest = Glide
@@ -500,8 +506,9 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                                     .into(imageViewList[i])
                             }
                         }
-                        if (count >8)
-                            Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT).show()
+                        if (count > 8)
+                            Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT)
+                                .show()
                     } else {
                         val imageUrl = data.data
                         if (imageUrl != null) {
@@ -549,7 +556,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                             image7 = img7,
                             image8 = img8,
                             price = binding.etPrice.text.trim().toString()
-                                .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
+                                .replace("\\s".toRegex(), "").replace(",", "").replace(".", "")
+                                .toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = null,
                             withFertilizer = null,
@@ -563,8 +571,9 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                             myAnnounce = true,
                             topNumber = 0,
                             phoneNumber =
-                            "+998${binding.etNumber.text.trim().toString()
-                                .replace("\\s".toRegex(), "")
+                            "+998${
+                                binding.etNumber.text.trim().toString()
+                                    .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
                         )
@@ -577,10 +586,11 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         })
     }
+
     private fun announceResultObserve() {
         addPotViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     val navController =
                         Navigation.findNavController(
                             requireActivity(),
@@ -594,19 +604,21 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         })
     }
+
     companion object {
         const val PICK_IMAGE_REQUEST_CODE = 1000
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
+
     private fun typeResultObserve() {
         addPotViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                    setAdapter(binding.spMaterialType,flowerNameList)
+                    setAdapter(binding.spMaterialType, flowerNameList)
                     flowerTypeId = flowerTypeList[0]
                     binding.spMaterialType.setSelection(spFlowerPosition)
                 }
@@ -616,16 +628,17 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         })
     }
+
     private fun regionResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         addPotViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         list.add(it.name)
                         regionIdList.add(it.id)
                     }
-                    if (regionIdList.isNotEmpty()){
+                    if (regionIdList.isNotEmpty()) {
                         regionId = regionIdList[0]
                     }
                     setAdapter(binding.spVilList, list)
@@ -637,16 +650,17 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         })
     }
+
     private fun cityResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         addPotViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
                     }
-                    if (cityIdList.isNotEmpty()){
+                    if (cityIdList.isNotEmpty()) {
                         cityId = cityIdList[0]
                     }
                     setAdapter(binding.spTumanList, list)
@@ -658,6 +672,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         })
     }
+
     private fun checkAnnounce(): Boolean {
         return when {
             binding.etTitle.text.isEmpty() -> {
@@ -686,7 +701,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                 false
             }
             binding.etNumber.text.isEmpty() -> {
-                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT)
+                    .show()
                 binding.etNumber.showSoftKeyboard()
                 false
             }
@@ -700,7 +716,12 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1001 -> {
@@ -711,8 +732,13 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         }
     }
+
     private fun pickImage() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             val intent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.INTERNAL_CONTENT_URI
@@ -728,9 +754,16 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             )
         }
     }
+
     private fun uriToImageFile(uri: Uri): File? {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = (activity as AddAnnounceActivity).contentResolver.query(uri, filePathColumn, null, null, null)
+        val cursor = (activity as AddAnnounceActivity).contentResolver.query(
+            uri,
+            filePathColumn,
+            null,
+            null,
+            null
+        )
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 val columnIndex = cursor.getColumnIndex(filePathColumn[0])
@@ -742,18 +775,20 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
         }
         return null
     }
-    private fun createFormData(file: File,imgName:String): MultipartBody.Part {
+
+    private fun createFormData(file: File, imgName: String): MultipartBody.Part {
         val requestFile: RequestBody = RequestBody.create(
             "image/*".toMediaTypeOrNull(),
             file
         )
         return MultipartBody.Part.createFormData(imgName, file.name, requestFile)
     }
+
     @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun compressImage(file:File?): File? {
+    private suspend fun compressImage(file: File?): File? {
         val compressedImageFile =
             file?.let { it1 ->
-                Compressor.compress(requireContext(), it1){
+                Compressor.compress(requireContext(), it1) {
                     resolution(1280, 720)
                     quality(80)
                     format(Bitmap.CompressFormat.WEBP)
@@ -762,7 +797,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
             }
         return compressedImageFile
     }
-    private fun setAdapter(sp:Spinner,list:List<String>){
+
+    private fun setAdapter(sp: Spinner, list: List<String>) {
         val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, list)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sp.adapter = adapter
