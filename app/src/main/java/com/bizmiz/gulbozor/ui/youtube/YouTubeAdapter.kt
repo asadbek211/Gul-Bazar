@@ -14,12 +14,6 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
             field = value
             notifyDataSetChanged()
         }
-    /* var data=ArrayList<Content>()
-     set(value) {
-         field.clear()
-         field=value
-         notifyDataSetChanged()
-     }*/
 
     inner class MyViewHolder(private val binding: ItemYoutubeBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.databinding.FragmentCompetitionBinding
 
@@ -25,6 +28,15 @@ class CompetitionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.txtToken.text = AppCache.getHelper().token
+        onBackPressed()
+    }
 
+    private fun onBackPressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_competition_to_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
 }

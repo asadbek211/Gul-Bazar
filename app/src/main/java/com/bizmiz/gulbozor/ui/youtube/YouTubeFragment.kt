@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
+package com.bizmiz.gulbozor.ui.youtube
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,86 +7,82 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
+import com.bizmiz.gulbozor.databinding.FragmentYouTubeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OneTypeOfCategory : androidx.fragment.app.Fragment() {
+class YouTubeFragment : Fragment() {
 
-    val args: OneTypeOfCategoryArgs by navArgs()
+    private val youTubeVM: YouTubeViewModel by viewModel()
+    val args: YouTubeFragmentArgs by navArgs()
 
-    private val viewModel: OneTypeOfCatVM by viewModel()
-
-    private var _binding: FragmentOneCategoryBinding? = null
+    private lateinit var adapter: YouTubeAdapter
+    private var _binding: FragmentYouTubeBinding? = null
     private val binding get() = _binding!!
-
-    private val categoryAdapter = OneTypeAdapterCategory()
-
-    private val parentId: Int = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getParentCatByID(parentId)
-        viewModel.getAnnounce()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentOneCategoryBinding.inflate(inflater, container, false)
+        _binding = FragmentYouTubeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.categoryRecyclerView.adapter = categoryAdapter
-
-        binding.categoryU.setOnClickListener(View.OnClickListener {
-            //findNavController().navigate(R.id.oneType_to_categories)
-        })
-        val category = args.categoryName
-        binding.oneCatTitle.text = category
-        windowStatus()
-
-        announceObserve()
-        if (args.onBack == "home") {
+        binding.categoryType.text = args.title
+        if (args.title == "Barchasi") {
             onBackHomePressed()
-        } else if (args.onBack == "category") {
+        } else {
             onBackCategoryPressed()
         }
+        youTubeVM.getYouTubePage()
+        adapter = YouTubeAdapter()
+        binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.youtubeRecyclerView.adapter = adapter
+
+        windowStatus()
+        setListeners()
+        announceObserve()
+
+    }
+
+    private fun setListeners() {
+        binding.onBackYouTube.setOnClickListener(View.OnClickListener {
+            if (args.title == "Barchasi") {
+                onBackHomePressed()
+            } else {
+                onBackCategoryPressed()
+            }
+        })
+        binding.categoryU.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.youtube_to_category)
+        })
     }
 
     private fun announceObserve() {
-
-        viewModel.parentCategory.observe(viewLifecycleOwner, Observer {
+        youTubeVM.announcePage.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-
-                }
-            }
-        })
-        viewModel.announce.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
-                    categoryAdapter.clearAdapter()
-                    categoryAdapter.categoryList = (it.data as ArrayList<AnnounceData>?)!!
-                    /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
-                        .show()*/
-
+                    /*Toast.makeText(this, "Success" + it.data, Toast.LENGTH_SHORT).show()*/
+                    adapter.youTubeList = (it.data?.content as ArrayList<Content>?)!!
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
+                ResourceState.LOADING -> {
+
+                }
             }
         })
-
     }
 
     private fun windowStatus() {
@@ -97,7 +93,7 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
     private fun onBackHomePressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.one_to_home)
+                findNavController().navigate(R.id.nav_on_back_youtube_to_home)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callBack)
@@ -106,10 +102,11 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
     private fun onBackCategoryPressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.onBack_to_category)
+                findNavController().navigate(R.id.youtube_to_category)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
+
 
 }

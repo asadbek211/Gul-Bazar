@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.databinding.FragmentShopsBinding
 
 class FragmentShops : Fragment() {
-
+    val args: FragmentShopsArgs by navArgs()
     private var _binding: FragmentShopsBinding? = null
     val binding get() = _binding!!
 
@@ -31,6 +35,12 @@ class FragmentShops : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadData()
+        if (args.onBack == "home") {
+            onBackHomePressed()
+        } else if (args.onBack == "category") {
+            onBackCategoryPressed()
+        }
+
         binding.shopsRecycler.adapter = shopAdapter
         binding.shopsRecycler.layoutManager = LinearLayoutManager(requireContext())
 
@@ -66,5 +76,22 @@ class FragmentShops : Fragment() {
         shopAdapter.data = data
     }
 
+    private fun onBackHomePressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_shops_to_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
+    }
+
+    private fun onBackCategoryPressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_shops_to_category)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
+    }
 
 }

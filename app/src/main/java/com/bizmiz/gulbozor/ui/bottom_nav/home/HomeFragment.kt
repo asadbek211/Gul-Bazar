@@ -1,6 +1,5 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -10,12 +9,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
-import com.bizmiz.gulbozor.ui.youtube.YouTubeActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,10 +74,12 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setListeners() {
+    private fun setListeners(view: View) {
 
         binding.youtubeOthers.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(requireContext(), YouTubeActivity::class.java))
+            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi")
+            Navigation.findNavController(view).navigate(action)
+            //todo youtube fragmentga aylantirish kerak
         })
 
     }
@@ -88,29 +87,32 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
+        setListeners(view)
+
         binding.categoryWithBucket.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Buket gullar")
+            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
             Navigation.findNavController(view).navigate(action)
         })
         binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Xonaki gullar")
+            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home")
             Navigation.findNavController(view).navigate(action)
         })
         binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Daraxtlar")
+            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home")
             Navigation.findNavController(view).navigate(action)
         })
         binding.potFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar")
+            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home")
             Navigation.findNavController(view).navigate(action)
         })
         binding.customersCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Haridorlar")
+            val action = HomeFragmentDirections.homeToOne("Haridorlar", "home")
             Navigation.findNavController(view).navigate(action)
         })
         binding.shopsCat.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.home_to_shop)
+            //findNavController().navigate(R.id.home_to_shop)
+            val action = HomeFragmentDirections.homeToShop("home")
+            Navigation.findNavController(view).navigate(action)
         })
 
 

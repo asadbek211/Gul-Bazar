@@ -2,7 +2,6 @@ package com.bizmiz.gulbozor.ui.bottom_nav
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
@@ -20,4 +19,5 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
         binding.navView.setupWithNavController(navController)
         LoginHelper.getHelper().login = true
     }
+
 }
