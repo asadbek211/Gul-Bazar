@@ -4,9 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.widget.ImageView
 import android.widget.Toast
@@ -33,10 +31,9 @@ class FetilizersDetailsFragment : Fragment(R.layout.fragment_fetilizers_details)
     private var flowerUrlList: ArrayList<String> = arrayListOf()
     private val binding by viewBinding { FragmentFetilizersDetailsBinding.bind(it) }
     private val fetilizersDetailsViewModel: FetilizersDetailsViewModel by viewModel()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         desId = requireArguments().getInt("desId")
         flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
@@ -124,7 +121,6 @@ class FetilizersDetailsFragment : Fragment(R.layout.fragment_fetilizers_details)
         binding.flowerPrice.text = number.toString()
         binding.flowerWidth.text = "${flowerData.weight} kg"
         flowerTypeObserve()
-        return binding.root
     }
 
     private fun flowerTypeObserve() {

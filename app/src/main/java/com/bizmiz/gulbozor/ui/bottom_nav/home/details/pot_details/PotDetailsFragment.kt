@@ -33,13 +33,6 @@ class PotDetailsFragment : Fragment(R.layout.fragment_pot_details) {
     private var flowerUrlList: ArrayList<String> = arrayListOf()
     private val binding by viewBinding { FragmentPotDetailsBinding.bind(it) }
     private val potDetailsViewModel: PotDetailsViewModel by viewModel()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

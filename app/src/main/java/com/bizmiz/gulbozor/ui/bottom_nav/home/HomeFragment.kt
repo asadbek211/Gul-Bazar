@@ -3,6 +3,7 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -119,19 +120,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         })
+        binding.youtubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                binding.progressBarYu.visibility = View.GONE
+                binding.swipeContainer.isRefreshing = false
+                youTubePlayer.loadVideo("2IE4JCW4T4U", 0f)
+            }
+        })
         homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     it.let {
                         lifecycle.addObserver(binding.youtubePlayerView)
-                        binding.youtubePlayerView.addYouTubePlayerListener(object :
-                            AbstractYouTubePlayerListener() {
-                            override fun onReady(youTubePlayer: YouTubePlayer) {
-                                binding.progressBarYu.visibility = View.GONE
-                                binding.swipeContainer.isRefreshing = false
-                                youTubePlayer.loadVideo(it.data!!.videoID!!.videoLink, 0f)
-                            }
-                        })
+
                     }
                 }
                 ResourceState.ERROR -> {
