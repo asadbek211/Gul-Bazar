@@ -30,7 +30,7 @@ class PaymentSystemsFragment : Fragment() ,View.OnClickListener{
         setImage(binding.btnPayUzCard,"https://logobank.uz:8005/media/logos_png/Uzcard-01.png")
         setImage(binding.btnPayHumo,"https://logobank.uz:8005/media/logos_preview/Humo-01.jpg")
         binding.tvPayPrice.text = "To‘lov miqdori:    $price so’m"
-        binding.tvPayPrice.text = "To‘lov raqami:    $paymentId"
+        binding.tvPayId.text = "To‘lov raqami:    $paymentId"
         onClickInstalization()
         return binding.root
     }
