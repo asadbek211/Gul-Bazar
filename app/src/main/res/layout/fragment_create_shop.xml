@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
-                    android:src="@drawable/ic_outline_phone_login" />
+                    android:src="@drawable/phone_icon" />
 
                 <com.santalu.maskedittext.MaskEditText
                     android:id="@+id/phoneNumber1"
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
-                    android:src="@drawable/ic_outline_phone_login" />
+                    android:src="@drawable/phone_icon" />
 
                 <com.santalu.maskedittext.MaskEditText
                     android:id="@+id/phoneNumber2"
@@ -147,11 +147,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_baseline_location_on_24" />
+                    android:padding="5dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/location" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_marginStart="8dp"
                     android:layout_height="match_parent">
                     <Spinner
                         android:id="@+id/spVilList"
@@ -181,11 +183,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_baseline_location_on_24" />
+                    android:padding="5dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/location"  />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_marginStart="8dp"
                     android:layout_height="match_parent">
 
                     <Spinner
@@ -215,11 +219,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_baseline_location_on_24" />
+                    android:padding="5dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/location"  />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_marginStart="8dp"
                     android:layout_height="match_parent">
 
                     <EditText
