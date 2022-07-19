@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -39,11 +38,7 @@ class YouTubeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryType.text = args.title
-        if (args.title == "Barchasi") {
-            onBackHomePressed()
-        } else {
-            onBackCategoryPressed()
-        }
+
         youTubeVM.getYouTubePage()
         adapter = YouTubeAdapter()
         binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -58,9 +53,9 @@ class YouTubeFragment : Fragment() {
     private fun setListeners() {
         binding.onBackYouTube.setOnClickListener(View.OnClickListener {
             if (args.title == "Barchasi") {
-                onBackHomePressed()
+                findNavController().navigate(R.id.nav_on_back_youtube_to_home)
             } else {
-                onBackCategoryPressed()
+                findNavController().navigate(R.id.youtube_to_category)
             }
         })
         binding.categoryU.setOnClickListener(View.OnClickListener {
@@ -72,7 +67,6 @@ class YouTubeFragment : Fragment() {
         youTubeVM.announcePage.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-                    /*Toast.makeText(this, "Success" + it.data, Toast.LENGTH_SHORT).show()*/
                     adapter.youTubeList = (it.data?.content as ArrayList<Content>?)!!
                 }
                 ResourceState.ERROR -> {
@@ -89,24 +83,5 @@ class YouTubeFragment : Fragment() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
     }
-
-    private fun onBackHomePressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_on_back_youtube_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
-    private fun onBackCategoryPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.youtube_to_category)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
 
 }

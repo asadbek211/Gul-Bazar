@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_main">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="7dp"
+                android:text="Xonaki gulni filterlash"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="7dp"
+                android:text="Bo'limni tanalang"
+                android:textSize="11sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp">
+
+                <Spinner
+                    android:id="@+id/spFlowerType"
+                    android:layout_width="170dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="25dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@id/spFlowerType"
+                    app:layout_constraintEnd_toEndOf="@id/spFlowerType"
+                    app:layout_constraintTop_toTopOf="@id/spFlowerType" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_regions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="11dp"
+                    android:text="Viloyat"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="11dp"
+                    android:text="Tuman yoki shahar"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="@id/spDistrict"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spRegion"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="25dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toStartOf="@+id/spDistrict"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_regions" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@id/spRegion"
+                    app:layout_constraintEnd_toEndOf="@id/spRegion"
+                    app:layout_constraintTop_toTopOf="@id/spRegion" />
+
+                <Spinner
+                    android:id="@+id/spDistrict"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="25dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/spRegion"
+                    app:layout_constraintTop_toBottomOf="@id/txt_district" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@id/spDistrict"
+                    app:layout_constraintEnd_toEndOf="@id/spDistrict"
+                    app:layout_constraintTop_toTopOf="@id/spDistrict" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_choose_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="19dp"
+                    android:text="O'simlik turini tanlang"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="@id/spChooseType"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spChooseType"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="49dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="25dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_choose_type" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@id/spChooseType"
+                    app:layout_constraintEnd_toEndOf="@id/spChooseType"
+                    app:layout_constraintTop_toTopOf="@id/spChooseType" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="10dp"
+                android:text="Narxini kiriting"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
+
+                <TextView
+                    android:id="@+id/txtFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="dan"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="@id/etFrom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/etFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center"
+                    android:hint="1 000"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/etTill"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtFrom" />
+
+                <TextView
+                    android:id="@+id/txtTill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="gacha"
+                    android:textSize="11sp"
+                    app:layout_constraintStart_toStartOf="@id/etTill"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/etTill"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="center"
+                    android:hint="20 000"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/spPrice"
+                    app:layout_constraintStart_toEndOf="@id/etFrom"
+                    app:layout_constraintTop_toBottomOf="@id/txtTill" />
+
+                <Spinner
+                    android:id="@+id/spPrice"
+                    android:layout_width="88dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="22dp"
+                    android:background="@drawable/text_shape2"
+                    android:paddingEnd="22dp"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/etTill"
+                    app:layout_constraintTop_toTopOf="@id/etTill" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@id/spPrice"
+                    app:layout_constraintEnd_toEndOf="@id/spPrice"
+                    app:layout_constraintTop_toTopOf="@id/spPrice" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
