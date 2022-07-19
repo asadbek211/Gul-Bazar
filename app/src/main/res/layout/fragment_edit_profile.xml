@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_outline_phone_login" />
+                android:src="@drawable/phone_icon" />
             <TextView
                 android:text="+998"
                 android:layout_width="wrap_content"
