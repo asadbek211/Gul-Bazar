@@ -9,23 +9,20 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddSuccessBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 
-class CategoryAddFlowerFragment : Fragment() ,View.OnClickListener{
+class CategoryAddFlowerFragment : Fragment(R.layout.fragment_category_add_flower) ,View.OnClickListener{
+    private val binding by viewBinding { FragmentCategoryAddFlowerBinding.bind(it) }
     private var departmentId:Int? = null
     private var isSeller:Boolean? = null
-    private var _binding: FragmentCategoryAddFlowerBinding? = null
-    private val binding get() = _binding!!
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         isSeller = requireArguments().getBoolean("isSeller")
-        _binding = FragmentCategoryAddFlowerBinding.inflate(inflater, container, false)
         instalization()
-        return binding.root
     }
 
     override fun onClick(v: View?) {

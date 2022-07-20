@@ -29,6 +29,8 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddFertilizersBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
@@ -48,6 +50,7 @@ import java.io.File
 
 
 class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
+    private val binding by viewBinding { FragmentAddFlowerBinding.bind(it) }
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
@@ -82,7 +85,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentAddFlowerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addFlowerViewModel.getRegion()
@@ -104,7 +106,6 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-            binding = FragmentAddFlowerBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(

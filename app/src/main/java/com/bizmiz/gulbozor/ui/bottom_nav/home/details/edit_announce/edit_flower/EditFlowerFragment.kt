@@ -28,11 +28,14 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentEditFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.EditAnnounceViewModel
-import com.bizmiz.gulbozor.utils.*
+import com.bizmiz.gulbozor.utils.askPermission
+import com.bizmiz.gulbozor.utils.isHasPermission
+import com.bizmiz.gulbozor.utils.onClick
+import com.bizmiz.gulbozor.utils.showSoftKeyboard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -53,38 +56,38 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
     private val editAnnounceViewModel: EditAnnounceViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
-    private var regionIdList:ArrayList<Int> = arrayListOf()
-    private var cityIdList:ArrayList<Int> = arrayListOf()
-    private var regionId:Int? = null
-    private var cityId:Int? = null
+    private var regionIdList: ArrayList<Int> = arrayListOf()
+    private var cityIdList: ArrayList<Int> = arrayListOf()
+    private var regionId: Int? = null
+    private var cityId: Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
-    private var file1:File? = null
-    private var file2:File? = null
-    private var file3:File? = null
-    private var file4:File? = null
-    private var file5:File? = null
-    private var file6:File? = null
-    private var file7:File? = null
-    private var file8:File? = null
-    private var img1:String? = null
-    private var img2:String? = null
-    private var img3:String? = null
-    private var img4:String? = null
-    private var img5:String? = null
-    private var img6:String? = null
-    private var img7:String? = null
-    private var img8:String? = null
-    private var imageViewList:List<ImageView> = listOf()
+    private var file1: File? = null
+    private var file2: File? = null
+    private var file3: File? = null
+    private var file4: File? = null
+    private var file5: File? = null
+    private var file6: File? = null
+    private var file7: File? = null
+    private var file8: File? = null
+    private var img1: String? = null
+    private var img2: String? = null
+    private var img3: String? = null
+    private var img4: String? = null
+    private var img5: String? = null
+    private var img6: String? = null
+    private var img7: String? = null
+    private var img8: String? = null
+    private var imageViewList: List<ImageView> = listOf()
     private val sectionList: List<String> = listOf("so'm")
-    private var departmentId:Int? = null
-    private var isSeller:Boolean? = null
-    private var flowerTypeList:ArrayList<Int> = arrayListOf()
-    private var flowerTypeId:Int? = null
-    private var spFlowerPosition:Int = 0
-    private var spRegionPosition:Int = 0
-    private var spCityPosition:Int = 0
-    private lateinit var flowerNameList:ArrayList<String>
-    private lateinit var binding: FragmentEditFlowerBinding
+    private var departmentId: Int? = null
+    private var isSeller: Boolean? = null
+    private var flowerTypeList: ArrayList<Int> = arrayListOf()
+    private var flowerTypeId: Int? = null
+    private var spFlowerPosition: Int = 0
+    private var spRegionPosition: Int = 0
+    private var spCityPosition: Int = 0
+    private lateinit var flowerNameList: ArrayList<String>
+    private val binding by viewBinding { FragmentEditFlowerBinding.bind(it) }
     private lateinit var flowerData: AnnounceResponseData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +95,7 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
         editAnnounceViewModel.getFlowerType()
         flowerNameList = arrayListOf()
     }
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -110,7 +114,6 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-            binding = FragmentEditFlowerBinding.bind(view)
         if (
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
@@ -136,11 +139,18 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
         binding.etHeight.setText(flowerData.height.toString())
         val df = DecimalFormat("#,###.##")
         val number = df.format(flowerData.price)
-        binding.etPrice.setText(number.replace(","," ").replace("."," "))
-        val phoneNumber = flowerData.phoneNumber?.replace("+998","")
-        binding.etNumber.setText("${phoneNumber?.substring(0,2)} ${phoneNumber?.substring(2,5)} ${phoneNumber?.substring(5,7)} ${phoneNumber?.substring(7,9)}")
-        setAdapter(binding.spPriceType,sectionList)
-      imageViewList = listOf(
+        binding.etPrice.setText(number.replace(",", " ").replace(".", " "))
+        val phoneNumber = flowerData.phoneNumber?.replace("+998", "")
+        binding.etNumber.setText(
+            "${phoneNumber?.substring(0, 2)} ${
+                phoneNumber?.substring(
+                    2,
+                    5
+                )
+            } ${phoneNumber?.substring(5, 7)} ${phoneNumber?.substring(7, 9)}"
+        )
+        setAdapter(binding.spPriceType, sectionList)
+        imageViewList = listOf(
             binding.image1,
             binding.image2,
             binding.image3,
@@ -150,8 +160,8 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             binding.image7,
             binding.image8
         )
-        if (imageUrlList.isNotEmpty()){
-            for (i in 0 until imageUrlList.size){
+        if (imageUrlList.isNotEmpty()) {
+            for (i in 0 until imageUrlList.size) {
                 val thumbnailRequest = Glide
                     .with(requireContext())
                     .load(R.drawable.ic_group_1)
@@ -172,23 +182,23 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
                 binding.etPrice
             )
         )
-        if (potAdd){
+        if (potAdd) {
             binding.potButtonYes.setBackgroundResource(R.drawable.button_shape)
             binding.potButtonYes.setTextColor(resources.getColor(R.color.white))
             binding.potButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
             binding.potButtonNo.setTextColor(resources.getColor(R.color.purple_500))
-        }else{
+        } else {
             binding.potButtonNo.setBackgroundResource(R.drawable.button_shape)
             binding.potButtonNo.setTextColor(resources.getColor(R.color.white))
             binding.potButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
             binding.potButtonYes.setTextColor(resources.getColor(R.color.purple_500))
         }
-        if (dungAdd){
+        if (dungAdd) {
             binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape)
             binding.dungButtonYes.setTextColor(resources.getColor(R.color.white))
             binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
             binding.dungButtonNo.setTextColor(resources.getColor(R.color.purple_500))
-        }else{
+        } else {
             binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape)
             binding.dungButtonNo.setTextColor(resources.getColor(R.color.white))
             binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
@@ -225,84 +235,84 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
         binding.progress.setOnClickListener {}
         binding.btnAnnouncement.setOnClickListener {
             if (checkAnnounce()) {
-            binding.progress.visibility = View.VISIBLE
-            when (imageUrlList.size) {
-                1 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
+                binding.progress.visibility = View.VISIBLE
+                when (imageUrlList.size) {
+                    1 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                    }
+                    2 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                    }
+                    3 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                    }
+                    4 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                        file4 = uriToImageFile(imageUrlList[3])
+                    }
+                    5 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                        file4 = uriToImageFile(imageUrlList[3])
+                        file5 = uriToImageFile(imageUrlList[4])
+                    }
+                    6 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                        file4 = uriToImageFile(imageUrlList[3])
+                        file5 = uriToImageFile(imageUrlList[4])
+                        file6 = uriToImageFile(imageUrlList[5])
+                    }
+                    7 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                        file4 = uriToImageFile(imageUrlList[3])
+                        file5 = uriToImageFile(imageUrlList[4])
+                        file6 = uriToImageFile(imageUrlList[5])
+                        file7 = uriToImageFile(imageUrlList[6])
+                    }
+                    8 -> {
+                        file1 = uriToImageFile(imageUrlList[0])
+                        file2 = uriToImageFile(imageUrlList[1])
+                        file3 = uriToImageFile(imageUrlList[2])
+                        file4 = uriToImageFile(imageUrlList[3])
+                        file5 = uriToImageFile(imageUrlList[4])
+                        file6 = uriToImageFile(imageUrlList[5])
+                        file7 = uriToImageFile(imageUrlList[6])
+                        file8 = uriToImageFile(imageUrlList[7])
+                    }
                 }
-                2 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                }
-                3 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                }
-                4 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                }
-                5 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                }
-                6 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                }
-                7 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                    file7 = uriToImageFile(imageUrlList[6])
-                }
-                8 -> {
-                    file1 = uriToImageFile(imageUrlList[0])
-                    file2 = uriToImageFile(imageUrlList[1])
-                    file3 = uriToImageFile(imageUrlList[2])
-                    file4 = uriToImageFile(imageUrlList[3])
-                    file5 = uriToImageFile(imageUrlList[4])
-                    file6 = uriToImageFile(imageUrlList[5])
-                    file7 = uriToImageFile(imageUrlList[6])
-                    file8 = uriToImageFile(imageUrlList[7])
+                CoroutineScope(Dispatchers.IO).launch {
+                    val compressImage1 = compressImage(file1)
+                    val compressImage2 = compressImage(file2)
+                    val compressImage3 = compressImage(file3)
+                    val compressImage4 = compressImage(file4)
+                    val compressImage5 = compressImage(file5)
+                    val compressImage6 = compressImage(file6)
+                    val compressImage7 = compressImage(file7)
+                    val compressImage8 = compressImage(file8)
+                    withContext(Dispatchers.Main) {
+                        editAnnounceViewModel.addFlower(
+                            compressImage1?.let { it1 -> createFormData(it1, "image1") },
+                            compressImage2?.let { it1 -> createFormData(it1, "image2") },
+                            compressImage3?.let { it1 -> createFormData(it1, "image3") },
+                            compressImage4?.let { it1 -> createFormData(it1, "image4") },
+                            compressImage5?.let { it1 -> createFormData(it1, "image5") },
+                            compressImage6?.let { it1 -> createFormData(it1, "image6") },
+                            compressImage7?.let { it1 -> createFormData(it1, "image7") },
+                            compressImage8?.let { it1 -> createFormData(it1, "image8") }
+                        )
+                    }
                 }
             }
-             CoroutineScope(Dispatchers.IO).launch {
-                 val compressImage1 = compressImage(file1)
-                 val compressImage2 = compressImage(file2)
-                 val compressImage3 = compressImage(file3)
-                 val compressImage4 = compressImage(file4)
-                 val compressImage5 = compressImage(file5)
-                 val compressImage6 = compressImage(file6)
-                 val compressImage7 = compressImage(file7)
-                 val compressImage8 = compressImage(file8)
-                 withContext(Dispatchers.Main){
-                     editAnnounceViewModel.addFlower(
-                         compressImage1?.let { it1 -> createFormData(it1, "image1") },
-                         compressImage2?.let { it1 -> createFormData(it1, "image2") },
-                         compressImage3?.let { it1 -> createFormData(it1, "image3") },
-                         compressImage4?.let { it1 -> createFormData(it1, "image4") },
-                         compressImage5?.let { it1 -> createFormData(it1, "image5") },
-                         compressImage6?.let { it1 -> createFormData(it1, "image6") },
-                         compressImage7?.let { it1 -> createFormData(it1, "image7") },
-                         compressImage8?.let { it1 -> createFormData(it1, "image8") }
-                     )
-                 }
-             }
-        }
 //            val params = "m=62ada9786a231d8d2dee422b;ac.order_id=2;a=50000"
 //            val data = params.toByteArray(StandardCharsets.UTF_8)
 //            val base64 = Base64.encodeToString(data,Base64.DEFAULT)
@@ -397,8 +407,9 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
                         myAnnounce = true,
                         topNumber = 0,
                         phoneNumber =
-                        "+998${binding.etNumber.text.trim().toString()
-                            .replace("\\s".toRegex(), "")
+                        "+998${
+                            binding.etNumber.text.trim().toString()
+                                .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
@@ -479,14 +490,14 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
 
         })
-        binding.spVilList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spVilList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if (regionIdList.isNotEmpty()){
+                if (regionIdList.isNotEmpty()) {
                     regionId = regionIdList[position]
                     editAnnounceViewModel.getCity(regionId!!)
                 }
@@ -497,29 +508,29 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
 
         }
-        binding.spFlowerType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spFlowerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                   flowerTypeId = flowerTypeList[position]
-                   spFlowerPosition = position
+                flowerTypeId = flowerTypeList[position]
+                spFlowerPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
         }
-        binding.spTumanList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spTumanList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if (cityIdList.isNotEmpty()){
+                if (cityIdList.isNotEmpty()) {
                     cityId = cityIdList[position]
                 }
                 spCityPosition = position
@@ -529,70 +540,72 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
 
         }
-        if (regionIdList.isNotEmpty()){
+        if (regionIdList.isNotEmpty()) {
             regionId = regionIdList[spRegionPosition]
             editAnnounceViewModel.getCity(regionId!!)
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE) {
-        when (resultCode) {
-            Activity.RESULT_OK -> {
-                imageUrlList.clear()
-                CoroutineScope(Dispatchers.IO).launch {
-                    img1 = null
-                    img2 = null
-                    img3 = null
-                    img4 = null
-                    img5 = null
-                    img6 = null
-                    img7 = null
-                    img8 = null
-                }
-                binding.image1.setImageResource(R.drawable.add)
-                binding.image2.setImageResource(R.drawable.ic_group_1)
-                binding.image3.setImageResource(R.drawable.ic_group_1)
-                binding.image4.setImageResource(R.drawable.ic_group_1)
-                binding.image5.setImageResource(R.drawable.ic_group_1)
-                binding.image6.setImageResource(R.drawable.ic_group_1)
-                binding.image7.setImageResource(R.drawable.ic_group_1)
-                binding.image8.setImageResource(R.drawable.ic_group_1)
-                if (data!!.clipData != null) {
-                    val count = data.clipData!!.itemCount
-                    for (i in 0 until count) {
-                        if (imageUrlList.size<8){
-                            val imageUrl = data.clipData!!.getItemAt(i).uri
-                            imageUrlList.add(imageUrl)
-                            val thumbnailRequest = Glide
-                                .with(requireContext())
-                                .load(R.drawable.ic_group_1)
-                            Glide.with(requireContext())
-                                .load(imageUrl)
-                                .transition(withCrossFade())
-                                .thumbnail(thumbnailRequest)
-                                .into(imageViewList[i])
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    imageUrlList.clear()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        img1 = null
+                        img2 = null
+                        img3 = null
+                        img4 = null
+                        img5 = null
+                        img6 = null
+                        img7 = null
+                        img8 = null
+                    }
+                    binding.image1.setImageResource(R.drawable.add)
+                    binding.image2.setImageResource(R.drawable.ic_group_1)
+                    binding.image3.setImageResource(R.drawable.ic_group_1)
+                    binding.image4.setImageResource(R.drawable.ic_group_1)
+                    binding.image5.setImageResource(R.drawable.ic_group_1)
+                    binding.image6.setImageResource(R.drawable.ic_group_1)
+                    binding.image7.setImageResource(R.drawable.ic_group_1)
+                    binding.image8.setImageResource(R.drawable.ic_group_1)
+                    if (data!!.clipData != null) {
+                        val count = data.clipData!!.itemCount
+                        for (i in 0 until count) {
+                            if (imageUrlList.size < 8) {
+                                val imageUrl = data.clipData!!.getItemAt(i).uri
+                                imageUrlList.add(imageUrl)
+                                val thumbnailRequest = Glide
+                                    .with(requireContext())
+                                    .load(R.drawable.ic_group_1)
+                                Glide.with(requireContext())
+                                    .load(imageUrl)
+                                    .transition(withCrossFade())
+                                    .thumbnail(thumbnailRequest)
+                                    .into(imageViewList[i])
+                            }
                         }
+                        if (count > 8)
+                            Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT)
+                                .show()
+                    } else {
+                        val imageUrl = data.data
+                        if (imageUrl != null) {
+                            imageUrlList.add(imageUrl)
+                        }
+                        val thumbnailRequest = Glide
+                            .with(requireContext())
+                            .load(R.drawable.ic_group_1)
+                        Glide.with(requireContext())
+                            .load(imageUrl)
+                            .transition(withCrossFade())
+                            .thumbnail(thumbnailRequest)
+                            .into(imageViewList[0])
                     }
-                    if (count >8)
-                        Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT).show()
-                } else {
-                    val imageUrl = data.data
-                    if (imageUrl != null) {
-                        imageUrlList.add(imageUrl)
-                    }
-                    val thumbnailRequest = Glide
-                        .with(requireContext())
-                        .load(R.drawable.ic_group_1)
-                    Glide.with(requireContext())
-                        .load(imageUrl)
-                        .transition(withCrossFade())
-                        .thumbnail(thumbnailRequest)
-                        .into(imageViewList[0])
                 }
             }
         }
-    }
     }
 
     private fun imageResultObserve() {
@@ -639,7 +652,8 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
                             myAnnounce = true,
                             topNumber = 0,
                             phoneNumber =
-                                "+998${binding.etNumber.text.trim().toString()
+                            "+998${
+                                binding.etNumber.text.trim().toString()
                                     .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
@@ -653,10 +667,11 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         })
     }
+
     private fun announceResultObserve() {
         editAnnounceViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     val navController =
                         Navigation.findNavController(
                             requireActivity(),
@@ -670,20 +685,22 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         })
     }
+
     companion object {
         const val PICK_IMAGE_REQUEST_CODE = 1000
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
+
     private fun typeResultObserve() {
         editAnnounceViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                        setAdapter(binding.spFlowerType,flowerNameList)
-                        flowerTypeId = flowerTypeList[0]
+                    setAdapter(binding.spFlowerType, flowerNameList)
+                    flowerTypeId = flowerTypeList[0]
                     binding.spFlowerType.setSelection(spFlowerPosition)
                 }
                 ResourceState.ERROR -> {
@@ -692,16 +709,17 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         })
     }
+
     private fun regionResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         editAnnounceViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         list.add(it.name)
                         regionIdList.add(it.id)
                     }
-                    if (regionIdList.isNotEmpty()){
+                    if (regionIdList.isNotEmpty()) {
                         regionId = regionIdList[0]
                     }
                     setAdapter(binding.spVilList, list)
@@ -713,16 +731,17 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         })
     }
+
     private fun cityResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         editAnnounceViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
                     }
-                    if (cityIdList.isNotEmpty()){
+                    if (cityIdList.isNotEmpty()) {
                         cityId = cityIdList[0]
                     }
                     setAdapter(binding.spTumanList, list)
@@ -734,6 +753,7 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         })
     }
+
     private fun checkAnnounce(): Boolean {
         return when {
             binding.etTitle.text.isEmpty() -> {
@@ -762,7 +782,8 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
                 false
             }
             binding.etNumber.text.isEmpty() -> {
-                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT)
+                    .show()
                 binding.etNumber.showSoftKeyboard()
                 false
             }
@@ -776,7 +797,12 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1001 -> {
@@ -787,8 +813,13 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             }
         }
     }
+
     private fun pickImage() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             val intent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.INTERNAL_CONTENT_URI
@@ -804,9 +835,16 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
             )
         }
     }
+
     private fun uriToImageFile(uri: Uri): File? {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = (activity as AddAnnounceActivity).contentResolver.query(uri, filePathColumn, null, null, null)
+        val cursor = (activity as AddAnnounceActivity).contentResolver.query(
+            uri,
+            filePathColumn,
+            null,
+            null,
+            null
+        )
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 val columnIndex = cursor.getColumnIndex(filePathColumn[0])
@@ -818,27 +856,30 @@ class EditFlowerFragment : Fragment(R.layout.fragment_edit_flower) {
         }
         return null
     }
-    private fun createFormData(file: File,imgName:String): MultipartBody.Part {
+
+    private fun createFormData(file: File, imgName: String): MultipartBody.Part {
         val requestFile: RequestBody = RequestBody.create(
             "image/*".toMediaTypeOrNull(),
             file
         )
         return MultipartBody.Part.createFormData(imgName, file.name, requestFile)
     }
+
     @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun compressImage(file:File?): File? {
-            val compressedImageFile =
-                file?.let { it1 ->
-                    Compressor.compress(requireContext(), it1){
-                        resolution(1280, 720)
-                        quality(80)
-                        format(Bitmap.CompressFormat.WEBP)
-                        size(2_097_152)
-                    }
+    private suspend fun compressImage(file: File?): File? {
+        val compressedImageFile =
+            file?.let { it1 ->
+                Compressor.compress(requireContext(), it1) {
+                    resolution(1280, 720)
+                    quality(80)
+                    format(Bitmap.CompressFormat.WEBP)
+                    size(2_097_152)
                 }
-            return compressedImageFile
+            }
+        return compressedImageFile
     }
-    private fun setAdapter(sp:Spinner,list:List<String>){
+
+    private fun setAdapter(sp: Spinner, list: List<String>) {
         val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, list)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sp.adapter = adapter

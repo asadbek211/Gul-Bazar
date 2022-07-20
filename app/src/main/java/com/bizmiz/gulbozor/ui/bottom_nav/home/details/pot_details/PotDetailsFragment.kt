@@ -4,7 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsetsController
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
@@ -16,23 +19,23 @@ import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentPotDetailsBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
-class PotDetailsFragment : Fragment() {
+class PotDetailsFragment : Fragment(R.layout.fragment_pot_details) {
     private var isFavourite = false
-    private  var desId:Int? = null
+    private var desId: Int? = null
     private lateinit var flowerData: AnnounceResponseData
-    private var flowerUrlList:ArrayList<String> = arrayListOf()
-    private lateinit var binding: FragmentPotDetailsBinding
-    private val potDetailsViewModel:PotDetailsViewModel by viewModel()
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    private var flowerUrlList: ArrayList<String> = arrayListOf()
+    private val binding by viewBinding { FragmentPotDetailsBinding.bind(it) }
+    private val potDetailsViewModel: PotDetailsViewModel by viewModel()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         desId = requireArguments().getInt("desId")
         flowerData = requireArguments().get("flowerData") as AnnounceResponseData
         flowerData.image1?.let { flowerUrlList.add(it) }
@@ -49,11 +52,6 @@ class PotDetailsFragment : Fragment() {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        binding = FragmentPotDetailsBinding.inflate(
-           inflater,
-                container,
-                false
-            )
         flowerData.categoryId?.let { potDetailsViewModel.getFlowerType(it) }
         binding.carouselView.setImageListener { position, imageView ->
             Glide.with(imageView).load(flowerUrlList[position].toUri())
@@ -81,11 +79,11 @@ class PotDetailsFragment : Fragment() {
         })
         binding.carouselView.pageCount = flowerUrlList.size
         binding.ivBack.setOnClickListener {
-            if (desId==1){
+            if (desId == 1) {
                 val navController =
                     Navigation.findNavController(requireActivity(), R.id.addContainer)
                 navController.popBackStack()
-            }else{
+            } else {
                 val navController =
                     Navigation.findNavController(requireActivity(), R.id.mainContainer)
                 navController.popBackStack()
@@ -107,7 +105,7 @@ class PotDetailsFragment : Fragment() {
         }
         binding.btnAds.setOnClickListener {
             val intent = Intent(requireActivity(), PaymentActivity::class.java)
-            intent.putExtra("flowerData",flowerData)
+            intent.putExtra("flowerData", flowerData)
             startActivity(intent)
         }
         binding.btnEdit.setOnClickListener {
@@ -116,7 +114,7 @@ class PotDetailsFragment : Fragment() {
             )
             val navController =
                 Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.navigate(R.id.action_potDetails_to_editPot,bundle)
+            navController.navigate(R.id.action_potDetails_to_editPot, bundle)
         }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description
@@ -126,8 +124,8 @@ class PotDetailsFragment : Fragment() {
         binding.flowerWidth.text = "${flowerData.diameter} sm"
         binding.flowerHeight.text = "${flowerData.height} sm"
         flowerTypeObserve()
-        return binding.root
     }
+
     private fun flowerTypeObserve() {
         potDetailsViewModel.flowerType.observe(viewLifecycleOwner, Observer {
             when (it.status) {

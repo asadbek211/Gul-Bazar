@@ -2,32 +2,26 @@ package com.bizmiz.gulbozor.ui.bottom_nav.payment.ads_price
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.widget.CheckBox
-import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentAdsCostsBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
-class AdsCostsFragment : Fragment() {
-    private var _binding: FragmentAdsCostsBinding? = null
-    private val binding get() = _binding!!
-    private var price:String = "11 000"
+class AdsCostsFragment : Fragment(R.layout.fragment_ads_costs) {
+    private val binding by viewBinding { FragmentAdsCostsBinding.bind(it) }
+    private var price: String = "11 000"
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val data = (activity as PaymentActivity).getData()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.ads_color)
@@ -37,38 +31,39 @@ class AdsCostsFragment : Fragment() {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        _binding = FragmentAdsCostsBinding.inflate(inflater, container, false)
-        binding.btnPay.text = when(price){
-            "11 000"->{
+        binding.btnPay.text = when (price) {
+            "11 000" -> {
                 "3x    11 000 so’m        To’lov qilish"
             }
-            "15 000"->{
+            "15 000" -> {
                 "5x    15 000 so’m        To’lov qilish"
             }
-            "21 000"->{
+            "21 000" -> {
                 "10x   21 000 so’m        To’lov qilish"
             }
-            else -> {""}
+            else -> {
+                ""
+            }
         }
 
         binding.checkBox1.setOnClickListener {
-            threeCheckCheckbox(binding.checkBox1,binding.checkBox2,binding.checkBox3)
+            threeCheckCheckbox(binding.checkBox1, binding.checkBox2, binding.checkBox3)
             binding.btnPay.text = "3x    11 000 so’m        To’lov qilish"
             price = "11 000"
         }
         binding.checkBox2.setOnClickListener {
-            threeCheckCheckbox(binding.checkBox2,binding.checkBox1,binding.checkBox3)
+            threeCheckCheckbox(binding.checkBox2, binding.checkBox1, binding.checkBox3)
             binding.btnPay.text = "5x    15 000 so’m        To’lov qilish"
             price = "15 000"
         }
         binding.checkBox3.setOnClickListener {
-            threeCheckCheckbox(binding.checkBox3,binding.checkBox1,binding.checkBox2)
+            threeCheckCheckbox(binding.checkBox3, binding.checkBox1, binding.checkBox2)
             binding.btnPay.text = "10x   21 000 so’m        To’lov qilish"
             price = "21 000"
         }
         val df = DecimalFormat("#,###.##")
         val number = df.format(data.price)
-        binding.flowerPrice.text = number.replace(","," ").replace("."," ")
+        binding.flowerPrice.text = number.replace(",", " ").replace(".", " ")
         binding.flowerName.text = data.title
         binding.flowerDescription.text = data.description
         Glide.with(binding.root.context).load(data.image1)
@@ -88,8 +83,8 @@ class AdsCostsFragment : Fragment() {
                 )
             navController.navigate(R.id.action_adsCosts_to_paymentSystems, bundle)
         }
-        return binding.root
     }
+
     private fun threeCheckCheckbox(
         chb1: CheckBox,
         chb2: CheckBox,

@@ -1,14 +1,11 @@
 package com.bizmiz.gulbozor
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.databinding.ActivityMainBinding
-import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 
 class MainActivity : AppCompatActivity() {
     var destinationId = 0
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-//    override fun onBackPressed() {
+    //    override fun onBackPressed() {
 //        when(destinationId){
 //            0->{
 //                super.onBackPressed()
