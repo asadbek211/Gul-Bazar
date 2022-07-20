@@ -1,6 +1,5 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +17,6 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
-import com.bizmiz.gulbozor.ui.youtube.YouTubeActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -103,7 +101,52 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             homeViewModel.getAnnounce()
             homeViewModel.getVideoLInkByID()
         }
-        setListeners()
+        return binding.root
+
+    }
+
+    private fun setListeners(view: View) {
+
+        binding.youtubeOthers.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi")
+            Navigation.findNavController(view).navigate(action)
+            //todo youtube fragmentga aylantirish kerak
+        })
+
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners(view)
+
+        binding.categoryWithBucket.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
+            Navigation.findNavController(view).navigate(action)
+        })
+        binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home")
+            Navigation.findNavController(view).navigate(action)
+        })
+        binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home")
+            Navigation.findNavController(view).navigate(action)
+        })
+        binding.potFlowerCat.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home")
+            Navigation.findNavController(view).navigate(action)
+        })
+        binding.customersCat.setOnClickListener(View.OnClickListener {
+            val action = HomeFragmentDirections.homeToOne("Haridorlar", "home")
+            Navigation.findNavController(view).navigate(action)
+        })
+        binding.shopsCat.setOnClickListener(View.OnClickListener {
+            //findNavController().navigate(R.id.home_to_shop)
+            val action = HomeFragmentDirections.homeToShop("home")
+            Navigation.findNavController(view).navigate(action)
+        })
+
+
     }
 
 
@@ -120,20 +163,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         })
-        binding.youtubePlayerView.addYouTubePlayerListener(object :
-            AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                binding.progressBarYu.visibility = View.GONE
-                binding.swipeContainer.isRefreshing = false
-                youTubePlayer.loadVideo("2IE4JCW4T4U", 0f)
-            }
-        })
         homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     it.let {
+                        binding.youtubeTitle.text = it.data!!.videoID.title
                         lifecycle.addObserver(binding.youtubePlayerView)
-
+                        binding.youtubePlayerView.addYouTubePlayerListener(object :
+                            AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
+                                binding.progressBarYu.visibility = View.GONE
+                                binding.swipeContainer.isRefreshing = false
+                                youTubePlayer.loadVideo(it.data.videoID.videoLink, 0f)
+                            }
+                        })
                     }
                 }
                 ResourceState.ERROR -> {

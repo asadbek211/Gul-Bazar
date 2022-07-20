@@ -2,8 +2,10 @@ package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
-import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YoutubeLinkID
+import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -78,7 +80,6 @@ class NetworkHelper(
                 call: Call<YouTubeLinkPage>?,
                 response: Response<YouTubeLinkPage>?
             ) {
-                Log.d("TAGPAGE", response?.body().toString())
                 if (response != null) {
                     response.body()?.let { onSuccess.invoke(it) }
                 }
@@ -86,6 +87,28 @@ class NetworkHelper(
 
             override fun onFailure(call: Call<YouTubeLinkPage>?, t: Throwable?) {
                 onFailure.invoke("OnOn " + t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getOneShopList(
+        page: Int,
+        shopId: Int,
+        onSuccess: (list: OneShopData) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call =
+            apiClient.create(ApiInterface::class.java).getOneShopPosts(page = page, shopId = shopId)
+        call.enqueue(object : Callback<OneShopData> {
+            override fun onResponse(call: Call<OneShopData>?, response: Response<OneShopData>?) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<OneShopData>, t: Throwable?) {
+                onFailure.invoke("Ha Ha Ha Again Ha " + t?.localizedMessage)
             }
 
         })
@@ -196,16 +219,38 @@ class NetworkHelper(
         })
     }
 
+    fun getShopsList(
+        onSuccess: (typeData: List<ShopsListItem>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getShopsList()
+        call.enqueue(object : Callback<List<ShopsListItem>> {
+            override fun onResponse(
+                call: Call<List<ShopsListItem>>?,
+                response: Response<List<ShopsListItem>>?
+            ) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ShopsListItem>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
     fun getYouTubeById(
         id: Int,
-        onSuccess: (typeData: YoutubeLinkID?) -> Unit,
+        onSuccess: (typeData: YouTubeLinkID?) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getVideoLinkById(id)
-        call.enqueue(object : Callback<YoutubeLinkID> {
+        call.enqueue(object : Callback<YouTubeLinkID> {
             override fun onResponse(
-                call: Call<YoutubeLinkID>?,
-                response: Response<YoutubeLinkID>?
+                call: Call<YouTubeLinkID>?,
+                response: Response<YouTubeLinkID>?
             ) {
                 if (response != null) {
                     response.body()?.let {
@@ -215,7 +260,56 @@ class NetworkHelper(
                 }
             }
 
-            override fun onFailure(call: Call<YoutubeLinkID>?, t: Throwable?) {
+            override fun onFailure(call: Call<YouTubeLinkID>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getByParentCatID(
+        id: Int,
+        onSuccess: (typeData: List<AnnounceData>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(id)
+        call.enqueue(object : Callback<List<AnnounceData>> {
+            override fun onResponse(
+                call: Call<List<AnnounceData>>?,
+                response: Response<List<AnnounceData>>?
+            ) {
+                if (response != null) {
+                    response.body()?.let {
+                        onSuccess.invoke(it)
+                    }
+                    Log.d("YUTAG", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getAnnounce(
+        onSuccess: (flowerList: List<AnnounceData>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
+        call.enqueue(object : Callback<List<AnnounceData>> {
+            override fun onResponse(
+                call: Call<List<AnnounceData>>?,
+                response: Response<List<AnnounceData>>?
+            ) {
+                if (response != null) {
+                    Log.d("listUrl", response.body().toString())
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

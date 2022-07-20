@@ -75,21 +75,21 @@ class SetUpActivity : AppCompatActivity() {
         this.data = ArrayList<OnBoardData>()
         data.add(
             OnBoardData(
-                imageBoard = R.drawable.v_p_1_splash,
+                imageBoard = R.drawable.ic_view_pager_1,
                 titleBoard = "Uyingizdan turib gullarni harid qilishingiz mumkin.",
                 descriptionBoard = "GulBazar orqali gullaringizni soting va harid qiling."
             )
         )
         data.add(
             OnBoardData(
-                imageBoard = R.drawable.v_p_2_splash,
+                imageBoard = R.drawable.ic_view_pager_2,
                 titleBoard = "O'simliklarni parvarish qilish bo'yicha video qo'llanmalar.",
                 descriptionBoard = "Gulni ko'paytirish va parvarishlash bo'yicha GulBazardan o'rganing."
             )
         )
         data.add(
             OnBoardData(
-                imageBoard = R.drawable.v_p_3_splash,
+                imageBoard = R.drawable.ic_view_pager_3,
                 titleBoard = "Uyingizdan turib xohlagancha gul soting.",
                 descriptionBoard = "GulBazar orqali mahalliy bozor va export uchun gul yetishtirib sotishingiz mumkin."
             )

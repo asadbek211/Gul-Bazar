@@ -54,6 +54,9 @@ class SignUpFragment1 : Fragment() {
                 ).show()
             }
         })
+        binding.signUpToLogin.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.sign_up1_login)
+        })
     }
 
     private fun windowStatus() {

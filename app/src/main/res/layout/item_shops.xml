@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="55dp"
+    android:layout_marginEnd="55dp"
+    android:layout_marginBottom="20dp"
+    android:elevation="14dp"
+    app:cardCornerRadius="50dp">
+
+    <TextView
+        android:id="@+id/name_of_shops"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shops_back"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:text="@string/green_house"
+        android:textColor="#787878"
+        android:textSize="22sp" />
+</androidx.cardview.widget.CardView>

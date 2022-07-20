@@ -9,21 +9,128 @@
         android:id="@+id/navigation_home"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/home_to_one"
+            app:destination="@id/oneTypeOfCategory">
+
+        </action>
+        <action
+            android:id="@+id/home_to_shop"
+            app:destination="@id/fragmentShops" />
+        <action
+            android:id="@+id/nav_home_to_youTube"
+            app:destination="@id/youTubeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_user"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/navigation_category"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.CategoriesFragment"
-        android:label="CategoriesFragment"
-        tools:layout="@layout/fragment_categories" />
+
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/nav_profile_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_competition"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.competition.CompetitionFragment"
         android:label="CompetitionFragment"
-        tools:layout="@layout/fragment_competition" />
+        tools:layout="@layout/fragment_competition">
+        <action
+            android:id="@+id/nav_competition_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/oneTypeOfCategory"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory.OneTypeOfCategory"
+        android:label="OneTypeOfCategory"
+        tools:layout="@layout/fragment_one_category">
+        <!--<action
+            android:id="@+id/oneType_to_cat"
+            app:destination="@id/navigation_category" />-->
+        <argument
+            android:name="categoryName"
+            android:defaultValue="cat"
+            app:argType="string" />
+        <argument
+            android:name="onBack"
+            android:defaultValue="back"
+            app:argType="string" />
+        <action
+            android:id="@+id/one_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/onBack_to_category"
+            app:destination="@id/navigation_category" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentShops"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.FragmentShops"
+        android:label="FragmentShops"
+        tools:layout="@layout/fragment_shops">
+        <argument
+            android:name="onBack"
+            android:defaultValue="back"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_shops_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/nav_shops_to_category"
+            app:destination="@id/navigation_category" />
+        <action
+            android:id="@+id/shops_to_shop"
+            app:destination="@id/oneShopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_category"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.CategoryFragment"
+        android:label="CategoryFragment"
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/nav_category_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/nav_category_to_shop"
+            app:destination="@id/fragmentShops" />
+        <action
+            android:id="@+id/nav_category_to_one"
+            app:destination="@id/oneTypeOfCategory" />
+        <action
+            android:id="@+id/nav_category_to_you_tube"
+            app:destination="@id/youTubeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youTubeFragment"
+        android:name="com.bizmiz.gulbozor.ui.youtube.YouTubeFragment"
+        android:label="YouTubeFragment"
+        tools:layout="@layout/fragment_you_tube">
+        <action
+            android:id="@+id/youtube_to_category"
+            app:destination="@id/navigation_category" />
+        <argument
+            android:name="title"
+            android:defaultValue="youtube"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_on_back_youtube_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/oneShopFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.OneShopFragment"
+        android:label="OneShopFragment"
+        tools:layout="@layout/fragment_one_shop">
+        <argument
+            android:name="position"
+            android:defaultValue="4"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/shop_to_shops"
+            app:destination="@id/fragmentShops" />
+    </fragment>
 </navigation>
