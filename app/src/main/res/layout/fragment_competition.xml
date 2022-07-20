@@ -199,9 +199,80 @@
         android:id="@+id/container3"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Competition"
-        android:textSize="29sp"
-        android:textStyle="bold" />
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_shape_container"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container2">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/flowerImage3"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:src="@drawable/img3"
+            android:theme="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLikeCount3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingTop="7dp"
+            android:text="978"
+            android:textColor="@color/menu_ripple"
+            android:textSize="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imgShare3"
+            app:layout_constraintStart_toEndOf="@+id/flowerImage3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvData3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="3.06.22"
+            android:textColor="#939393"
+            android:textSize="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvLikeCount3"
+            app:layout_constraintStart_toStartOf="@+id/tvLikeCount3" />
+
+        <ImageView
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/imgShare3"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_bg_share"
+            android:padding="5dp"
+            android:src="@drawable/share_flower"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imgRemove3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:clickable="true"
+            android:focusable="true"
+            android:id="@+id/imgRemove3"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/button_bg_red"
+            android:padding="8dp"
+            android:src="@drawable/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
