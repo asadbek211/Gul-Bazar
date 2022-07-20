@@ -38,11 +38,11 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginMVP.View {
     }
 
     private fun setListeners() {
-        binding.logoGulbazar.setOnClickListener(View.OnClickListener {
+        /*binding.logoGulbazar.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireContext(), MiddleActivity::class.java)
             startActivity(intent)
         })
-
+*/
         binding.ivShowHidePass.setOnClickListener {
             mIsShowPass = !mIsShowPass
             showPassword(mIsShowPass)
@@ -62,14 +62,15 @@ class LoginFragment : Fragment(R.layout.fragment_login), LoginMVP.View {
                 password = binding.etPass.text.toString()
             )
         })
-        binding.justForToast.setOnClickListener(View.OnClickListener {
-            Toast.makeText(
-                requireContext(),
-                binding.etPhoneNumber.text?.trim().toString()
-                    .replace(" ".toRegex(), "") + binding.etPass.text.toString(),
-                Toast.LENGTH_LONG
-            ).show()
-        })
+        /*
+            binding.justForToast.setOnClickListener(View.OnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    binding.etPhoneNumber.text?.trim().toString()
+                        .replace(" ".toRegex(), "") + binding.etPass.text.toString(),
+                    Toast.LENGTH_LONG
+                ).show()
+            })*/
 
     }
 

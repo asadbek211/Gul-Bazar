@@ -1,3 +1,4 @@
+
 package com.bizmiz.gulbozor.ui.bottom_nav.categories
 
 import android.os.Bundle
@@ -76,11 +77,3 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
         return listC
     }
-
-    private fun windowStatus() {
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
-    }
-
-
-}
