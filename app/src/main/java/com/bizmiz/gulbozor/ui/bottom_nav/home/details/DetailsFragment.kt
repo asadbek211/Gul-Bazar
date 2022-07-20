@@ -4,8 +4,10 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceData
@@ -51,6 +53,7 @@ class DetailsFragment : Fragment() {
                 false
             )
         )
+        onBackPressed()
         binding.carouselView.setImageListener { position, imageView ->
             Glide.with(imageView).load(flowerUrlList[position])
                 .into(imageView)
@@ -101,11 +104,22 @@ class DetailsFragment : Fragment() {
         flowerData.withFertilizer?.let { checkPot(binding.dungCheck, it) }
         return binding.root
     }
-    private fun checkPot(imageView: ImageView,boolean: Boolean){
-        if(boolean){
+
+    private fun checkPot(imageView: ImageView, boolean: Boolean) {
+        if (boolean) {
             imageView.setImageResource(R.drawable.ic_check_yes_24)
-        }else{
+        } else {
             imageView.setImageResource(R.drawable.ic_check_no_24)
         }
     }
+
+    private fun onBackPressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.details_to_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
+    }
+
 }

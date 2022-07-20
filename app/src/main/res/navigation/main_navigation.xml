@@ -18,5 +18,9 @@
         android:id="@+id/detailsFragment"
         android:label="DetailsFragment"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.DetailsFragment"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/details_to_home"
+            app:destination="@id/bottomNavFragment" />
+    </fragment>
 </navigation>

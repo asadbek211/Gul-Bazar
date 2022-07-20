@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
                 )
             navController.navigate(R.id.home_to_details, bundle)
         }
+
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
 

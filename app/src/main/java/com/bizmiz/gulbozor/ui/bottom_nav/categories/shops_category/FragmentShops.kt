@@ -4,23 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentShopsBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentShops : Fragment() {
     val args: FragmentShopsArgs by navArgs()
     private var _binding: FragmentShopsBinding? = null
     val binding get() = _binding!!
 
+    private val shopsViewModel: ShopsViewModel by viewModel()
+
     private val shopAdapter = ShopsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shopsViewModel.getShopsList()
     }
 
     override fun onCreateView(
@@ -34,64 +43,57 @@ class FragmentShops : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadData()
-        if (args.onBack == "home") {
-            onBackHomePressed()
-        } else if (args.onBack == "category") {
-            onBackCategoryPressed()
-        }
+        announceObserve()
+        onBackHomePressed()
+
+        binding.onBackPressed.setOnClickListener(View.OnClickListener {
+            if (args.onBack == "home") {
+                findNavController().navigate(R.id.nav_shops_to_home)
+            } else {
+                findNavController().navigate(R.id.nav_shops_to_category)
+            }
+        })
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.white)
 
         binding.shopsRecycler.adapter = shopAdapter
         binding.shopsRecycler.layoutManager = LinearLayoutManager(requireContext())
 
     }
 
-    private fun loadData() {
-        val data = ArrayList<ShopsData>()
-        val data1 = ArrayList<ShopsData>()
-        val shop1 = ShopsData("Green House")
-        val shop2 = ShopsData("Tashkent Flowers")
-        val shop3 = ShopsData("Uz flower")
-        val shop4 = ShopsData("Yashil Olam")
-        val shop6 = ShopsData("G'uncha'")
-        val shop7 = ShopsData("Bahor")
-        val shop8 = ShopsData("MyHouse")
-        val shop9 = ShopsData("Rose")
-        val shop10 = ShopsData("Parkent trees")
-        val shop11 = ShopsData("Golden flower")
-        val shop12 = ShopsData("Last One>)")
-        data1.add(shop1)
-        data1.add(shop2)
-        data1.add(shop3)
-        data1.add(shop4)
-        data1.add(shop6)
-        data1.add(shop7)
-        data1.add(shop8)
-        data1.add(shop9)
-        data1.add(shop10)
-        data1.add(shop11)
-        data1.add(shop12)
-        data.addAll(data1)
+    private fun announceObserve() {
+        shopsViewModel.shops.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    shopAdapter.data = it.data!!
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        shopAdapter.setOnItemClickListener(object : ShopsAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+                val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)
+            }
 
-        shopAdapter.data = data
+        })
     }
+
 
     private fun onBackHomePressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_shops_to_home)
+                if (args.onBack == "home") {
+                    findNavController().navigate(R.id.nav_shops_to_home)
+                } else {
+                    findNavController().navigate(R.id.nav_shops_to_category)
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
 
-    private fun onBackCategoryPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_shops_to_category)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
 
 }

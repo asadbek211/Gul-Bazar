@@ -3,6 +3,8 @@ package com.bizmiz.gulbozor.core.helper
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -47,6 +49,9 @@ interface ApiInterface {
     @GET("/videoLink/{id}")
     fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
 
+    @GET("/shop")
+    fun getShopsList(): Call<List<ShopsListItem>>//todo dataType
+
     @GET("/category/byParentCategoryId/{parentId}")
     fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceData>>
 
@@ -54,4 +59,11 @@ interface ApiInterface {
     fun getVideoLinkPage(
         @Query("page") page: Int
     ): Call<YouTubeLinkPage>
+
+    @GET("/announce/byShop/{shopId}?")
+    fun getOneShopPosts(
+        @Path("shopId") shopId: Int,
+        @Query("page") page: Int
+
+    ): Call<OneShopData>
 }

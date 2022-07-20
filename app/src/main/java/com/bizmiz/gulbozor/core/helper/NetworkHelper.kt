@@ -4,6 +4,8 @@ import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -63,7 +65,6 @@ class NetworkHelper(
                 call: Call<YouTubeLinkPage>?,
                 response: Response<YouTubeLinkPage>?
             ) {
-                Log.d("TAGPAGE", response?.body().toString())
                 if (response != null) {
                     response.body()?.let { onSuccess.invoke(it) }
                 }
@@ -71,6 +72,28 @@ class NetworkHelper(
 
             override fun onFailure(call: Call<YouTubeLinkPage>?, t: Throwable?) {
                 onFailure.invoke("OnOn " + t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getOneShopList(
+        page: Int,
+        shopId: Int,
+        onSuccess: (list: OneShopData) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call =
+            apiClient.create(ApiInterface::class.java).getOneShopPosts(page = page, shopId = shopId)
+        call.enqueue(object : Callback<OneShopData> {
+            override fun onResponse(call: Call<OneShopData>?, response: Response<OneShopData>?) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<OneShopData>, t: Throwable?) {
+                onFailure.invoke("Ha Ha Ha Again Ha " + t?.localizedMessage)
             }
 
         })
@@ -171,6 +194,28 @@ class NetworkHelper(
             }
 
             override fun onFailure(call: Call<FlowerTypeData>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getShopsList(
+        onSuccess: (typeData: List<ShopsListItem>) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getShopsList()
+        call.enqueue(object : Callback<List<ShopsListItem>> {
+            override fun onResponse(
+                call: Call<List<ShopsListItem>>?,
+                response: Response<List<ShopsListItem>>?
+            ) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ShopsListItem>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

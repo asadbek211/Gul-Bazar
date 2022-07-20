@@ -10,14 +10,15 @@ import java.text.DecimalFormat
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
 
-    var flowersList:List<AnnounceData> = listOf()
-       set(value) {
-           field = value
-           notifyDataSetChanged()
-       }
+    var flowersList: List<AnnounceData> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun populateModel(flowerListResponse: AnnounceData,position: Int) {
+        fun populateModel(flowerListResponse: AnnounceData, position: Int) {
             Glide.with(binding.root.context).load(flowerListResponse.image1)
                 .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
@@ -44,7 +45,7 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     }
 
     override fun onBindViewHolder(holder: Myholder, position: Int) {
-        holder.populateModel(flowersList[position],position)
+        holder.populateModel(flowersList[position], position)
     }
 
     override fun getItemCount(): Int = flowersList.size

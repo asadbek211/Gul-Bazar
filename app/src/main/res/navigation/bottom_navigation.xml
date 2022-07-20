@@ -85,6 +85,9 @@
         <action
             android:id="@+id/nav_shops_to_category"
             app:destination="@id/navigation_category" />
+        <action
+            android:id="@+id/shops_to_shop"
+            app:destination="@id/oneShopFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_category"
@@ -119,5 +122,19 @@
         <action
             android:id="@+id/nav_on_back_youtube_to_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/oneShopFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.OneShopFragment"
+        android:label="OneShopFragment"
+        tools:layout="@layout/fragment_one_shop">
+        <argument
+            android:name="position"
+            android:defaultValue="4"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/shop_to_shops"
+            app:destination="@id/fragmentShops" />
     </fragment>
 </navigation>
