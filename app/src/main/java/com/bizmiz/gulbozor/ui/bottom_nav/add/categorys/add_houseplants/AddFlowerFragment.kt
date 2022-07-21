@@ -16,25 +16,26 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
-import com.bizmiz.gulbozor.core.models.FlowerTypeData
-import com.bizmiz.gulbozor.core.models.FlowerTypeDataItem
+import com.bizmiz.gulbozor.core.caches.AppCache
+import com.bizmiz.gulbozor.core.models.AnnounceRequestData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.NumberFormat
 import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentAddFertilizersBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.google.android.material.snackbar.Snackbar
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -49,11 +50,14 @@ import java.io.File
 
 
 class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
+    private val binding by viewBinding { FragmentAddFlowerBinding.bind(it) }
     private val addFlowerViewModel: AddFlowerViewModel by viewModel()
     private var potAdd = true
     private var dungAdd = true
-    private var regionId:Int = 1
-    private var cityId:Int = 1
+    private var regionIdList:ArrayList<Int> = arrayListOf()
+    private var cityIdList:ArrayList<Int> = arrayListOf()
+    private var regionId:Int? = null
+    private var cityId:Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
     private var file1:File? = null
     private var file2:File? = null
@@ -63,13 +67,30 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     private var file6:File? = null
     private var file7:File? = null
     private var file8:File? = null
+    private var img1:String? = null
+    private var img2:String? = null
+    private var img3:String? = null
+    private var img4:String? = null
+    private var img5:String? = null
+    private var img6:String? = null
+    private var img7:String? = null
+    private var img8:String? = null
+    private var imageViewList:List<ImageView> = listOf()
     private val sectionList: List<String> = listOf("so'm")
     private var departmentId:Int? = null
     private var isSeller:Boolean? = null
     private var flowerTypeList:ArrayList<Int> = arrayListOf()
     private var flowerTypeId:Int? = null
-    private lateinit var binding: FragmentAddFlowerBinding
-
+    private var spFlowerPosition:Int = 0
+    private var spRegionPosition:Int = 0
+    private var spCityPosition:Int = 0
+    private lateinit var flowerNameList:ArrayList<String>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addFlowerViewModel.getRegion()
+        addFlowerViewModel.getFlowerType()
+        flowerNameList = arrayListOf()
+    }
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,18 +102,19 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        addFlowerViewModel.getRegion()
-        addFlowerViewModel.getFlowerType()
         requireActivity().window.setFlags(
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-            binding = FragmentAddFlowerBinding.bind(view)
         if (
-            !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
-                READ_EXTERNAL_STORAGE
-            ) ||
-                    !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                !isHasPermission(Manifest.permission.CAMERA) || !isHasPermission(
+                    READ_EXTERNAL_STORAGE
+                ) ||
+                        !isHasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                false
+            }
         ) {
             askPermission(
                 arrayOf(
@@ -104,6 +126,28 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
             )
         }
         setAdapter(binding.spPriceType,sectionList)
+      imageViewList = listOf(
+            binding.image1,
+            binding.image2,
+            binding.image3,
+            binding.image4,
+            binding.image5,
+            binding.image6,
+            binding.image7,
+            binding.image8
+        )
+        if (imageUrlList.isNotEmpty()){
+            for (i in 0 until imageUrlList.size){
+                val thumbnailRequest = Glide
+                    .with(requireContext())
+                    .load(R.drawable.ic_group_1)
+                Glide.with(requireContext())
+                    .load(imageUrlList[i])
+                    .transition(withCrossFade())
+                    .thumbnail(thumbnailRequest)
+                    .into(imageViewList[i])
+            }
+        }
         binding.etNumber.addTextChangedListener(
             PhoneNumberTextWatcher(
                 binding.etNumber
@@ -114,6 +158,28 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 binding.etPrice
             )
         )
+        if (potAdd){
+            binding.potButtonYes.setBackgroundResource(R.drawable.button_shape)
+            binding.potButtonYes.setTextColor(resources.getColor(R.color.white))
+            binding.potButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
+            binding.potButtonNo.setTextColor(resources.getColor(R.color.purple_500))
+        }else{
+            binding.potButtonNo.setBackgroundResource(R.drawable.button_shape)
+            binding.potButtonNo.setTextColor(resources.getColor(R.color.white))
+            binding.potButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
+            binding.potButtonYes.setTextColor(resources.getColor(R.color.purple_500))
+        }
+        if (dungAdd){
+            binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape)
+            binding.dungButtonYes.setTextColor(resources.getColor(R.color.white))
+            binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape_stroke)
+            binding.dungButtonNo.setTextColor(resources.getColor(R.color.purple_500))
+        }else{
+            binding.dungButtonNo.setBackgroundResource(R.drawable.button_shape)
+            binding.dungButtonNo.setTextColor(resources.getColor(R.color.white))
+            binding.dungButtonYes.setBackgroundResource(R.drawable.button_shape_stroke)
+            binding.dungButtonYes.setTextColor(resources.getColor(R.color.purple_500))
+        }
         binding.potButtonNo.setOnClickListener {
             binding.potButtonNo.setBackgroundResource(R.drawable.button_shape)
             binding.potButtonNo.setTextColor(resources.getColor(R.color.white))
@@ -231,32 +297,113 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
 //            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(payMeUrl))
 //            startActivity(browserIntent)
         }
-//        binding.btnViewAnnouncement.setOnClickListener {
-//            if (checkAnnounce()) {
-//                val bundle = bundleOf(
-//                    "flowerData" to AnnounceData(
-//                        active = true,
-//                        allowed = true,
-//                        description = binding.etDescription.text.toString().trim(),
-//                        diameter = binding.etWidth.text.toString().trim().toInt(),
-//                        height = binding.etHeight.text.toString().trim().toInt(),
-//                        price = binding.etPrice.text.trim().toString().replace("\\s".toRegex(), "")
-//                            .toInt(),
-//                        title = binding.etTitle.text.toString().trim(),
-//                        weight = 23,
-//                        withFertilizer = dungAdd,
-//                        withPot = potAdd
-//                    )
-//                )
-//                val navController =
-//                    Navigation.findNavController(
-//                        requireActivity(),
-//                        R.id.mainContainer
-//                    )
-//                navController.navigate(R.id.action_bottomNavFragment_to_detailsFragment, bundle)
-//            }
-//        }
+        binding.btnViewAnnouncement.setOnClickListener {
+            if (checkAnnounce()) {
+                when (imageUrlList.size) {
+                    1 -> {
+                        img1 = imageUrlList[0].toString()
+                    }
+                    2 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                    }
+                    3 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                    }
+                    4 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                    }
+                    5 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                    }
+                    6 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
+                    }
+                    7 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
+                        img7 = imageUrlList[6].toString()
+                    }
+                    8 -> {
+                        img1 = imageUrlList[0].toString()
+                        img2 = imageUrlList[1].toString()
+                        img3 = imageUrlList[2].toString()
+                        img4 = imageUrlList[3].toString()
+                        img5 = imageUrlList[4].toString()
+                        img6 = imageUrlList[5].toString()
+                        img7 = imageUrlList[6].toString()
+                        img8 = imageUrlList[7].toString()
+                    }
+                }
+                val bundle = bundleOf(
+                    "flowerData" to AnnounceResponseData(
+                        description = binding.etDescription.text.toString().trim(),
+                        diameter = binding.etWidth.text.toString().trim().toInt(),
+                        height = binding.etHeight.text.toString().trim().toInt(),
+                        image1 = img1,
+                        image2 = img2,
+                        image3 = img3,
+                        image4 = img4,
+                        image5 = img5,
+                        image6 = img6,
+                        image7 = img7,
+                        image8 = img8,
+                        price = binding.etPrice.text.trim().toString()
+                            .replace("\\s".toRegex(), "")
+                            .replace(",", "").replace(".", "")
+                            .toLong(),
+                        title = binding.etTitle.text.toString().trim(),
+                        weight = null,
+                        withFertilizer = dungAdd,
+                        withPot = potAdd,
+                        categoryId = flowerTypeId,
+                        sellerId = AppCache.getHelper().userId,
+                        department = departmentId,
+                        shopId = null,
+                        cityId = cityId,
+                        regionId = regionId,
+                        myAnnounce = true,
+                        topNumber = 0,
+                        phoneNumber =
+                        "+998${binding.etNumber.text.trim().toString()
+                            .replace("\\s".toRegex(), "")
+                        }",
+                        seller = isSeller,
+                        id = null,
+                        createAt = null,
+                    ),
+                    "desId" to 1,
+                )
+                val navController =
+                    Navigation.findNavController(
+                        requireActivity(),
+                        R.id.addContainer
+                    )
+                navController.navigate(R.id.addFlowerFragment2_to_detailsFragment2, bundle)
+            }
+        }
         imageResultObserve()
+        regionResultObserve()
+        cityResultObserve()
+        typeResultObserve()
         binding.image1.onClick {
             pickImage()
         }
@@ -325,8 +472,11 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                addFlowerViewModel.getCity(position+1)
-                regionId = position+1
+                if (regionIdList.isNotEmpty()){
+                    regionId = regionIdList[position]
+                    addFlowerViewModel.getCity(regionId!!)
+                }
+                spRegionPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -340,7 +490,8 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                flowerTypeId = flowerTypeList[position]
+                   flowerTypeId = flowerTypeList[position]
+                   spFlowerPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -354,37 +505,37 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                 position: Int,
                 id: Long
             ) {
-                cityId = position+1
+                if (cityIdList.isNotEmpty()){
+                    cityId = cityIdList[position]
+                }
+                spCityPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
         }
-        addFlowerViewModel.getCity((binding.spVilList.selectedItemId+1).toInt())
-        binding.titleLayout.isHintEnabled = false
-        binding.priceLayout.isHintEnabled = false
-        binding.descriptionLayout.isHintEnabled = false
-        regionResultObserve()
-        cityResultObserve()
-        typeResultObserve()
+        if (regionIdList.isNotEmpty()){
+            regionId = regionIdList[spRegionPosition]
+            addFlowerViewModel.getCity(regionId!!)
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE) {
-        val imageViewList:List<ImageView> = listOf(
-            binding.image1,
-            binding.image2,
-            binding.image3,
-            binding.image4,
-            binding.image5,
-            binding.image6,
-            binding.image7,
-            binding.image8
-        )
         when (resultCode) {
             Activity.RESULT_OK -> {
                 imageUrlList.clear()
+                CoroutineScope(Dispatchers.IO).launch {
+                    img1 = null
+                    img2 = null
+                    img3 = null
+                    img4 = null
+                    img5 = null
+                    img6 = null
+                    img7 = null
+                    img8 = null
+                }
                 binding.image1.setImageResource(R.drawable.add)
                 binding.image2.setImageResource(R.drawable.ic_group_1)
                 binding.image3.setImageResource(R.drawable.ic_group_1)
@@ -443,9 +594,9 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     val img7 = it.data?.image7
                     val img8 = it.data?.image8
                     addFlowerViewModel.setAnnounce(
-                        AnnounceData(
-                            active = true,
-                            allowed = true,
+                        AnnounceRequestData(
+                            active = false,
+                            allowed = false,
                             description = binding.etDescription.text.toString().trim(),
                             diameter = binding.etWidth.text.toString().trim().toInt(),
                             height = binding.etHeight.text.toString().trim().toInt(),
@@ -458,15 +609,17 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             image7 = img7,
                             image8 = img8,
                             price = binding.etPrice.text.trim().toString()
-                                .replace("\\s".toRegex(), "").toLong(),
+                                .replace("\\s".toRegex(), "")
+                                .replace(",", "").replace(".", "")
+                                .toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = null,
                             withFertilizer = dungAdd,
                             withPot = potAdd,
                             categoryId = flowerTypeId,
-                            sellerId = 1,
+                            sellerId = AppCache.getHelper().userId,
                             department = departmentId,
-                            shopId = 1,
+                            shopId = null,
                             cityId = cityId,
                             regionId = regionId,
                             myAnnounce = true,
@@ -495,7 +648,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             requireActivity(),
                             R.id.addContainer
                         )
-                    navController.navigate(R.id.action_addFlowerFragment2_to_addSuccess)
+                    navController.navigate(R.id.addFlowerFragment2_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -511,13 +664,13 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         addFlowerViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    val list:ArrayList<String> = arrayListOf()
                     it.data?.forEach {
-                        list.add(it.name)
+                        flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                    setAdapter(binding.spFlowerType,list)
-                    flowerTypeId = flowerTypeList[0]
+                        setAdapter(binding.spFlowerType,flowerNameList)
+                        flowerTypeId = flowerTypeList[0]
+                    binding.spFlowerType.setSelection(spFlowerPosition)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -526,10 +679,19 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun regionResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFlowerViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spVilList, it1) }
+                    it.data?.forEach {
+                        list.add(it.name)
+                        regionIdList.add(it.id)
+                    }
+                    if (regionIdList.isNotEmpty()){
+                        regionId = regionIdList[0]
+                    }
+                    setAdapter(binding.spVilList, list)
+                    binding.spVilList.setSelection(spRegionPosition)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -538,10 +700,19 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         })
     }
     private fun cityResultObserve() {
+        val list:ArrayList<String> = arrayListOf()
         addFlowerViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    it.data?.let { it1 -> setAdapter(binding.spTumanList, it1) }
+                    it.data?.forEach {
+                        list.add(it.name)
+                        cityIdList.add(it.id)
+                    }
+                    if (cityIdList.isNotEmpty()){
+                        cityId = cityIdList[0]
+                    }
+                    setAdapter(binding.spTumanList, list)
+                    binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payment_navigation"
+    app:startDestination="@id/adsCosts">
+    <fragment
+        android:id="@+id/adsCosts"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.payment.ads_price.AdsCostsFragment"
+        android:label="fragment_ads_costs"
+        tools:layout="@layout/fragment_ads_costs" >
+        <action
+            android:id="@+id/action_adsCosts_to_paymentSystems"
+            app:destination="@id/paymentSystems" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentSystems"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.payment.payment_systems.PaymentSystemsFragment"
+        android:label="fragment_payment_systems"
+        tools:layout="@layout/fragment_payment_systems" >
+        <action
+            android:id="@+id/action_paymentSystems_to_successPay"
+            app:destination="@id/successPay"
+            app:popUpTo="@id/paymentSystems"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/successPay"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.payment.success_pay.SuccessPayFragment"
+        android:label="fragment_success_pay"
+        tools:layout="@layout/fragment_success_pay" />
+</navigation>

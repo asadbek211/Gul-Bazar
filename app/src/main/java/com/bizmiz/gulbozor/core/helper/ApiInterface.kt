@@ -13,13 +13,13 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @GET("/announce/announceList")
-    fun getAnnounce(): Call<List<AnnounceData>>
+    fun getAnnounce(): Call<List<AnnounceResponseData>>
 
     @Headers("Content-Type:application/json")
     @POST("/announce")
     fun setAnnounce(
-        @Body announceData: AnnounceData
-    ): Call<AnnounceResponse>
+        @Body announceRequestData: AnnounceRequestData
+    ): Call<AnnounceBaseResponse>
 
     @Multipart
     @POST("/attachment/uploadImage")
@@ -33,7 +33,6 @@ interface ApiInterface {
         @Part image7: MultipartBody.Part?,
         @Part image8: MultipartBody.Part?
     ): Call<ImageResponseData>
-
     @GET("/region")
     fun getRegion(
     ): Call<RegionData>
@@ -45,15 +44,18 @@ interface ApiInterface {
     @GET("/category/allParentCategory")
     fun getFlowerType(
     ): Call<FlowerTypeData>
-
-    @GET("/videoLink/{id}")
-    fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
-
     @GET("/shop")
     fun getShopsList(): Call<List<ShopsListItem>>//todo dataType
 
     @GET("/category/byParentCategoryId/{parentId}")
     fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceData>>
+    @GET("/category/{id}")
+    fun getFlowerTypeById(
+        @Path("id")id:Int
+    ): Call<BaseResponse<FlowerTypeDataItem>>
+
+    @GET("videoLink/{id}")
+    fun getVideoLinkById(@Path("id") id: Int): Call<YoutubeLinkID>
 
     @GET("videoLink?")
     fun getVideoLinkPage(

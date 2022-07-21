@@ -36,7 +36,9 @@
         tools:layout="@layout/fragment_sign_up3">
         <action
             android:id="@+id/action_signUpFragment3_to_signUpFragment4"
-            app:destination="@id/signUpFragment4" />
+            app:destination="@id/signUpFragment4"
+            app:popUpTo="@id/signUpFragment3"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signUpFragment3_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -45,8 +47,7 @@
         android:id="@+id/signUpFragment4"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
-        tools:layout="@layout/fragment_sign_up4">
-    </fragment>
+        tools:layout="@layout/fragment_sign_up4" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"

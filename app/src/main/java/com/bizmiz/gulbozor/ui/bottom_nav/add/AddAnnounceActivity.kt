@@ -14,7 +14,6 @@ import com.bizmiz.gulbozor.databinding.ActivityAddAnnounceBinding
 import com.bizmiz.gulbozor.databinding.ActivityMainBinding
 
 class AddAnnounceActivity : AppCompatActivity() {
-    var destinationId = 0
     private var _binding: ActivityAddAnnounceBinding? = null
     private val binding get() = _binding!!
 
@@ -24,16 +23,5 @@ class AddAnnounceActivity : AppCompatActivity() {
             ContextCompat.getColor(this, R.color.gray_main)
         _binding = ActivityAddAnnounceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
-    override fun onBackPressed() {
-        when(destinationId){
-            0->{
-                super.onBackPressed()
-            }
-            1->{
-                startActivity(Intent(this,MainActivity::class.java))
-                finish()
-            }
-        }
     }
 }

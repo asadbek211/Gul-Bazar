@@ -44,10 +44,6 @@
             app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        android:id="@+id/container"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.add.add_container.ContainerFragment"
-        android:label="ContainerFragment" />
-    <fragment
         android:id="@+id/oneTypeOfCategory"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory.OneTypeOfCategory"
         android:label="OneTypeOfCategory"

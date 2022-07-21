@@ -2,7 +2,10 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.View
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -12,17 +15,16 @@ import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var flowersAdapter: FlowersAdapter
-    private lateinit var binding: FragmentHomeBinding
-
+    private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +32,43 @@ class HomeFragment : Fragment() {
         homeViewModel.getVideoLInkByID()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    private fun destination(categoryId: Int, bundle: Bundle) {
+        val navController =
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.mainContainer
+            )
+        when (categoryId) {
+            1 -> {
+                navController.navigate(R.id.home_to_buketDetails, bundle)
+            }
+            2 -> {
+                navController.navigate(R.id.home_to_flowerDetails, bundle)
+            }
+            3 -> {
+                navController.navigate(R.id.home_to_treeDetails, bundle)
+            }
+            4 -> {
+                navController.navigate(R.id.home_to_potDetails, bundle)
+            }
+            5 -> {
+                navController.navigate(R.id.home_to_fetilizersDetails, bundle)
+            }
+        }
+
+    }
+
+    private fun setListeners() {
+
+        binding.youtubeOthers.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(requireContext(), YouTubeActivity::class.java))
+        })
+
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).destinationId = 0
         flowersAdapter = FlowersAdapter()
         requireActivity().window.statusBarColor =
@@ -49,19 +83,16 @@ class HomeFragment : Fragment() {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.homeRecyclerview.adapter = flowersAdapter
 
         flowersAdapter.onClickListener {
-            val bundle = bundleOf(
-                "flowerData" to it
-            )
-            val navController =
-                Navigation.findNavController(
-                    requireActivity(),
-                    R.id.mainContainer
+            if (it.department != null) {
+                val bundle = bundleOf(
+                    "flowerData" to it,
+                    "desId" to 0,
                 )
-            navController.navigate(R.id.home_to_details, bundle)
+                destination(it.department, bundle)
+            }
         }
 
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)

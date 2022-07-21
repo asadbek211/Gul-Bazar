@@ -13,27 +13,18 @@ import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentLoginBinding
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginMVP
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginPresenter
 import com.bizmiz.gulbozor.ui.start.onBoard.MiddleActivity
 
-class LoginFragment : Fragment(), LoginMVP.View {
+class LoginFragment : Fragment(R.layout.fragment_login), LoginMVP.View {
     private var mIsShowPass = false
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding { FragmentLoginBinding.bind(it) }
 
     private lateinit var presenter: LoginMVP.Presenter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
