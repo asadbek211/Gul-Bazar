@@ -212,7 +212,6 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
         })
 
     }
-
     private fun loadListener(view: View) {
         binding.bucketFlowersTxt.setOnClickListener(View.OnClickListener {
             val action = CategoryFragmentDirections.navCategoryToOne("Buket gullar", "category")

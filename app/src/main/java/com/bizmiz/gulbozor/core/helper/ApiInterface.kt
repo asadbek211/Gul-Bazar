@@ -57,7 +57,7 @@ interface ApiInterface {
     fun getShopsList(): Call<List<ShopsListItem>>//todo dataType
 
     @GET("/category/byParentCategoryId/{parentId}")
-    fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceData>>
+    fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceResponseData>>
 
     @GET("videoLink?")
     fun getVideoLinkPage(

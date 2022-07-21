@@ -269,14 +269,14 @@ class NetworkHelper(
 
     fun getByParentCatID(
         id: Int,
-        onSuccess: (typeData: List<AnnounceData>) -> Unit,
+        onSuccess: (typeData: List<AnnounceResponseData>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(id)
-        call.enqueue(object : Callback<List<AnnounceData>> {
+        call.enqueue(object : Callback<List<AnnounceResponseData>> {
             override fun onResponse(
-                call: Call<List<AnnounceData>>?,
-                response: Response<List<AnnounceData>>?
+                call: Call<List<AnnounceResponseData>>?,
+                response: Response<List<AnnounceResponseData>>?
             ) {
                 if (response != null) {
                     response.body()?.let {
@@ -286,35 +286,10 @@ class NetworkHelper(
                 }
             }
 
-            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<AnnounceResponseData>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 
         })
     }
-
-    fun getAnnounce(
-        onSuccess: (flowerList: List<AnnounceData>) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
-        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
-        call.enqueue(object : Callback<List<AnnounceData>> {
-            override fun onResponse(
-                call: Call<List<AnnounceData>>?,
-                response: Response<List<AnnounceData>>?
-            ) {
-                if (response != null) {
-                    Log.d("listUrl", response.body().toString())
-                    response.body()?.let { onSuccess.invoke(it) }
-                }
-            }
-
-            override fun onFailure(call: Call<List<AnnounceData>>?, t: Throwable?) {
-                onFailure.invoke(t?.localizedMessage)
-            }
-
-        })
-    }
-
-
 }

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         //        BottomNavFragment().visibility()
         binding.editProfile.setOnClickListener {
             val navController =
-                Navigation.findNavController(
+                findNavController(
                     requireActivity(),
                     R.id.mainContainer
                 )
@@ -28,14 +29,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         binding.shop.setOnClickListener {
             val navController =
-                Navigation.findNavController(
+                findNavController(
                     requireActivity(),
                     R.id.mainContainer
                 )
             navController.navigate(R.id.bottomNavFragment_to_createShop)
         }
-    }
-
     }
 
     private fun onBackPressed() {
