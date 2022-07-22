@@ -3,13 +3,13 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewHolder>() {
-    var categoryList = ArrayList<AnnounceData>()
+    var categoryList = ArrayList<AnnounceResponseData>()
         set(value) {
             field.addAll(value)
             notifyDataSetChanged()
@@ -22,7 +22,7 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
 
     inner class ViewHolder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: AnnounceData, position: Int) {
+        fun workWithModel(response: AnnounceResponseData, position: Int) {
             ///binding.youtubeTitle.text=response.videoID.categoryId.toString()
             Glide.with(binding.root.context).load(response.image1)
                 .into(binding.flowerImage)

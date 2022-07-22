@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -76,7 +76,7 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     categoryAdapter.clearAdapter()
-                    categoryAdapter.categoryList = (it.data as ArrayList<AnnounceData>?)!!
+                    categoryAdapter.categoryList = (it.data as ArrayList<AnnounceResponseData>?)!!
                     /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
                         .show()*/
 

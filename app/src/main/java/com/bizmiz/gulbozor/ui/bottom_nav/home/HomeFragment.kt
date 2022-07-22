@@ -58,10 +58,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
-    private fun setListeners() {
+
+    private fun setListeners(view: View) {
 
         binding.youtubeOthers.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(requireContext(), YouTubeActivity::class.java))
+            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi")
+            Navigation.findNavController(view).navigate(action)
+            //todo youtube fragmentga aylantirish kerak
         })
 
     }
@@ -69,6 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners(view)
         (activity as MainActivity).destinationId = 0
         flowersAdapter = FlowersAdapter()
         requireActivity().window.statusBarColor =
@@ -102,25 +106,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             homeViewModel.getAnnounce()
             homeViewModel.getVideoLInkByID()
         }
-        return binding.root
-
-    }
-
-    private fun setListeners(view: View) {
-
-        binding.youtubeOthers.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi")
-            Navigation.findNavController(view).navigate(action)
-            //todo youtube fragmentga aylantirish kerak
-        })
-
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setListeners(view)
-
         binding.categoryWithBucket.setOnClickListener(View.OnClickListener {
             val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
             Navigation.findNavController(view).navigate(action)
@@ -195,10 +180,4 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.youtubePlayerView.release()
-    }
-
 }
