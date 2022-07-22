@@ -7,16 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
 
-class CategoryFragment : androidx.fragment.app.Fragment() {
-
-    private var _binding: FragmentCategoryBinding? = null
-    private val binding get() = _binding!!
-
+class CategoryFragment : Fragment(R.layout.fragment_category) {
+    private val binding by viewBinding { FragmentCategoryBinding.bind(it) }
     private var expanded1: Boolean = false
     private var expanded2: Boolean = false
     private var expanded3: Boolean = false
@@ -24,22 +23,11 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
     private var justNumber1: Int = 0
     private var justNumber2: Int = 0
     private var justNumber3: Int = 0
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         checking()
         onBackPressed()
-
         loadListener(view)
     }
 
@@ -264,7 +252,7 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
 
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
+            ContextCompat.getColor(requireActivity(), R.color.gray_main)
     }
 
     private fun onBackPressed() {

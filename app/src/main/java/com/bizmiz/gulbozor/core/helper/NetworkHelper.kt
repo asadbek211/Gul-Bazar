@@ -200,24 +200,6 @@ class NetworkHelper(
 
         })
     }
-    fun getFlowerTypeById(
-        id:Int,
-        onSuccess: (typeData: FlowerTypeDataItem) -> Unit,
-        onFailure: (msg: String?) -> Unit
-    ) {
-        val call = apiClient.create(ApiInterface::class.java).getFlowerTypeById(id)
-        call.enqueue(object : Callback<BaseResponse<FlowerTypeDataItem>> {
-            override fun onResponse(call: Call<BaseResponse<FlowerTypeDataItem>>?, response: Response<BaseResponse<FlowerTypeDataItem>>?) {
-                if (response != null) {
-                    response.body()?.let { response.body()?.`object`?.let { it1 -> onSuccess.invoke(it1) } }
-                }
-            }
-            override fun onFailure(call: Call<BaseResponse<FlowerTypeDataItem>>?, t: Throwable?) {
-                onFailure.invoke(t?.localizedMessage)
-            }
-
-        })
-    }
 
     fun getShopsList(
         onSuccess: (typeData: List<ShopsListItem>) -> Unit,
@@ -235,6 +217,24 @@ class NetworkHelper(
             }
 
             override fun onFailure(call: Call<List<ShopsListItem>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun getFlowerTypeById(
+        id:Int,
+        onSuccess: (typeData: FlowerTypeDataItem) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getFlowerTypeById(id)
+        call.enqueue(object : Callback<BaseResponse<FlowerTypeDataItem>> {
+            override fun onResponse(call: Call<BaseResponse<FlowerTypeDataItem>>?, response: Response<BaseResponse<FlowerTypeDataItem>>?) {
+                if (response != null) {
+                    response.body()?.let { response.body()?.`object`?.let { it1 -> onSuccess.invoke(it1) } }
+                }
+            }
+            override fun onFailure(call: Call<BaseResponse<FlowerTypeDataItem>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

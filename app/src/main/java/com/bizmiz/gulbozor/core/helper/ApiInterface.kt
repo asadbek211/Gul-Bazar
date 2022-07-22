@@ -44,20 +44,18 @@ interface ApiInterface {
     @GET("/category/allParentCategory")
     fun getFlowerType(
     ): Call<FlowerTypeData>
-
-    @GET("/category/{id}")
-    fun getFlowerTypeById(
-        @Path("id")id:Int
-    ): Call<BaseResponse<FlowerTypeDataItem>>
-
-   @GET("/videoLink/{id}")
-    fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
-
     @GET("/shop")
     fun getShopsList(): Call<List<ShopsListItem>>//todo dataType
 
     @GET("/category/byParentCategoryId/{parentId}")
     fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<AnnounceResponseData>>
+    @GET("/category/{id}")
+    fun getFlowerTypeById(
+        @Path("id")id:Int
+    ): Call<BaseResponse<FlowerTypeDataItem>>
+
+    @GET("videoLink/{id}")
+    fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
 
     @GET("videoLink?")
     fun getVideoLinkPage(

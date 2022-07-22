@@ -1,6 +1,5 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -58,6 +57,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
     }
+
+
     private fun setListeners(view: View) {
 
         binding.youtubeOthers.setOnClickListener(View.OnClickListener {
@@ -71,6 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners(view)
         (activity as MainActivity).destinationId = 0
         flowersAdapter = FlowersAdapter()
         requireActivity().window.statusBarColor =
@@ -96,6 +98,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 destination(it.department, bundle)
             }
         }
+
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
 
@@ -103,8 +106,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             homeViewModel.getAnnounce()
             homeViewModel.getVideoLInkByID()
         }
-        setListeners(view)
-
         binding.categoryWithBucket.setOnClickListener(View.OnClickListener {
             val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
             Navigation.findNavController(view).navigate(action)
@@ -179,10 +180,4 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.youtubePlayerView.release()
-    }
-
 }

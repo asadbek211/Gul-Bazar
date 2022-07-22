@@ -27,11 +27,12 @@
 
             <ImageView
                 android:id="@+id/back_pressed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_arrow_back_gray"
-                app:layout_constraintBottom_toBottomOf="@id/logo_place"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:padding="16dp"
+                android:src="@drawable/ic_back_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
