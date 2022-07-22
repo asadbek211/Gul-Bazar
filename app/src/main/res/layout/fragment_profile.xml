@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView1"
-        app:tint="@color/Secondary_color" />
+        app:tint="@color/secondary_color" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="1dp"
                 android:text="Xush kelibsiz"
-                android:textColor="@color/Secondary_color"
+                android:textColor="@color/secondary_color"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/userImages"
@@ -394,7 +394,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:text="Sizga qanday yordam\nbera olamiz?"
-                    android:textColor="@color/Secondary_color"
+                    android:textColor="@color/secondary_color"
                     android:textSize="14dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
