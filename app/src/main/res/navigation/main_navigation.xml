@@ -11,16 +11,116 @@
         android:label="BottomNavFragment"
         tools:layout="@layout/fragment_bottom_nav">
         <action
-            android:id="@+id/home_to_details"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/home_to_flowerDetails"
+            app:destination="@id/flowerDetails" />
+        <action
+            android:id="@+id/home_to_buketDetails"
+            app:destination="@id/buketDetails" />
+        <action
+            android:id="@+id/home_to_fetilizersDetails"
+            app:destination="@id/fetilizersDetails" />
+        <action
+            android:id="@+id/home_to_potDetails"
+            app:destination="@id/potDetails" />
+        <action
+            android:id="@+id/home_to_treeDetails"
+            app:destination="@id/treeDetails" />
+        <action
+            android:id="@+id/bottomNavFragment_to_editProfile"
+            app:destination="@id/editProfile" />
+        <action
+            android:id="@+id/bottomNavFragment_to_createShop"
+            app:destination="@id/createShop" />
     </fragment>
     <fragment
-        android:id="@+id/detailsFragment"
+        android:id="@+id/flowerDetails"
         android:label="DetailsFragment"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.DetailsFragment"
-        tools:layout="@layout/fragment_details">
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsFragment"
+        tools:layout="@layout/fragment_flower_details" >
         <action
-            android:id="@+id/details_to_home"
-            app:destination="@id/bottomNavFragment" />
+            android:id="@+id/action_flowerDetails_to_editFlower"
+            app:destination="@id/editFlower" />
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment_buket_details"
+        android:id="@+id/buketDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.buket_details.BuketDetailsFragment"
+        android:label="BuketDetailsFragment" >
+        <action
+            android:id="@+id/action_buketDetails_to_editBuket"
+            app:destination="@id/editBuket" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_fetilizers_details"
+        android:id="@+id/fetilizersDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.FetilizersDetailsFragment"
+        android:label="FetilizersDetailsFragment" >
+        <action
+            android:id="@+id/action_fetilizersDetails_to_editFertilizers"
+            app:destination="@id/editFertilizers" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_pot_details"
+        android:id="@+id/potDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsFragment"
+        android:label="PotDetailsFragment" >
+        <action
+            android:id="@+id/action_potDetails_to_editPot"
+            app:destination="@id/editPot" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_tree_details"
+        android:id="@+id/treeDetails"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsFragment"
+        android:label="TreeDetailsFragment" >
+        <action
+            android:id="@+id/action_treeDetails_to_editTree"
+            app:destination="@id/editTree" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_edit_profile"
+        android:id="@+id/editProfile"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.edit.EditProfileFragment"
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfile_to_profileEditSuccessFragment"
+            app:destination="@id/profileEditSuccessFragment"
+            app:popUpTo="@id/editProfile"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_success_edit_profile"
+        android:id="@+id/profileEditSuccessFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.edit.success.ProfileEditSuccessFragment"
+        android:label="ProfileEditSuccessFragment" />
+    <fragment
+        tools:layout="@layout/fragment_create_shop"
+        android:id="@+id/createShop"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopFragment"
+        android:label="CreateShopFragment" />
+    <fragment
+        tools:layout="@layout/fragment_edit_buket"
+        android:id="@+id/editBuket"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_buket.EditBuketFragment"
+        android:label="EditBuketFragment" />
+    <fragment
+        tools:layout="@layout/fragment_edit_flower"
+        android:id="@+id/editFlower"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_flower.EditFlowerFragment"
+        android:label="EditFlowerFragment" />
+    <fragment
+        tools:layout="@layout/fragment_edit_fertilizers"
+        android:id="@+id/editFertilizers"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_fetilizers.EditFertilizersFragment"
+        android:label="EditFertilizersFragment" />
+    <fragment
+        tools:layout="@layout/fragment_edit_pot"
+        android:id="@+id/editPot"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_pot.EditPotFragment"
+        android:label="EditPotFragment" />
+    <fragment
+        tools:layout="@layout/fragment_edit_tree"
+        android:id="@+id/editTree"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_tree.EditTreeFragment"
+        android:label="EditTreeFragment" />
 </navigation>

@@ -12,21 +12,21 @@
         android:layout_height="?actionBarSize">
 
         <ImageView
-            android:id="@+id/on_back_you_tube"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:paddingEnd="25dp"
-            android:src="@drawable/ic_arrow_back_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:padding="6dp"
             android:src="@drawable/ic_gulbazar_logo"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/on_back_you_tube"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="16dp"
+            android:src="@drawable/ic_back_icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

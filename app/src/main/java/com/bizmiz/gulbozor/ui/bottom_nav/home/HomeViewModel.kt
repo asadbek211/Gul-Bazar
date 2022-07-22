@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getAnnounce: MutableLiveData<Resource<List<AnnounceData>>> = MutableLiveData()
-    val announce: LiveData<Resource<List<AnnounceData>>>
+    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> = MutableLiveData()
+    val announce: LiveData<Resource<List<AnnounceResponseData>>>
         get() = getAnnounce
 
     private val videoLinkVM: MutableLiveData<Resource<YouTubeLinkID>> = MutableLiveData()

@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceData
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class OneTypeOfCatVM(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getParentCategory: MutableLiveData<Resource<List<AnnounceData>>> = MutableLiveData()
-    val parentCategory: LiveData<Resource<List<AnnounceData>>> get() = getParentCategory
+    private val getParentCategory: MutableLiveData<Resource<List<AnnounceResponseData>>> = MutableLiveData()
+    val parentCategory: LiveData<Resource<List<AnnounceResponseData>>> get() = getParentCategory
 
-    private val getAnnounce: MutableLiveData<Resource<List<AnnounceData>>> = MutableLiveData()
-    val announce: LiveData<Resource<List<AnnounceData>>>
+    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> = MutableLiveData()
+    val announce: LiveData<Resource<List<AnnounceResponseData>>>
         get() = getAnnounce
 
     fun getParentCatByID(id: Int) {

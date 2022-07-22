@@ -9,7 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hint_color">#717171</color>
     <color name="green_color">#32CD32</color>
-
+    <color name="ads_color">#F5F5F5</color>
+    <color name="Secondary_color">#FF6500</color>
+    <color name="menu_ripple_2">#00FF0A</color>
     <color name="menu_ripple">#00DF4C</color>
     <color name="menu_non_select">#9F9FA1</color>
     <color name="gray_main">#ECEBEB</color>

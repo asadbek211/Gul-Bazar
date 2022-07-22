@@ -3,11 +3,9 @@ package com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_fertilizers
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bizmiz.gulbozor.core.models.AnnounceResponse
 import com.bizmiz.gulbozor.core.utils.Resource
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceData
-import com.bizmiz.gulbozor.core.models.FlowerTypeData
+import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 
@@ -16,15 +14,18 @@ class AddFertilizersViewModel(private val networkHelper: NetworkHelper) : ViewMo
     private val setImage: MutableLiveData<Resource<ImageResponseData>> = MutableLiveData()
     val result: LiveData<Resource<ImageResponseData>>
         get() = setImage
-    private val setAnnounce: MutableLiveData<Resource<AnnounceResponse>> = MutableLiveData()
-    val resultAnnounce: LiveData<Resource<AnnounceResponse>>
+    private val setAnnounce: MutableLiveData<Resource<AnnounceBaseResponse>> = MutableLiveData()
+    val resultAnnounce: LiveData<Resource<AnnounceBaseResponse>>
         get() = setAnnounce
-    private val getRegion: MutableLiveData<Resource<List<String>>> = MutableLiveData()
-    val regionList: LiveData<Resource<List<String>>>
+    private val getRegion: MutableLiveData<Resource<RegionData>> = MutableLiveData()
+    val regionList: LiveData<Resource<RegionData>>
         get() = getRegion
-    private val getCity: MutableLiveData<Resource<List<String>>> = MutableLiveData()
-    val cityData: LiveData<Resource<List<String>>>
+    private val getCity: MutableLiveData<Resource<ArrayList<CityDataItem>>> = MutableLiveData()
+    val cityData: LiveData<Resource<ArrayList<CityDataItem>>>
         get() = getCity
+    private val getType: MutableLiveData<Resource<FlowerTypeData>> = MutableLiveData()
+    val getTypeData: LiveData<Resource<FlowerTypeData>>
+        get() = getType
     fun addFlower(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -41,8 +42,8 @@ class AddFertilizersViewModel(private val networkHelper: NetworkHelper) : ViewMo
             setImage.value = Resource.error(it)
         })
     }
-    fun setAnnounce(announceData: AnnounceData) {
-        networkHelper.setAnnounce(announceData, {
+    fun setAnnounce(announceRequestData: AnnounceRequestData) {
+        networkHelper.setAnnounce(announceRequestData, {
             setAnnounce.value = Resource.success(it)
         }, {
             setAnnounce.value = Resource.error(it)
@@ -60,6 +61,13 @@ class AddFertilizersViewModel(private val networkHelper: NetworkHelper) : ViewMo
             getCity.value = Resource.success(it)
         }, {
             getCity.value = Resource.error(it)
+        })
+    }
+    fun getFlowerType() {
+        networkHelper.getFlowerType({
+            getType.value = Resource.success(it)
+        }, {
+            getType.value = Resource.error(it)
         })
     }
 }

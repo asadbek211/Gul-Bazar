@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.ui.start.onBoard
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -24,7 +25,10 @@ class SetUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySetUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        window.setFlags(
+            0,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         if (!boardOpen) {
             loadBoardData()
             windowStatus()

@@ -23,6 +23,16 @@
         android:windowSoftInputMode="adjustPan"
         tools:targetApi="31">
         <activity
+            android:name=".ui.bottom_nav.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.start.onBoard.SetUpActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.youtube.YouTubeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.bottom_nav.add.AddAnnounceActivity"
             android:exported="false" />
         <activity
@@ -33,9 +43,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.start.onBoard.SetUpActivity"
+            android:name=".ui.start.splash_screen.SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
