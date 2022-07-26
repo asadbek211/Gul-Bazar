@@ -46,7 +46,7 @@ class FragmentShops : Fragment() {
         announceObserve()
         onBackHomePressed()
 
-        binding.onBackPressed.setOnClickListener(View.OnClickListener {
+        binding.backPressed.setOnClickListener(View.OnClickListener {
             if (args.onBack == "home") {
                 findNavController().navigate(R.id.nav_shops_to_home)
             } else {

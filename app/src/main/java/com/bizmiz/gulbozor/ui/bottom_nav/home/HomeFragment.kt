@@ -2,7 +2,6 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -62,9 +61,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun setListeners(view: View) {
 
         binding.youtubeOthers.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi")
+            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
             Navigation.findNavController(view).navigate(action)
-            //todo youtube fragmentga aylantirish kerak
         })
 
     }

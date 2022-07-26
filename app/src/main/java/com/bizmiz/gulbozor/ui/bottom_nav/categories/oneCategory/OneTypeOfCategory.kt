@@ -54,13 +54,16 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
         val category = args.categoryName
         binding.oneCatTitle.text = category
         windowStatus()
-
+        onBackPressed()
         announceObserve()
-        if (args.onBack == "home") {
-            onBackHomePressed()
-        } else if (args.onBack == "category") {
-            onBackCategoryPressed()
-        }
+
+        binding.backPressed.setOnClickListener(View.OnClickListener {
+            if (args.onBack == "home") {
+                findNavController().navigate(R.id.one_to_home)
+            } else if (args.onBack == "category") {
+                findNavController().navigate(R.id.onBack_to_category)
+            }
+        })
     }
 
     private fun announceObserve() {
@@ -91,22 +94,17 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
 
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
+            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
     }
 
-    private fun onBackHomePressed() {
+    private fun onBackPressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.one_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
-    private fun onBackCategoryPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.onBack_to_category)
+                if (args.onBack == "home") {
+                    findNavController().navigate(R.id.one_to_home)
+                } else if (args.onBack == "category") {
+                    findNavController().navigate(R.id.onBack_to_category)
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callBack)

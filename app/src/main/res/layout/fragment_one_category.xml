@@ -17,11 +17,32 @@
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:padding="6dp"
-                android:src="@drawable/ic_gulbazar_logo" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/logo_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="#fff"
+                    android:paddingBottom="4dp"
+                    android:src="@drawable/ic_gulbazar_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/back_pressed"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_back_icon"
+                    app:layout_constraintStart_toStartOf="@id/logo_place"
+                    app:layout_constraintTop_toTopOf="@id/logo_place" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <ImageView
@@ -61,7 +82,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recyclerView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2"

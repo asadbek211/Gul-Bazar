@@ -2,9 +2,7 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -238,11 +236,15 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         })
 
         binding.hotRoomCat.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToYouTube("Issiq xona qurish")
+            val action =
+                CategoryFragmentDirections.navCategoryToYouTube("Issiq xona qurish", "category")
             Navigation.findNavController(view).navigate(action)
         })
         binding.takeCareCat.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToYouTube("Parvarishlash darslari")
+            val action = CategoryFragmentDirections.navCategoryToYouTube(
+                "Parvarishlash darslari",
+                "category"
+            )
             Navigation.findNavController(view).navigate(action)
         })
         binding.shopsCat.setOnClickListener(View.OnClickListener {

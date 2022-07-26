@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -43,7 +44,7 @@ class YouTubeFragment : Fragment() {
         adapter = YouTubeAdapter()
         binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.youtubeRecyclerView.adapter = adapter
-
+        onBackPressed()
         windowStatus()
         setListeners()
         announceObserve()
@@ -81,7 +82,20 @@ class YouTubeFragment : Fragment() {
 
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
+            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
+    }
+
+    private fun onBackPressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (args.back == "category") {
+                    findNavController().navigate(R.id.youtube_to_category)
+                } else if (args.back == "home") {
+                    findNavController().navigate(R.id.nav_on_back_youtube_to_home)
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
 
 }

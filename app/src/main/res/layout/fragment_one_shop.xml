@@ -30,11 +30,10 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
                 android:padding="16dp"
                 android:src="@drawable/ic_back_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@id/logo_place"
+                app:layout_constraintTop_toTopOf="@id/logo_place" />
 
             <ImageView
                 android:id="@+id/logo_shop"

@@ -115,6 +115,10 @@
             android:name="title"
             android:defaultValue="youtube"
             app:argType="string" />
+        <argument
+            android:name="back"
+            android:defaultValue="home"
+            app:argType="string" />
         <action
             android:id="@+id/nav_on_back_youtube_to_home"
             app:destination="@id/navigation_home" />

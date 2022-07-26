@@ -31,13 +31,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
                 <ImageView
-                    android:id="@+id/onBackPressed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_arrow_back_gray"
-                    app:layout_constraintBottom_toBottomOf="@id/logo_place"
+                    android:id="@+id/back_pressed"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_back_icon"
                     app:layout_constraintStart_toStartOf="@id/logo_place"
                     app:layout_constraintTop_toTopOf="@id/logo_place" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -79,6 +80,10 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_shops" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="77dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

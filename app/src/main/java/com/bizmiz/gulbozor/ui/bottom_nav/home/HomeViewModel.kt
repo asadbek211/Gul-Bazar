@@ -18,7 +18,7 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
         get() = videoLinkVM
 
     fun getVideoLInkByID() {
-        networkHelper.getYouTubeById(id = 6,
+        networkHelper.getYouTubeById(id = 1,
             {
                 videoLinkVM.value = Resource.success(it!!)
             }, {

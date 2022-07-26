@@ -5,9 +5,9 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
-import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
 
@@ -28,6 +28,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 )
             navController.navigate(R.id.bottomNavFragment_to_editProfile)
         }
+        binding.shop.isSelected = true
         binding.shop.setOnClickListener {
             val navController =
                 Navigation.findNavController(
