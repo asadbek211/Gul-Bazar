@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context="com.bizmiz.gulbozor.ui.bottom_nav.home.HomeFragment">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="110dp"
@@ -18,9 +19,9 @@
 
     <ImageView
         android:id="@+id/btnSearch"
-        android:layout_marginEnd="20dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
         android:padding="15dp"
         android:src="@drawable/search"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -30,10 +31,10 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
-        android:layout_marginTop="10dp"
-        android:background="#ECEBEB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ECEBEB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSearch">
@@ -58,15 +59,30 @@
                     android:layout_height="match_parent">
 
 
-                    <ImageView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/rec_view"
                         android:layout_width="match_parent"
-                        android:layout_height="222dp"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/rec_image"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.denzcoskun.imageslider.ImageSlider
+                                android:id="@+id/imageSlider"
+                                android:layout_width="match_parent"
+                                android:layout_height="222dp"
+                                app:iss_auto_cycle="true"
+                                app:iss_corner_radius="10"
+                                app:iss_delay="1000"
+                                app:iss_period="1000"
+                                app:iss_placeholder="@drawable/ic_gulbazar_logo" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cons_cat"

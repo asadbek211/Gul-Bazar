@@ -14,9 +14,12 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OneTypeOfCategory : androidx.fragment.app.Fragment() {
+    private val slideModels: ArrayList<SlideModel> = ArrayList()
 
     val args: OneTypeOfCategoryArgs by navArgs()
 
@@ -33,6 +36,7 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
         super.onCreate(savedInstanceState)
         viewModel.getParentCatByID(parentId)
         viewModel.getAnnounce()
+        viewModel.getReklamaImages(4)
     }
 
     override fun onCreateView(
@@ -83,6 +87,21 @@ class OneTypeOfCategory : androidx.fragment.app.Fragment() {
                     /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
                         .show()*/
 
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        viewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image4, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image5, ScaleTypes.FIT))
+                    binding.imageSlider.setImageList(slideModels, ScaleTypes.FIT)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

@@ -16,9 +16,13 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentYouTubeBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class YouTubeFragment : Fragment() {
+
+    private val slideModels: ArrayList<SlideModel> = ArrayList()
 
     private val youTubeVM: YouTubeViewModel by viewModel()
     val args: YouTubeFragmentArgs by navArgs()
@@ -26,6 +30,11 @@ class YouTubeFragment : Fragment() {
     private lateinit var adapter: YouTubeAdapter
     private var _binding: FragmentYouTubeBinding? = null
     private val binding get() = _binding!!
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        youTubeVM.getYouTubePage()
+        youTubeVM.getReklamaImages(2)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +49,6 @@ class YouTubeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryType.text = args.title
 
-        youTubeVM.getYouTubePage()
         adapter = YouTubeAdapter()
         binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.youtubeRecyclerView.adapter = adapter
@@ -75,6 +83,21 @@ class YouTubeFragment : Fragment() {
                 }
                 ResourceState.LOADING -> {
 
+                }
+            }
+        })
+        youTubeVM.getReklamaId.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image4, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image5, ScaleTypes.FIT))
+                    binding.imageSlider.setImageList(slideModels, ScaleTypes.FIT)
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })

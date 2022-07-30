@@ -16,6 +16,8 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,10 +27,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var flowersAdapter: FlowersAdapter
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
+    private val slideModels: ArrayList<SlideModel> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce()
         homeViewModel.getVideoLInkByID()
+        homeViewModel.getReklamaImages(1)
     }
 
     private fun destination(categoryId: Int, bundle: Bundle) {
@@ -144,6 +149,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        homeViewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    binding.swipeContainer.isRefreshing = false
+                    slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image4, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image5, ScaleTypes.FIT))
+                    binding.imageSlider.setImageList(slideModels, ScaleTypes.FIT)
+                }
+                ResourceState.ERROR -> {
+                    binding.swipeContainer.isRefreshing = false
+                    Toast.makeText(
+                        requireContext(),
+                        "Reklama error" + it.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

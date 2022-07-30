@@ -1,6 +1,7 @@
 package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
@@ -68,4 +69,7 @@ interface ApiInterface {
         @Query("page") page: Int
 
     ): Call<OneShopData>
+
+    @GET("/reklama/{id}")
+    fun getReklamaId(@Path("id") id: Int): Call<ReklamaImages>
 }

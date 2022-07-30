@@ -96,4 +96,8 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 
 
+    //SlideImage uchun  reclama joyiga
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
+
 }

@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
@@ -261,6 +262,32 @@ class NetworkHelper(
             }
 
             override fun onFailure(call: Call<YouTubeLinkID>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getReklamaById(
+        id: Int,
+        onSuccess: (typeData: ReklamaImages?) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getReklamaId(id)
+        call.enqueue(object : Callback<ReklamaImages> {
+            override fun onResponse(
+                call: Call<ReklamaImages>?,
+                response: Response<ReklamaImages>?
+            ) {
+                if (response != null) {
+                    response.body()?.let {
+                        onSuccess.invoke(it)
+                    }
+                    Log.d("YUTAG", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ReklamaImages>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 
