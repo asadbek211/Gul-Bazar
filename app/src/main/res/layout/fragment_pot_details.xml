@@ -137,7 +137,6 @@
                     android:paddingTop="10dp"
                     android:paddingEnd="50dp"
                     android:paddingBottom="10dp"
-                    android:text="Plastmassa"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     app:layout_constraintStart_toStartOf="@+id/flowerPriceTypeUSD"
@@ -314,6 +313,7 @@
                     android:textColor="@color/white"
                     android:textSize="11dp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnEdit"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -339,6 +339,7 @@
                     android:textColor="@color/white"
                     android:textSize="11dp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnRemove"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -394,6 +395,7 @@
         android:background="@drawable/product_view_button_shape"
         android:padding="9dp"
         android:src="@drawable/ic_baseline_favorite_border_24"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivBack" />
 

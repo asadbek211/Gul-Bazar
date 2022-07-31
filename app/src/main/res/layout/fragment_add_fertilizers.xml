@@ -47,7 +47,7 @@
                     android:background="@drawable/text_shape2"
                     android:gravity="center">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -223,7 +223,7 @@
                 android:text="Og'irligini kiriting."
                 android:textColor="#797979"
                 android:textSize="10dp"
-                app:layout_constraintStart_toStartOf="@+id/etWeight"
+                app:layout_constraintStart_toStartOf="@+id/etWeightLay"
                 app:layout_constraintTop_toBottomOf="@+id/priceLayout" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -245,7 +245,7 @@
                     android:background="@drawable/text_shape2"
                     android:gravity="center">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etPrice"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -310,7 +310,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="@+id/priceLayout"
@@ -327,42 +327,43 @@
                 app:layout_constraintEnd_toEndOf="@+id/spFetilizerType"
                 app:layout_constraintTop_toTopOf="@+id/spFetilizerType" />
 
-            <EditText
-                android:id="@+id/etWeight"
+            <LinearLayout
+                android:id="@+id/etWeightLay"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/text_shape2"
-                android:gravity="end|center_vertical"
-                android:hint="0"
-                android:imeOptions="actionSearch"
-                android:inputType="number"
-                android:maxLength="4"
-                android:maxLines="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="50dp"
-                android:singleLine="true"
-                android:textColor="@color/hint_color"
-                android:textColorHint="@color/hint_color"
-                android:textSize="14dp"
-                android:theme="@style/editTextStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/spPriceType"
-                app:layout_constraintTop_toBottomOf="@+id/title10" />
-
-            <TextView
-                android:id="@+id/widthType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="kg"
-                android:textColor="@color/hint_color"
-                android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/etWeight"
-                app:layout_constraintEnd_toEndOf="@+id/etWeight"
-                app:layout_constraintHorizontal_bias="0.67"
-                app:layout_constraintStart_toStartOf="@+id/etWeight"
-                app:layout_constraintTop_toTopOf="@+id/etWeight" />
-
+                app:layout_constraintTop_toBottomOf="@+id/title10" >
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etWeight"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/text_shape2"
+                    android:gravity="end|center_vertical"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:maxLines="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/hint_color"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="14dp"
+                    android:theme="@style/editTextStyle"/>
+                <TextView
+                    android:layout_weight="0.6"
+                    android:id="@+id/widthType"
+                    android:layout_width="0dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:text="kg"
+                    android:textColor="@color/hint_color"
+                    android:textSize="14dp"/>
+            </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/descriptionLayout"
                 android:layout_width="0dp"
@@ -409,7 +410,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etWeight" />
+                app:layout_constraintTop_toBottomOf="@+id/etWeightLay" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneLayout"
@@ -438,7 +439,7 @@
                         android:text="+998"
                         android:textSize="14dp" />
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etNumber"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -447,7 +448,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingStart="5dp"
-                        android:paddingEnd="20dp"
+                        android:paddingEnd="10dp"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/hint_color"
@@ -478,7 +479,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toStartOf="@+id/spTumanList"
@@ -515,7 +516,7 @@
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"

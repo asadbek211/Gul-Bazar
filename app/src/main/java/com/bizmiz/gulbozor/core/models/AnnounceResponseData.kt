@@ -1,18 +1,22 @@
 package com.bizmiz.gulbozor.core.models
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AnnounceResponseData(
     val id:Int?,
-    val createAt:String?,
+    val createAt:Long?,
     val categoryId: Int?,
     val cityId: Int?,
     val department: Int?,
     val description: String,
     val diameter: Int?,
     val height: Int?,
+    val regionName: String?,
+    val cityName: String?,
+    val callingCount:Int?,
     val image1: String?,
     val image2: String?,
     val image3: String?,
@@ -23,13 +27,13 @@ data class AnnounceResponseData(
     val image8: String?,
     val myAnnounce: Boolean?,
     val phoneNumber:String?,
-val price:Long,
-val regionId:Int?,
-val seller:Boolean?,
-val sellerId:Int?,
-val shopId:Int?,
-val title:String,
-val topNumber:Int?,
+    val price:Long,
+    val regionId:Int?,
+    val seller:Boolean?,
+    val sellerId:Int?,
+    val shopId:Int?,
+    val title:String,
+    val topNumber:Int?,
     val weight: Int?,
     val withFertilizer: Boolean?,
     val withPot: Boolean?

@@ -119,7 +119,7 @@
                     android:layout_marginStart="5dp"
                     android:gravity="start"
                     android:lines="1"
-                    android:text="Ko’chat nomi"
+                    android:text="Ko'chat nomi"
                     android:textColor="#8F8B8B"
                     android:textSize="10dp"
                     app:layout_constraintBottom_toTopOf="@+id/flowerType"
@@ -133,14 +133,13 @@
                     android:background="@drawable/text_shape_border"
                     android:gravity="start"
                     android:lines="1"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="50dp"
-                    android:paddingBottom="10dp"
-                    android:text="Ramashka"
+                    android:minWidth="150dp"
+                    android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="15dp"
-                    app:layout_constraintStart_toStartOf="@+id/flowerPriceTypeUSD"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tvDescription"
                     app:layout_constraintTop_toBottomOf="@+id/flowerPrice" />
 
                 <TextView
@@ -194,6 +193,7 @@
                     android:textColor="@color/white"
                     android:textSize="11dp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnEdit"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -219,6 +219,7 @@
                     android:textColor="@color/white"
                     android:textSize="11dp"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnRemove"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -274,6 +275,7 @@
         android:background="@drawable/product_view_button_shape"
         android:padding="9dp"
         android:src="@drawable/ic_baseline_favorite_border_24"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivBack" />
 

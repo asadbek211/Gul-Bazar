@@ -25,14 +25,9 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.utils.NumberFormat
-import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
-import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.core.utils.viewBinding
-import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
+import com.bizmiz.gulbozor.core.utils.*
 import com.bizmiz.gulbozor.databinding.FragmentAddTreeBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
-import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -77,16 +72,21 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
     private var departmentId:Int? = null
     private var isSeller:Boolean? = null
     private var flowerTypeList:ArrayList<Int> = arrayListOf()
+    private var flowerTypeList2:ArrayList<Int> = arrayListOf()
     private var flowerTypeId:Int? = null
+    private var flowerTypeId2:Int? = null
     private var spFlowerPosition:Int = 0
+    private var spFlowerPosition2:Int = 0
     private var spRegionPosition:Int = 0
     private var spCityPosition:Int = 0
     private lateinit var flowerNameList:ArrayList<String>
+    private lateinit var flowerNameList2:ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addTreeViewModel.getRegion()
-        addTreeViewModel.getFlowerType()
+        addTreeViewModel.getByParentCatID(Constant.TREE_CATEGORY_ID)
         flowerNameList = arrayListOf()
+        flowerNameList2 = arrayListOf()
     }
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -306,13 +306,13 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                         image6 = img6,
                         image7 = img7,
                         image8 = img8,
-                        price = binding.etPrice.text.trim().toString()
+                        price = binding.etPrice.text?.trim().toString()
                             .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
                         title = binding.etTitle.text.toString().trim(),
                         weight = null,
                         withFertilizer = null,
                         withPot = null,
-                        categoryId = flowerTypeId,
+                        categoryId = flowerTypeId2,
                         sellerId = AppCache.getHelper().userId,
                         department = departmentId,
                         shopId = null,
@@ -321,12 +321,15 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                         myAnnounce = true,
                         topNumber = 0,
                         phoneNumber =
-                        "+998${binding.etNumber.text.trim().toString()
+                        "+998${binding.etNumber.text?.trim().toString()
                             .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
-                        createAt = null
+                        createAt = null,
+                        callingCount = null,
+                        regionName = null,
+                        cityName = null
                     ),
                     "desId" to 1,
                 )
@@ -341,6 +344,7 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
         imageResultObserve()
         regionResultObserve()
         typeResultObserve()
+        typeResultByIdObserve()
         cityResultObserve()
         binding.image1.onClick {
 
@@ -404,7 +408,7 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
             }
 
         })
-        binding.spFlowerType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spFlowerType1.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -413,6 +417,22 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
             ) {
                 flowerTypeId = flowerTypeList[position]
                 spFlowerPosition = position
+                addTreeViewModel.getFlowerTypeById(flowerTypeId!!)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+        binding.spFlowerType2.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                flowerTypeId2 = flowerTypeList2[position]
+                spFlowerPosition2 = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -547,13 +567,13 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                             image6 = img6,
                             image7 = img7,
                             image8 = img8,
-                            price = binding.etPrice.text.trim().toString()
+                            price = binding.etPrice.text?.trim().toString()
                                 .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = null,
                             withFertilizer = null,
                             withPot = null,
-                            categoryId = flowerTypeId,
+                            categoryId = flowerTypeId2,
                             sellerId = AppCache.getHelper().userId,
                             department = departmentId,
                             shopId = null,
@@ -562,7 +582,7 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                             myAnnounce = true,
                             topNumber = 0,
                             phoneNumber =
-                            "+998${binding.etNumber.text.trim().toString()
+                            "+998${binding.etNumber.text?.trim().toString()
                                 .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
@@ -588,6 +608,7 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                     navController.navigate(R.id.addTree_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -623,6 +644,8 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
         addTreeViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
+                    list.clear()
+                    cityIdList.clear()
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
@@ -640,16 +663,38 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
         })
     }
     private fun typeResultObserve() {
-        addTreeViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
+        addTreeViewModel.parentCatData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
+                    flowerTypeList.clear()
+                    flowerNameList.clear()
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                    setAdapter(binding.spFlowerType,flowerNameList)
+                    setAdapter(binding.spFlowerType1,flowerNameList)
                     flowerTypeId = flowerTypeList[0]
-                    binding.spFlowerType.setSelection(spFlowerPosition)
+                    binding.spFlowerType1.setSelection(spFlowerPosition)
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun typeResultByIdObserve() {
+        addTreeViewModel.flowerTypeData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS-> {
+                    flowerTypeList2.clear()
+                    flowerNameList2.clear()
+                    it.data?.forEach {
+                        flowerNameList2.add(it.name)
+                        flowerTypeList2.add(it.id)
+                    }
+                    setAdapter(binding.spFlowerType2,flowerNameList2)
+                    flowerTypeId2 = flowerTypeList2[0]
+                    binding.spFlowerType2.setSelection(spFlowerPosition2)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -659,7 +704,7 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
     }
     private fun checkAnnounce(): Boolean {
         return when {
-            binding.etTitle.text.isEmpty() -> {
+            binding.etTitle.text?.isEmpty() == true -> {
                 binding.titleLayout.error = "Sarlavha kiriting"
                 binding.etTitle.showSoftKeyboard()
                 false
@@ -669,19 +714,46 @@ class AddTreeFragment : Fragment(R.layout.fragment_add_tree) {
                     .show()
                 false
             }
-            binding.etPrice.text.isEmpty() -> {
+            flowerTypeId==null -> {
+                Toast.makeText(requireActivity(), "Ko'chat turini olib bo'lmadi\nInternet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            flowerTypeId2==null -> {
+                Toast.makeText(requireActivity(), "Ko'chat nomini olib bo'lmadi\nInternet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            binding.etPrice.text?.isEmpty() == true -> {
                 binding.priceLayout.error = "Narx kiriting"
                 binding.etPrice.showSoftKeyboard()
                 false
             }
-            binding.etNumber.text.isEmpty() -> {
+            binding.etNumber.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
                 binding.etNumber.showSoftKeyboard()
+                false
+            }
+            regionId==null -> {
+                Toast.makeText(requireActivity(), "Viloyat nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            cityId==null -> {
+                Toast.makeText(requireActivity(), "Tuman nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
                 false
             }
             binding.etDescription.text?.isEmpty() == true -> {
                 binding.descriptionLayout.error = "Qo'shimcha ma'lumot kiriting"
                 binding.etDescription.showSoftKeyboard()
+                false
+            }
+            !networkCheck(requireContext()) -> {
+                Toast.makeText(requireActivity(), "Internet aloqasi yo'q", Toast.LENGTH_SHORT)
+                    .show()
                 false
             }
             else -> {

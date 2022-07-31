@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.utils.Resource
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 
@@ -23,9 +24,12 @@ class AddTreeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     private val getCity: MutableLiveData<Resource<ArrayList<CityDataItem>>> = MutableLiveData()
     val cityData: LiveData<Resource<ArrayList<CityDataItem>>>
         get() = getCity
-    private val getType: MutableLiveData<Resource<FlowerTypeData>> = MutableLiveData()
-    val getTypeData: LiveData<Resource<FlowerTypeData>>
-        get() = getType
+    private val getParentCatID: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
+    val parentCatData: LiveData<Resource<List<ByParentIDItem>>>
+        get() = getParentCatID
+    private val flowerTypeDataItem: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
+    val flowerTypeData: LiveData<Resource<List<ByParentIDItem>>>
+        get() = flowerTypeDataItem
     fun addFlower(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -63,11 +67,22 @@ class AddTreeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
             getCity.value = Resource.error(it)
         })
     }
-    fun getFlowerType() {
-        networkHelper.getFlowerType({
-            getType.value = Resource.success(it)
+    fun getByParentCatID(
+        parentId:Int
+    ) {
+        networkHelper.getByParentCatID(parentId,{
+            getParentCatID.value = Resource.success(it)
         }, {
-            getType.value = Resource.error(it)
+            getParentCatID.value = Resource.error(it)
+        })
+    }
+    fun getFlowerTypeById(
+        id:Int
+    ) {
+        networkHelper.getByParentCatID(id,{
+            flowerTypeDataItem.value = Resource.success(it)
+        }, {
+            flowerTypeDataItem.value = Resource.error(it)
         })
     }
 }

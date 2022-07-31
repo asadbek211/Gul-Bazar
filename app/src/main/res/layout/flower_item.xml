@@ -42,12 +42,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:ellipsize="marquee"
-                android:fontFamily="@font/merriweather"
+                android:fontFamily="@font/poppins_bold"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="Flower name"
                 android:textColor="@color/homeGreen"
-                android:textSize="13sp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -57,10 +57,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:fontFamily="@font/merriweather_sans_regular"
             android:layout_marginBottom="7dp"
             android:text="Toshkent, Shayxontohur tumani Bugun 01:31"
             android:textColor="#8F8B8B"
-            android:textSize="8sp" />
+            android:textSize="9dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -14,16 +14,16 @@ import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OneTypeOfCategory : Fragment() {
+class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
 
     val args: OneTypeOfCategoryArgs by navArgs()
     private val viewModel: OneTypeOfCatVM by viewModel()
-
-    private var _binding: FragmentOneCategoryBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding { FragmentOneCategoryBinding.bind(it) }
 
     private val categoryAdapter = OneTypeAdapterCategory()
 
@@ -34,16 +34,6 @@ class OneTypeOfCategory : Fragment() {
         viewModel.getParentCatByID(parentId)
         viewModel.getAnnounce()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentOneCategoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.categoryRecyclerView.adapter = categoryAdapter

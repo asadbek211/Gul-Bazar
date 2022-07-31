@@ -14,12 +14,19 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import okhttp3.*
+import okio.IOException
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.adapter.rxjava3.Result
+import retrofit2.adapter.rxjava3.Result.response
+
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
@@ -74,7 +81,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         setListeners(view)
         (activity as MainActivity).destinationId = 0
-        flowersAdapter = FlowersAdapter()
+            flowersAdapter = FlowersAdapter()
+            binding.homeRecyclerview.adapter = flowersAdapter
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -87,8 +95,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             0,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        binding.homeRecyclerview.adapter = flowersAdapter
-
         flowersAdapter.onClickListener {
             if (it.department != null) {
                 val bundle = bundleOf(
@@ -98,7 +104,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 destination(it.department, bundle)
             }
         }
-
+//        flowersAdapter.deleteItemById()
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
 
@@ -106,10 +112,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             homeViewModel.getAnnounce()
             homeViewModel.getVideoLInkByID()
         }
-        binding.categoryWithBucket.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
-            Navigation.findNavController(view).navigate(action)
-        })
+        binding.categoryWithBucket.setOnClickListener {
+//            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
+//            Navigation.findNavController(view).navigate(action)
+        }
         binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
             val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home")
             Navigation.findNavController(view).navigate(action)
@@ -127,7 +133,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             Navigation.findNavController(view).navigate(action)
         })
         binding.shopsCat.setOnClickListener(View.OnClickListener {
-            //findNavController().navigate(R.id.home_to_shop)
             val action = HomeFragmentDirections.homeToShop("home")
             Navigation.findNavController(view).navigate(action)
         })
@@ -141,7 +146,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.swipeContainer.isRefreshing = false
-                    flowersAdapter.flowersList = it.data!!
+                    flowersAdapter.flowersList = (it.data as ArrayList<AnnounceResponseData>?)!!
                 }
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false

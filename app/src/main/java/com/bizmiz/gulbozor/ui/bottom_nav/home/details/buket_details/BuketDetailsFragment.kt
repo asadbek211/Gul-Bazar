@@ -1,5 +1,6 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home.details.buket_details
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,8 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentBuketDetailsBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
@@ -31,20 +34,6 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
     private var flowerUrlList: ArrayList<String> = arrayListOf()
     private val binding by viewBinding { FragmentBuketDetailsBinding.bind(it) }
     private val buketDetailsViewModel: BuketDetailsViewModel by viewModel()
-
-    private fun flowerTypeObserve() {
-        buketDetailsViewModel.flowerType.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
-                    binding.flowerType.text = it.data?.name
-                }
-                ResourceState.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         desId = requireArguments().getInt("desId")
@@ -62,6 +51,26 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
+        }
+        if (flowerData.sellerId==AppCache.getHelper().userId){
+            binding.btnRemove.visibility = View.VISIBLE
+            binding.btnRemove.isEnabled = true
+        }
+        binding.btnRemove.setOnClickListener {
+            if (!networkCheck(requireContext())){
+                Toast.makeText(requireActivity(), "Internet aloqasi yo'q", Toast.LENGTH_SHORT).show()
+            }else{
+                val message = AlertDialog.Builder(requireActivity())
+                message.setTitle("Gul Bazar")
+                    .setMessage("E'loningizni o'chirmoqchimisiz?")
+                    .setCancelable(false)
+                    .setPositiveButton("Ha") { message, _ ->
+                        flowerData.id?.let { it1 -> buketDetailsViewModel.deleteAnnounceById(it1) }
+//                        binding.loading.visibility = View.VISIBLE
+                    }.setNegativeButton("Yo'q"){message,_->
+                        message.dismiss()
+                    }.create().show()
+            }
         }
         flowerData.categoryId?.let { buketDetailsViewModel.getFlowerType(it) }
         binding.carouselView.setImageListener { position, imageView ->
@@ -100,38 +109,63 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
                 navController.popBackStack()
             }
         }
-        binding.ivFavourite.setOnClickListener {
-            if (isFavourite) {
-                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                isFavourite = false
-            } else {
-                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
-                isFavourite = true
-            }
-        }
+//        binding.ivFavourite.setOnClickListener {
+//            if (isFavourite) {
+//                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//                isFavourite = false
+//            } else {
+//                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
+//                isFavourite = true
+//            }
+//        }
         binding.btnPhone.setOnClickListener {
             val phone = flowerData.phoneNumber.toString()
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
             startActivity(intent)
         }
-        binding.btnAds.setOnClickListener {
-            val intent = Intent(requireActivity(), PaymentActivity::class.java)
-            intent.putExtra("flowerData", flowerData)
-            startActivity(intent)
-        }
-        binding.btnEdit.setOnClickListener {
-            val bundle = bundleOf(
-                "data" to flowerData
-            )
-            val navController =
-                Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.navigate(R.id.action_buketDetails_to_editBuket, bundle)
-        }
+//        binding.btnAds.setOnClickListener {
+//            val intent = Intent(requireActivity(), PaymentActivity::class.java)
+//            intent.putExtra("flowerData", flowerData)
+//            startActivity(intent)
+//        }
+//        binding.btnEdit.setOnClickListener {
+//            val bundle = bundleOf(
+//                "data" to flowerData
+//            )
+//            val navController =
+//                Navigation.findNavController(requireActivity(), R.id.mainContainer)
+//            navController.navigate(R.id.action_buketDetails_to_editBuket, bundle)
+//        }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description
         val df = DecimalFormat("#,###.##")
         val number = df.format(flowerData.price)
         binding.flowerPrice.text = number.toString()
         flowerTypeObserve()
+        deleteAnnounceObserve()
+    }
+    private fun flowerTypeObserve() {
+        buketDetailsViewModel.flowerType.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    binding.flowerType.text = it.data?.name
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun deleteAnnounceObserve() {
+        buketDetailsViewModel.deleteAnnounceResult.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 }

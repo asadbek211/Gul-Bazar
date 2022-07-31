@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.utils.Resource
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 
@@ -23,9 +24,8 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
     private val getCity: MutableLiveData<Resource<ArrayList<CityDataItem>>> = MutableLiveData()
     val cityData: LiveData<Resource<ArrayList<CityDataItem>>>
         get() = getCity
-    private val getType: MutableLiveData<Resource<FlowerTypeData>> = MutableLiveData()
-    val getTypeData: LiveData<Resource<FlowerTypeData>>
-        get() = getType
+    private val getParentCategory: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
+    val parentCategory: LiveData<Resource<List<ByParentIDItem>>> get() = getParentCategory
     fun addFlower(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -63,11 +63,13 @@ class AddFlowerViewModel(private val networkHelper: NetworkHelper) : ViewModel()
             getCity.value = Resource.error(it)
         })
     }
-    fun getFlowerType() {
-        networkHelper.getFlowerType({
-            getType.value = Resource.success(it)
-        }, {
-            getType.value = Resource.error(it)
-        })
+    fun getParentCatByID(id: Int) {
+        networkHelper.getByParentCatID(
+            id = id, {
+                getParentCategory.value = Resource.success(it)
+            }, {
+                getParentCategory.value = Resource.error(it)
+            }
+        )
     }
 }

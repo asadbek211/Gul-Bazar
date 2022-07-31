@@ -47,7 +47,7 @@
                     android:background="@drawable/text_shape2"
                     android:gravity="center">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etTitle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -214,26 +214,70 @@
                 app:layout_constraintTop_toBottomOf="@+id/image5" />
 
             <Spinner
-                android:id="@+id/spFlowerType"
+                android:id="@+id/spFlowerType1"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
-                app:layout_constraintEnd_toEndOf="@+id/priceLayout"
-                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintEnd_toStartOf="@+id/spFlowerType2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/priceLayout"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/spFlowerType1"
+                app:layout_constraintEnd_toEndOf="@+id/spFlowerType1"
+                app:layout_constraintTop_toTopOf="@+id/spFlowerType1" />
+
+
+            <TextView
+                android:id="@+id/textV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/varela_round_regular"
+                android:text="Ko'chat nomi"
+                android:textColor="#797979"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/spFlowerType2"
+                app:layout_constraintTop_toBottomOf="@+id/image5" />
+
+            <Spinner
+                android:id="@+id/spFlowerType2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/text_shape2"
+                android:gravity="center_vertical"
+                android:paddingEnd="15dp"
+                android:spinnerMode="dropdown"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/spPriceType"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/spFlowerType1"
+                app:layout_constraintTop_toBottomOf="@+id/textV" />
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="6dp"
                 android:src="@drawable/ic_arrow_down"
-                app:layout_constraintBottom_toBottomOf="@+id/spFlowerType"
-                app:layout_constraintEnd_toEndOf="@+id/spFlowerType"
-                app:layout_constraintTop_toTopOf="@+id/spFlowerType" />
+                app:layout_constraintBottom_toBottomOf="@+id/spFlowerType2"
+                app:layout_constraintEnd_toEndOf="@+id/spFlowerType2"
+                app:layout_constraintTop_toTopOf="@+id/spFlowerType2" />
+
 
             <TextView
                 android:id="@+id/title4"
@@ -248,7 +292,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spFlowerType" />
+                app:layout_constraintTop_toBottomOf="@+id/spFlowerType1" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/priceLayout"
@@ -269,15 +313,15 @@
                     android:background="@drawable/text_shape2"
                     android:gravity="center">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etPrice"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="end|center_vertical"
                         android:hint="0"
-                        android:maxLength="11"
                         android:inputType="number"
+                        android:maxLength="11"
                         android:maxLines="1"
                         android:paddingStart="5dp"
                         android:paddingEnd="20dp"
@@ -297,7 +341,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -388,7 +432,7 @@
                         android:text="+998"
                         android:textSize="14dp" />
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etNumber"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -428,7 +472,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toStartOf="@+id/spTumanList"
@@ -462,10 +506,10 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/text_shape2"
                 android:gravity="center_vertical"
-                android:paddingEnd="25dp"
+                android:paddingEnd="15dp"
                 android:spinnerMode="dropdown"
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -483,11 +527,11 @@
                 app:layout_constraintTop_toTopOf="@+id/spTumanList" />
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/title9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/varela_round_regular"
                 android:text="Qo’shimcha ma’lumot."
                 android:textColor="#797979"

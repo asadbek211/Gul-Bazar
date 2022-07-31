@@ -27,7 +27,7 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
             Glide.with(binding.root.context).load(response.image1)
                 .into(binding.flowerImage)
             binding.flowerName.text = response.title
-            binding.flowerDescription.text = response.createAt
+            binding.flowerDescription.text = response.createAt.toString()
             val df = DecimalFormat("#,###.##")
             val number = df.format(response.price)
             binding.flowerPrice.text = number

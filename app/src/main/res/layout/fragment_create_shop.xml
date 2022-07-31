@@ -153,17 +153,18 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                    <EditText
-                        android:id="@+id/etRegion"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:hint="Viloyat"
-                        android:inputType="text"
-                        android:textColor="@color/naturalDark"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent" />
+                    <Spinner
+                        android:id="@+id/spVilList"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:paddingEnd="5dp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="14dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -187,16 +188,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/etCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:hint="Tuman yoki shahar"
-                        android:inputType="text"
-                        android:textColor="@color/naturalDark"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent" />
+                    <Spinner
+                        android:id="@+id/spTumanList"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:paddingEnd="5dp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="14dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -220,7 +223,8 @@
                     android:layout_height="match_parent">
 
                     <EditText
-                        android:id="@+id/et_pass2"
+                        android:paddingStart="8dp"
+                        android:id="@+id/etStreet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"

@@ -16,7 +16,6 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -26,14 +25,9 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.utils.NumberFormat
-import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
-import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.core.utils.viewBinding
-import com.bizmiz.gulbozor.databinding.FragmentAddFertilizersBinding
+import com.bizmiz.gulbozor.core.utils.*
 import com.bizmiz.gulbozor.databinding.FragmentAddFlowerBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
-import com.bizmiz.gulbozor.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -88,7 +82,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addFlowerViewModel.getRegion()
-        addFlowerViewModel.getFlowerType()
+        addFlowerViewModel.getParentCatByID(Constant.HOUSE_PLANTS_CATEGORY_ID)
         flowerNameList = arrayListOf()
     }
     @OptIn(DelicateCoroutinesApi::class)
@@ -366,7 +360,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                         image6 = img6,
                         image7 = img7,
                         image8 = img8,
-                        price = binding.etPrice.text.trim().toString()
+                        price = binding.etPrice.text?.trim().toString()
                             .replace("\\s".toRegex(), "")
                             .replace(",", "").replace(".", "")
                             .toLong(),
@@ -383,12 +377,16 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                         myAnnounce = true,
                         topNumber = 0,
                         phoneNumber =
-                        "+998${binding.etNumber.text.trim().toString()
+                        "+998${
+                            binding.etNumber.text?.trim().toString()
                             .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
                         createAt = null,
+                        callingCount = null,
+                        regionName = null,
+                        cityName = null
                     ),
                     "desId" to 1,
                 )
@@ -608,7 +606,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             image6 = img6,
                             image7 = img7,
                             image8 = img8,
-                            price = binding.etPrice.text.trim().toString()
+                            price = binding.etPrice.text?.trim().toString()
                                 .replace("\\s".toRegex(), "")
                                 .replace(",", "").replace(".", "")
                                 .toLong(),
@@ -625,7 +623,8 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                             myAnnounce = true,
                             topNumber = 0,
                             phoneNumber =
-                                "+998${binding.etNumber.text.trim().toString()
+                                "+998${
+                                    binding.etNumber.text?.trim().toString()
                                     .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
@@ -651,6 +650,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     navController.navigate(R.id.addFlowerFragment2_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -661,9 +661,11 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
     private fun typeResultObserve() {
-        addFlowerViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
+        addFlowerViewModel.parentCategory.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
+                    flowerNameList.clear()
+                    flowerTypeList.clear()
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
@@ -704,6 +706,8 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
         addFlowerViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
+                    list.clear()
+                    cityIdList.clear()
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
@@ -722,7 +726,7 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
     }
     private fun checkAnnounce(): Boolean {
         return when {
-            binding.etTitle.text.isEmpty() -> {
+            binding.etTitle.text?.isEmpty() == true -> {
                 binding.titleLayout.error = "Sarlavha kiriting"
                 binding.etTitle.showSoftKeyboard()
                 false
@@ -732,29 +736,51 @@ class AddFlowerFragment : Fragment(R.layout.fragment_add_flower) {
                     .show()
                 false
             }
-            binding.etPrice.text.isEmpty() -> {
+            flowerTypeId==null -> {
+                Toast.makeText(requireActivity(), "O'simlik turini olib bo'lmadi\nInternet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            binding.etPrice.text?.isEmpty() == true -> {
                 binding.priceLayout.error = "Narx kiriting"
                 binding.etPrice.showSoftKeyboard()
                 false
             }
-            binding.etWidth.text.isEmpty() -> {
+            binding.etWidth.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Diametr kiriting", Toast.LENGTH_SHORT).show()
                 binding.etWidth.showSoftKeyboard()
                 false
             }
-            binding.etHeight.text.isEmpty() -> {
+            binding.etHeight.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Balandlik kiriting", Toast.LENGTH_SHORT).show()
                 binding.etHeight.showSoftKeyboard()
                 false
             }
-            binding.etNumber.text.isEmpty() -> {
+            binding.etNumber.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
                 binding.etNumber.showSoftKeyboard()
+                false
+            }
+            regionId==null -> {
+                Toast.makeText(requireActivity(), "Viloyat nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            cityId==null -> {
+                Toast.makeText(requireActivity(), "Tuman nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
                 false
             }
             binding.etDescription.text?.isEmpty() == true -> {
                 binding.descriptionLayout.error = "Qo'shimcha ma'lumot kiriting"
                 binding.etDescription.showSoftKeyboard()
+                false
+            }
+            !networkCheck(requireContext()) -> {
+                Toast.makeText(requireActivity(), "Internet aloqasi yo'q", Toast.LENGTH_SHORT)
+                    .show()
                 false
             }
             else -> {

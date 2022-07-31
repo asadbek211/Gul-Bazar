@@ -11,7 +11,6 @@ import com.bizmiz.gulbozor.ui.start.onBoard.SetUpActivity
 class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fullScreen()
         Handler(Looper.getMainLooper()).postDelayed({
             activityStarter(this, SetUpActivity())
             finish()

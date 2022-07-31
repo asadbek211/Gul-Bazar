@@ -2,16 +2,29 @@ package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
+import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
+import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.io.IOException
+
 
 class NetworkHelper(
     private val apiClient: Retrofit
@@ -269,14 +282,14 @@ class NetworkHelper(
 
     fun getByParentCatID(
         id: Int,
-        onSuccess: (typeData: List<AnnounceResponseData>) -> Unit,
+        onSuccess: (typeData: List<ByParentIDItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(id)
-        call.enqueue(object : Callback<List<AnnounceResponseData>> {
+        call.enqueue(object : Callback<List<ByParentIDItem>> {
             override fun onResponse(
-                call: Call<List<AnnounceResponseData>>?,
-                response: Response<List<AnnounceResponseData>>?
+                call: Call<List<ByParentIDItem>>?,
+                response: Response<List<ByParentIDItem>>?
             ) {
                 if (response != null) {
                     response.body()?.let {
@@ -286,7 +299,126 @@ class NetworkHelper(
                 }
             }
 
-            override fun onFailure(call: Call<List<AnnounceResponseData>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<ByParentIDItem>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun createShop(
+        createShopRequest: CreateShopRequest,
+        onSuccess: (createShopRequest: CreateShopRequest) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).createShop(createShopRequest)
+        call.enqueue(object : Callback<BaseResponse<CreateShopRequest>> {
+            override fun onResponse(call: Call<BaseResponse<CreateShopRequest>>?, response: Response<BaseResponse<CreateShopRequest>>?) {
+                if (response != null) {
+                    Log.d("resultsShop", response.body()?.`object`.toString())
+                }
+                if (response != null) {
+                    response.body()?.`object`?.let { onSuccess.invoke(it) }
+                }
+            }
+            override fun onFailure(call: Call<BaseResponse<CreateShopRequest>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+                Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
+    fun deleteAnnounceById(
+        announceId:Int,
+        onSuccess: (data:Any) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).deleteAnnounceById(announceId)
+        call.enqueue(object : Callback<Any> {
+            override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
+                if (response != null) {
+                    Log.d("resultsShop", response.body().toString())
+                }
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+            override fun onFailure(call: Call<Any>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+                Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
+    fun updateShopId(
+        sellerId: Int,
+        shopId: Int,
+        onSuccess: (data: Any) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId,shopId)
+        call.enqueue(object : Callback<BaseResponse<Any>> {
+            override fun onResponse(call: Call<BaseResponse<Any>>?, response: Response<BaseResponse<Any>>?) {
+                if (response != null) {
+                    Log.d("resultsShopId", response.toString())
+                    Log.d("resultsShopId", response.body()?.`object`.toString())
+                }
+                if (response != null) {
+                    response.body()?.`object`?.let { onSuccess.invoke(it) }
+                }
+            }
+            override fun onFailure(call: Call<BaseResponse<Any>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+                Log.d("results", t?.localizedMessage.toString())
+            }
+
+        })
+    }
+    fun smsSend(
+        token:String,
+        data: RequestBody,
+        onSuccess: (status: String) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val client = OkHttpClient().newBuilder()
+            .build()
+        val request: Request = Request.Builder()
+            .url("https://notify.eskiz.uz/api/message/sms/send")
+            .method("POST", data)
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+        val call = client.newCall(request)
+        call.enqueue(object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                onFailure.invoke(e.localizedMessage)
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (response.isSuccessful){
+                        onSuccess.invoke("success")
+                    }
+                }
+            }
+        })
+    }
+    fun getUserData(
+        userId:Int,
+        onSuccess: (userData:UserDataResponse) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getUserData(userId)
+        call.enqueue(object : Callback<BaseResponse<UserDataResponse>> {
+            override fun onResponse(call: Call<BaseResponse<UserDataResponse>>?, response: Response<BaseResponse<UserDataResponse>>?) {
+                if (response != null) {
+                    response.body()?.`object`.let {
+                        if (it != null) {
+                            onSuccess.invoke(it)
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<UserDataResponse>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

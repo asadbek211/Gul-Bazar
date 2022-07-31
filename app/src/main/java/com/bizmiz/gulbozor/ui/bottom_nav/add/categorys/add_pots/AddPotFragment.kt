@@ -25,16 +25,9 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.utils.NumberFormat
-import com.bizmiz.gulbozor.core.utils.PhoneNumberTextWatcher
-import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.core.utils.*
 import com.bizmiz.gulbozor.databinding.FragmentAddPotBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
-import com.bizmiz.gulbozor.utils.askPermission
-import com.bizmiz.gulbozor.utils.isHasPermission
-import com.bizmiz.gulbozor.utils.onClick
-import com.bizmiz.gulbozor.utils.showSoftKeyboard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -87,7 +80,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPotViewModel.getRegion()
-        addPotViewModel.getFlowerType()
+        addPotViewModel.getParentCatByID(Constant.POT_CATEGORY_ID)
         flowerNameList = arrayListOf()
     }
 
@@ -327,12 +320,15 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                         topNumber = 0,
                         phoneNumber =
                         "+998${
-                            binding.etNumber.text.trim().toString()
+                            binding.etNumber.text?.trim().toString()
                                 .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
                         createAt = null,
+                        callingCount = null,
+                        regionName = null,
+                        cityName = null
                     ),
                     "desId" to 1,
                 )
@@ -572,7 +568,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                             topNumber = 0,
                             phoneNumber =
                             "+998${
-                                binding.etNumber.text.trim().toString()
+                                binding.etNumber.text?.trim().toString()
                                     .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
@@ -599,6 +595,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                     navController.navigate(R.id.addPot_to_addSuccess)
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -611,14 +608,16 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
     }
 
     private fun typeResultObserve() {
-        addPotViewModel.getTypeData.observe(viewLifecycleOwner, Observer {
+        addPotViewModel.parentCategory.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS -> {
+                ResourceState.SUCCESS-> {
+                    flowerTypeList.clear()
+                    flowerNameList.clear()
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                    setAdapter(binding.spMaterialType, flowerNameList)
+                    setAdapter(binding.spMaterialType,flowerNameList)
                     flowerTypeId = flowerTypeList[0]
                     binding.spMaterialType.setSelection(spFlowerPosition)
                 }
@@ -656,6 +655,8 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
         addPotViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
+                    list.clear()
+                    cityIdList.clear()
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
@@ -675,7 +676,7 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
 
     private fun checkAnnounce(): Boolean {
         return when {
-            binding.etTitle.text.isEmpty() -> {
+            binding.etTitle.text?.isEmpty() == true -> {
                 binding.titleLayout.error = "Sarlavha kiriting"
                 binding.etTitle.showSoftKeyboard()
                 false
@@ -685,30 +686,52 @@ class AddPotFragment : Fragment(R.layout.fragment_add_pot) {
                     .show()
                 false
             }
+            flowerTypeId==null -> {
+                Toast.makeText(requireActivity(), "Tuvak materialini olib bo'lmadi\nInternet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
             binding.etPrice.text.isEmpty() -> {
                 binding.priceLayout.error = "Narx kiriting"
                 binding.etPrice.showSoftKeyboard()
                 false
             }
-            binding.etWidth.text.isEmpty() -> {
+            binding.etWidth.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Diametr kiriting", Toast.LENGTH_SHORT).show()
                 binding.etWidth.showSoftKeyboard()
                 false
             }
-            binding.etHeight.text.isEmpty() -> {
+            binding.etHeight.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Balandlik kiriting", Toast.LENGTH_SHORT).show()
                 binding.etHeight.showSoftKeyboard()
                 false
             }
-            binding.etNumber.text.isEmpty() -> {
+            binding.etNumber.text?.isEmpty() == true -> {
                 Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT)
                     .show()
                 binding.etNumber.showSoftKeyboard()
                 false
             }
+            regionId==null -> {
+                Toast.makeText(requireActivity(), "Viloyat nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
+            cityId==null -> {
+                Toast.makeText(requireActivity(), "Tuman nomini olib bo'lmadi\n" +
+                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
             binding.etDescription.text?.isEmpty() == true -> {
                 binding.descriptionLayout.error = "Qo'shimcha ma'lumot kiriting"
                 binding.etDescription.showSoftKeyboard()
+                false
+            }
+            !networkCheck(requireContext()) -> {
+                Toast.makeText(requireActivity(), "Internet aloqasi yo'q", Toast.LENGTH_SHORT)
+                    .show()
                 false
             }
             else -> {

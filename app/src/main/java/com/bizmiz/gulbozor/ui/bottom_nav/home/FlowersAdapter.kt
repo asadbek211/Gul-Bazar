@@ -1,24 +1,23 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.models.CityDataItem
+import com.bizmiz.gulbozor.core.models.RegionDataItem
+import com.bizmiz.gulbozor.core.utils.checkMonth
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
-
-    var flowersList:List<AnnounceResponseData> = listOf(
-        AnnounceResponseData(1,"12-05-2020",1,1,2,"dwndwdnjdn j dwkjed wjd  jdjd ked we"
-        ,43,54,"wewadewdwe","weewwefe","dfsddsdd","dsfsdfdsd","dsfdfd",
-        "fweff","efe","wewf",true,"+998907366402",232032232,1,
-        true,11,1,"dweda dwef efew f ewf",0,32, withFertilizer = false, withPot = false
-        )
-    )
+    var flowersList:ArrayList<AnnounceResponseData> = arrayListOf()
        set(value) {
            field = value
            notifyDataSetChanged()
@@ -29,24 +28,58 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
                 Glide.with(binding.root.context).load(flowerListResponse.image1)
                     .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val date: Date = dateFormat.parse(flowerListResponse.createAt)
-            binding.flowerDescription.text = date.toString()
+            binding.flowerDescription.text = "${flowerListResponse.regionName}, ${flowerListResponse.cityName} ${dataSettings(flowerListResponse.createAt)}"
             val df = DecimalFormat("#,###.##")
             val number = df.format(flowerListResponse.price)
-            binding.flowerPrice.text = number
+            binding.flowerPrice.text = number.replace("."," ").replace(","," ")
              binding.cardView.setOnClickListener {
                  onclick.invoke(flowerListResponse)
              }
         }
 
     }
+  fun deleteItemById(id:Int){
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+          flowersList.removeIf {
+              it.id == id
+          }
+      }
+      flowersList.forEach {
 
+      }
+  }
     private var onclick: (flowerListResponse: AnnounceResponseData) -> Unit = {}
     fun onClickListener(onclick: (flowerListResponse: AnnounceResponseData) -> Unit) {
         this.onclick = onclick
     }
-
+    //"2022-07-21"
+    //"yyyy-MM-dd'T'HH:mm:ss"
+    //"HH:mm"
+    //"yyyy-MM-dd HH:mm"
+    // postData = "Bugun ${String.format("%s", dateString)}"
+    private fun dataSettings(data:Long?):String{
+        var postData = ""
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateString = simpleDateFormat.format(data)
+      val currentDataMillis = System.currentTimeMillis()
+        val currentDateString = simpleDateFormat.format(currentDataMillis)
+       if (dateString==currentDateString){
+           val timeFormat = SimpleDateFormat("HH:mm")
+           val timeString = timeFormat.format(data)
+           postData = "Bugun ${String.format("%s", timeString)}"
+       }
+       else if (currentDateString.substring(8,10).toInt()-1==dateString.substring(8,10).toInt() &&
+           currentDateString.substring(5,7)==dateString.substring(5,7) &&
+           currentDateString.substring(0,4)==dateString.substring(0,4)){
+           val timeFormat = SimpleDateFormat("HH:mm")
+           val timeString = timeFormat.format(data)
+           postData = "Kecha ${String.format("%s", timeString)}"
+       }else{
+           val number = dateString.substring(5,7).toInt()
+           postData = "${dateString.substring(8,10).toInt()}-${checkMonth(number)}"
+       }
+        return postData
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Myholder {
         val flowerItemBinding =
             FlowerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

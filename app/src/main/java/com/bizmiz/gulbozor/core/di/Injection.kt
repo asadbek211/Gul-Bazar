@@ -17,6 +17,9 @@ import com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details.Fetiliz
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.FlowerDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.profile.ProfileViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopViewModel
+import com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SmsVerifyViewModel
 import com.bizmiz.gulbozor.ui.youtube.YouTubeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -42,4 +45,7 @@ val viewModelModule = module {
     viewModel { FetilizersDetailsViewModel(get()) }
     viewModel { BuketDetailsViewModel(get()) }
     viewModel { EditAnnounceViewModel(get()) }
+    viewModel { CreateShopViewModel(get()) }
+    viewModel { SmsVerifyViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
 }

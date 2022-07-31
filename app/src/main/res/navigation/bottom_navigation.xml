@@ -132,4 +132,13 @@
             android:id="@+id/shop_to_shops"
             app:destination="@id/fragmentShops" />
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment_create_shop"
+        android:id="@+id/createShopFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopFragment"
+        android:label="CreateShopFragment" >
+        <action
+            android:id="@+id/createShop_to_navigation_user"
+            app:destination="@id/navigation_user" />
+    </fragment>
 </navigation>

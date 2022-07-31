@@ -32,10 +32,10 @@ import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentEditTreeBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.EditAnnounceViewModel
-import com.bizmiz.gulbozor.utils.askPermission
-import com.bizmiz.gulbozor.utils.isHasPermission
-import com.bizmiz.gulbozor.utils.onClick
-import com.bizmiz.gulbozor.utils.showSoftKeyboard
+import com.bizmiz.gulbozor.core.utils.askPermission
+import com.bizmiz.gulbozor.core.utils.isHasPermission
+import com.bizmiz.gulbozor.core.utils.onClick
+import com.bizmiz.gulbozor.core.utils.showSoftKeyboard
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import id.zelory.compressor.Compressor
@@ -331,7 +331,10 @@ class EditTreeFragment : Fragment(R.layout.fragment_edit_tree) {
                         }",
                         seller = isSeller,
                         id = null,
-                        createAt = null
+                        createAt = null,
+                        callingCount = null,
+                        regionName = null,
+                        cityName = null
                     ),
                     "desId" to 1,
                 )
