@@ -17,11 +17,13 @@ import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
-
+    private val slideModels: ArrayList<SlideModel> = ArrayList()
     val args: OneTypeOfCategoryArgs by navArgs()
+
     private val viewModel: OneTypeOfCatVM by viewModel()
     private val binding by viewBinding { FragmentOneCategoryBinding.bind(it) }
 
@@ -33,6 +35,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         super.onCreate(savedInstanceState)
         viewModel.getParentCatByID(parentId)
         viewModel.getAnnounce()
+        viewModel.getReklamaImages(4)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,13 +47,16 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         val category = args.categoryName
         binding.oneCatTitle.text = category
         windowStatus()
-
+        onBackPressed()
         announceObserve()
-        if (args.onBack == "home") {
-            onBackHomePressed()
-        } else if (args.onBack == "category") {
-            onBackCategoryPressed()
-        }
+
+        binding.backPressed.setOnClickListener(View.OnClickListener {
+            if (args.onBack == "home") {
+                findNavController().navigate(R.id.one_to_home)
+            } else if (args.onBack == "category") {
+                findNavController().navigate(R.id.onBack_to_category)
+            }
+        })
     }
 
     private fun announceObserve() {
@@ -76,27 +82,37 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 }
             }
         })
+        viewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image4, ScaleTypes.FIT))
+                    slideModels.add(SlideModel(it.data.`object`.image5, ScaleTypes.FIT))
+                    binding.imageSlider.setImageList(slideModels, ScaleTypes.FIT)
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
     }
 
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.gray_main)
+            ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
     }
 
-    private fun onBackHomePressed() {
+    private fun onBackPressed() {
         val callBack = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.one_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
-    private fun onBackCategoryPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.onBack_to_category)
+                if (args.onBack == "home") {
+                    findNavController().navigate(R.id.one_to_home)
+                } else if (args.onBack == "category") {
+                    findNavController().navigate(R.id.onBack_to_category)
+                }
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callBack)

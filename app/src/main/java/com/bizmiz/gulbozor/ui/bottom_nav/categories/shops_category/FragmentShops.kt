@@ -16,9 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.databinding.FragmentShopsBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentShops : Fragment() {
+
+    private val slideModels: ArrayList<SlideModel> = ArrayList()
+
     val args: FragmentShopsArgs by navArgs()
     private var _binding: FragmentShopsBinding? = null
     val binding get() = _binding!!
@@ -30,6 +35,7 @@ class FragmentShops : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shopsViewModel.getShopsList()
+        shopsViewModel.getReklamaImages(3)
     }
 
     override fun onCreateView(
@@ -46,7 +52,7 @@ class FragmentShops : Fragment() {
         announceObserve()
         onBackHomePressed()
 
-        binding.onBackPressed.setOnClickListener(View.OnClickListener {
+        binding.backPressed.setOnClickListener(View.OnClickListener {
             if (args.onBack == "home") {
                 findNavController().navigate(R.id.nav_shops_to_home)
             } else {
@@ -71,6 +77,21 @@ class FragmentShops : Fragment() {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
+            shopsViewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
+                        slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
+                        slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
+                        slideModels.add(SlideModel(it.data.`object`.image4, ScaleTypes.FIT))
+                        slideModels.add(SlideModel(it.data.`object`.image5, ScaleTypes.FIT))
+                        binding.imageSlider.setImageList(slideModels, ScaleTypes.FIT)
+                    }
+                    ResourceState.ERROR -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
         })
         shopAdapter.setOnItemClickListener(object : ShopsAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {

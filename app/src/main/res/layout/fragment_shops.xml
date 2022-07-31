@@ -31,21 +31,39 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
                 <ImageView
-                    android:id="@+id/onBackPressed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_arrow_back_gray"
-                    app:layout_constraintBottom_toBottomOf="@id/logo_place"
+                    android:id="@+id/back_pressed"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_back_icon"
                     app:layout_constraintStart_toStartOf="@id/logo_place"
                     app:layout_constraintTop_toTopOf="@id/logo_place" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/rec_view"
                 android:layout_width="match_parent"
-                android:layout_height="222dp"
-                android:src="@drawable/rec_image" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/imageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="222dp"
+                        app:iss_auto_cycle="true"
+                        app:iss_corner_radius="10"
+                        app:iss_delay="1000"
+                        app:iss_period="1000"
+                        app:iss_placeholder="@drawable/ic_gulbazar_logo" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <EditText
                 android:layout_width="match_parent"
@@ -79,6 +97,10 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_shops" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="77dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

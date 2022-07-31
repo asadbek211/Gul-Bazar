@@ -17,6 +17,8 @@
         android:background="@drawable/shops_back"
         android:clickable="true"
         android:focusable="true"
+        android:paddingStart="11dp"
+        android:paddingEnd="11dp"
         android:gravity="center"
         android:paddingTop="15dp"
         android:paddingBottom="20dp"

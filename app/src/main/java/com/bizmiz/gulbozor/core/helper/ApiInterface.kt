@@ -5,6 +5,7 @@ import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
 import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
 import com.bizmiz.gulbozor.core.models.user.UserDataResponse
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
@@ -107,4 +108,7 @@ interface ApiInterface {
     fun getUserData(
         @Path("userId") userId: Int
     ): Call<BaseResponse<UserDataResponse>>
+
+    @GET("/reklama/{id}")
+    fun getReklamaId(@Path("id") id: Int): Call<ReklamaImages>
 }

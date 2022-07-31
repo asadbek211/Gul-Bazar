@@ -9,12 +9,14 @@ import com.bizmiz.gulbozor.core.models.CityDataItem
 import com.bizmiz.gulbozor.core.models.RegionData
 import com.bizmiz.gulbozor.core.models.SmsRequestData
 import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.utils.Resource
 import okhttp3.RequestBody
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> = MutableLiveData()
+    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> =
+        MutableLiveData()
     val announce: LiveData<Resource<List<AnnounceResponseData>>>
         get() = getAnnounce
 
@@ -27,6 +29,11 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     private val getCity: MutableLiveData<Resource<ArrayList<CityDataItem>>> = MutableLiveData()
     val cityData: LiveData<Resource<ArrayList<CityDataItem>>>
         get() = getCity
+
+    private val reklamaVM: MutableLiveData<Resource<ReklamaImages>> = MutableLiveData()
+    val getReklamaId: LiveData<Resource<ReklamaImages>>
+        get() = reklamaVM
+
     fun getVideoLInkByID() {
         networkHelper.getYouTubeById(id = 1,
             {
@@ -36,6 +43,19 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
             }
         )
     }
+
+    fun getReklamaImages(id: Int) {
+        networkHelper.getReklamaById(
+            id = id,
+            {
+                reklamaVM.value = Resource.success(it!!)
+            }, {
+                reklamaVM.value = Resource.error(it)
+            }
+        )
+    }
+
+
     fun getAnnounce() {
         networkHelper.getAnnounce({
             getAnnounce.value = Resource.success(it)
@@ -43,5 +63,4 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
             getAnnounce.value = Resource.error(it)
         })
     }
-
 }
