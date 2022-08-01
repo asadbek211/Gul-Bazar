@@ -3,14 +3,20 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoryFragment : Fragment(R.layout.fragment_category) {
     private val binding by viewBinding { FragmentCategoryBinding.bind(it) }
@@ -21,12 +27,110 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private var justNumber1: Int = 0
     private var justNumber2: Int = 0
     private var justNumber3: Int = 0
+
+
+    private var categoryNum1: Int = 0
+    private var categoryNum2: Int = 0
+    private var categoryNum3: Int = 0
+    private var categoryNum4: Int = 0
+    private var categoryNum5: Int = 0
+
+    private val viewModel: CategoryVM by viewModel()
+    private val categoryAdapter1 = CategoryAdapter1()
+    private val categoryAdapter2 = CategoryAdapter2()
+    private val categoryAdapter3 = CategoryAdapter3()
+    private val categoryAdapter4 = CategoryAdapter4()
+    private val categoryAdapter5 = CategoryAdapter5()
+    private val categoryAdapter6 = CategoryAdapter6()
+    private val categoryAdapter7 = CategoryAdapter7()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         checking()
         onBackPressed()
         loadListener(view)
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.bucketFlowersRecycler.adapter = categoryAdapter1
+        binding.bucketFlowersRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.potFlowersRecycler.adapter = categoryAdapter2
+        binding.potFlowersRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.fruitTreeRecycler.adapter = categoryAdapter3
+        binding.fruitTreeRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.archaTreeRecycler.adapter = categoryAdapter4
+        binding.archaTreeRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.landscapeTreeRecycler.adapter = categoryAdapter5
+        binding.landscapeTreeRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.potRecycler.adapter = categoryAdapter6
+        binding.potRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.dungRecycler.adapter = categoryAdapter7
+        binding.dungRecycler.layoutManager = LinearLayoutManager(requireContext())
+
+        categoryAdapter1.setOnItemClickListener(object : CategoryAdapter1.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        categoryAdapter2.setOnItemClickListener(object : CategoryAdapter2.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+        categoryAdapter3.setOnItemClickListener(object : CategoryAdapter3.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+        categoryAdapter4.setOnItemClickListener(object : CategoryAdapter4.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        categoryAdapter5.setOnItemClickListener(object : CategoryAdapter5.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+        categoryAdapter6.setOnItemClickListener(object : CategoryAdapter6.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+        categoryAdapter7.setOnItemClickListener(object : CategoryAdapter7.onItemClickListenerCat {
+            override fun onItemClick(position: Int) {
+                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
+                Navigation.findNavController(view!!).navigate(action)*/
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun checking() {
@@ -198,41 +302,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         })
 
     }
-    private fun loadListener(view: View) {
-        binding.bucketFlowersTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Buket gullar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.homemadeFlowersCatTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Xonaki gullar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.potFlowersCatTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Tuvakli gullar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.archalarTreeTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Archalar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.fruitTreeTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Mavali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.sceneTreeTxt.setOnClickListener(View.OnClickListener {
-            val action =
-                CategoryFragmentDirections.navCategoryToOne("Manzarali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
 
-        binding.potCatTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("Tuvaklar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.dungTxt.setOnClickListener(View.OnClickListener {
-            val action = CategoryFragmentDirections.navCategoryToOne("O'g'itlar", "category")
-            Navigation.findNavController(view).navigate(action)
-        })
+    private fun loadListener(view: View) {
+        flowersParent()
+        treesParent()
+        dungPotParent()
 
         binding.hotRoomCat.setOnClickListener(View.OnClickListener {
             val action =
@@ -249,6 +323,171 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.shopsCat.setOnClickListener(View.OnClickListener {
             val action = CategoryFragmentDirections.navCategoryToShop("category")
             Navigation.findNavController(view).navigate(action)
+        })
+    }
+
+    private fun dungPotParent() {
+        binding.potCatTxt.setOnClickListener(View.OnClickListener {
+            viewModel.getByPArentCatId5(9)
+            binding.potRecycler.visibility = View.VISIBLE
+            binding.dungRecycler.visibility = View.GONE
+            binding.dungTxt.setTextColor(Color.parseColor("#626262"))
+            binding.potCatTxt.setTextColor(Color.parseColor("#00B83F"))
+            viewModel.childCat5.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.ERROR -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    ResourceState.SUCCESS -> {
+                        categoryAdapter6.categoryList = it.data!!
+                    }
+                }
+            })
+            /*val action = CategoryFragmentDirections.navCategoryToOne("Tuvaklar", "category")
+            Navigation.findNavController(view).navigate(action)*/
+        })
+        binding.dungTxt.setOnClickListener(View.OnClickListener {
+            viewModel.getByPArentCatId6(8)
+            binding.potRecycler.visibility = View.GONE
+            binding.dungRecycler.visibility = View.VISIBLE
+            binding.dungTxt.setTextColor(Color.parseColor("#00B83F"))
+            binding.potCatTxt.setTextColor(Color.parseColor("#626262"))
+            viewModel.childCat6.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.ERROR -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    ResourceState.SUCCESS -> {
+                        categoryAdapter7.categoryList = it.data!!
+                    }
+                }
+            })
+            /*val action = CategoryFragmentDirections.navCategoryToOne("O'g'itlar", "category")
+            Navigation.findNavController(view).navigate(action)*/
+        })
+    }
+
+    private fun treesParent() {
+
+        binding.sceneTreeTxt.setOnClickListener(View.OnClickListener {
+            categoryNum5 = 1
+            if (categoryNum5 == 1) {
+                viewModel.getByPArentCatId4(7)
+                binding.fruitTreeRecycler.visibility = View.GONE
+                binding.landscapeTreeRecycler.visibility = View.VISIBLE
+                binding.archaTreeRecycler.visibility = View.GONE
+                binding.fruitTreeTxt.setTextColor(Color.parseColor("#626262"))
+                binding.sceneTreeTxt.setTextColor(Color.parseColor("#00B83F"))
+                binding.archalarTreeTxt.setTextColor(Color.parseColor("#626262"))
+                viewModel.childCat4.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.SUCCESS -> {
+                            categoryAdapter5.categoryList = it.data!!
+                        }
+                        ResourceState.ERROR -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+            /*val action =
+                CategoryFragmentDirections.navCategoryToOne("Manzarali daraxtlar", "category")
+            Navigation.findNavController(view).navigate(action)*/
+        })
+        binding.archalarTreeTxt.setOnClickListener(View.OnClickListener {
+            categoryNum4 = 1
+            if (categoryNum4 == 1) {
+                viewModel.getByPArentCatId3(8)
+                binding.fruitTreeRecycler.visibility = View.GONE
+                binding.landscapeTreeRecycler.visibility = View.GONE
+                binding.archaTreeRecycler.visibility = View.VISIBLE
+                binding.fruitTreeTxt.setTextColor(Color.parseColor("#626262"))
+                binding.sceneTreeTxt.setTextColor(Color.parseColor("#626262"))
+                binding.archalarTreeTxt.setTextColor(Color.parseColor("#00B83F"))
+                viewModel.childCat3.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.SUCCESS -> {
+                            categoryAdapter4.categoryList = it.data!!
+                        }
+                        ResourceState.ERROR -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+//            val action = CategoryFragmentDirections.navCategoryToOne("Archalar", "category")
+//            Navigation.findNavController(view).navigate(action)
+        })
+        binding.fruitTreeTxt.setOnClickListener(View.OnClickListener {
+            categoryNum3 = 1
+            if (categoryNum3 == 1) {
+                viewModel.getByPArentCatId2(6)
+                binding.fruitTreeRecycler.visibility = View.VISIBLE
+                binding.landscapeTreeRecycler.visibility = View.GONE
+                binding.archaTreeRecycler.visibility = View.GONE
+                binding.fruitTreeTxt.setTextColor(Color.parseColor("#00B83F"))
+                binding.sceneTreeTxt.setTextColor(Color.parseColor("#626262"))
+                binding.archalarTreeTxt.setTextColor(Color.parseColor("#626262"))
+                viewModel.childCat2.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.SUCCESS -> {
+                            categoryAdapter3.categoryList = it.data!!
+                        }
+                        ResourceState.ERROR -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+            /*val action = CategoryFragmentDirections.navCategoryToOne("Mavali daraxtlar", "category")
+            Navigation.findNavController(view).navigate(action)*/
+        })
+    }
+
+    private fun flowersParent() {
+        binding.bucketFlowersTxt.setOnClickListener(View.OnClickListener {
+            categoryNum1 = 1
+            if (categoryNum1 == 1) {
+                viewModel.getByPArentCatId(4)
+                binding.potFlowersRecycler.visibility = View.GONE
+                binding.bucketFlowersRecycler.visibility = View.VISIBLE
+                binding.bucketFlowersTxt.setTextColor(Color.parseColor("#00B83F"))
+                binding.potFlowersCatTxt.setTextColor(Color.parseColor("#626262"))
+                viewModel.childCat.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.SUCCESS -> {
+                            categoryAdapter1.categoryList = it.data!! as ArrayList<ByParentIDItem>
+                        }
+                        ResourceState.ERROR -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+//            val action = CategoryFragmentDirections.navCategoryToOne("Buket gullar", "category")
+//            Navigation.findNavController(view).navigate(action)
+        })
+        binding.potFlowersCatTxt.setOnClickListener(View.OnClickListener {
+            categoryNum2 = 1
+            if (categoryNum2 == 1) {
+                viewModel.getByPArentCatId1(5)
+                binding.potFlowersRecycler.visibility = View.VISIBLE
+                binding.bucketFlowersRecycler.visibility = View.GONE
+                binding.potFlowersCatTxt.setTextColor(Color.parseColor("#00B83F"))
+                binding.bucketFlowersTxt.setTextColor(Color.parseColor("#626262"))
+                viewModel.childCat1.observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        ResourceState.SUCCESS -> {
+                            categoryAdapter2.categoryList = it.data!! as ArrayList<ByParentIDItem>
+                        }
+                        ResourceState.ERROR -> {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+//            val action = CategoryFragmentDirections.navCategoryToOne("Tuvakli gullar", "category")
+//            Navigation.findNavController(view).navigate(action)
         })
     }
 

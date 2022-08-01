@@ -96,6 +96,8 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_payment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_set_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_vide_player.xml" value="0.190625" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_video_player.xml" value="0.190625" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/activity_you_tube.xml" value="0.23282442748091603" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/dialog_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/expandable_list.xml" value="0.25416666666666665" />
@@ -111,7 +113,7 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_buket_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_categories.xml" value="0.25025641025641027" />
-        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_category.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_category.xml" value="0.2" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_category_add_flower.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_competition.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_create_shop.xml" value="0.25416666666666665" />
@@ -128,7 +130,7 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_category.xml" value="0.15828738241972104" />
-        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_shop.xml" value="0.16116248348745046" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_shop.xml" value="0.1471652593486128" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_payment_systems.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_pot_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
@@ -143,6 +145,7 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_you_tube.xml" value="0.2" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/freagment_one_category.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_board.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_category.xml" value="0.2" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_circle_cat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_flower.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/item_shops.xml" value="0.25416666666666665" />

@@ -33,7 +33,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getParentCatByID(parentId)
-        viewModel.getAnnounce(page)
+        //viewModel.getAnnounce(page)
         viewModel.getReklamaImages(4)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

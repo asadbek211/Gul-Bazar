@@ -7,6 +7,7 @@ import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_fertilizers.AddFertil
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_houseplants.AddFlowerViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_pots.AddPotViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_tree.AddTreeViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.CategoryVM
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory.OneTypeOfCatVM
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.OnShopVM
@@ -29,6 +30,7 @@ val dataModule = module {
     single { NetworkHelper(get()) }
 }
 val viewModelModule = module {
+    viewModel { CategoryVM(get()) }
     viewModel { OnShopVM(get()) }
     viewModel { ShopsViewModel(get()) }
     viewModel { OneTypeOfCatVM(get()) }

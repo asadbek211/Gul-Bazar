@@ -4,5 +4,7 @@ data class Content(
     val categoryId: Int,
     val id: Int,
     val title: String,
-    val videoLink: String
+    val videoLink: String,
+    val imageUrl: String,
+    val createAt: Long
 )

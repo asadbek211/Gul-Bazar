@@ -1,7 +1,9 @@
 package com.bizmiz.gulbozor.core.models.home
 
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+
 data class GetAnnounceByIndexPage(
-    val content: List<Content>,
+    val content: List<AnnounceResponseData>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,
