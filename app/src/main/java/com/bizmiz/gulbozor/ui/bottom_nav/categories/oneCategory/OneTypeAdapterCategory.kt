@@ -3,7 +3,7 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.models.home.Content
 import com.bizmiz.gulbozor.core.utils.checkMonth
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
@@ -11,7 +11,7 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewHolder>() {
-    var categoryList = ArrayList<AnnounceResponseData>()
+    var categoryList = ArrayList<Content>()
         set(value) {
             field.addAll(value)
             notifyDataSetChanged()
@@ -24,32 +24,35 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
 
     inner class ViewHolder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: AnnounceResponseData, position: Int) {
+        fun workWithModel(response: Content, position: Int) {
             ///binding.youtubeTitle.text=response.videoID.categoryId.toString()
             Glide.with(binding.root.context).load(response.image1)
                 .into(binding.flowerImage)
             binding.flowerName.text = response.title
-            binding.flowerDescription.text = "${response.regionName}, ${response.cityName} ${dataSettings(response.createAt)}"
+            binding.flowerDescription.text =
+                "${response.regionName}, ${response.cityName} ${dataSettings(response.createAt)}"
             val df = DecimalFormat("#,###.##")
             val number = df.format(response.price)
-            binding.flowerPrice.text = number.replace("."," ").replace(","," ")
+            binding.flowerPrice.text = number.replace(".", " ").replace(",", " ")
             binding.cardView.setOnClickListener {
                 onclick.invoke(response)
             }
 
         }
     }
-    private var onclick: (flowerListResponse: AnnounceResponseData) -> Unit = {}
-    fun onClickListener(onclick: (flowerListResponse: AnnounceResponseData) -> Unit) {
+
+    private var onclick: (flowerListResponse: Content) -> Unit = {}
+    fun onClickListener(onclick: (flowerListResponse: Content) -> Unit) {
         this.onclick = onclick
     }
-    private fun dataSettings(data:Long?):String{
+
+    private fun dataSettings(data: Long?): String {
         var postData = ""
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         val dateString = simpleDateFormat.format(data)
         val currentDataMillis = System.currentTimeMillis()
         val currentDateString = simpleDateFormat.format(currentDataMillis)
-        if (dateString==currentDateString){
+        if (dateString == currentDateString) {
             val timeFormat = SimpleDateFormat("HH:mm")
             val timeString = timeFormat.format(data)
             postData = "Bugun ${String.format("%s", timeString)}"
