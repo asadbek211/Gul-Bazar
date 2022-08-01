@@ -11,7 +11,6 @@
     <application
         android:name=".core.app.App"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -20,8 +19,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GulBozor"
+        android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.bottom_nav.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.start.onBoard.SetUpActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bottom_nav.add.AddAnnounceActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.start.onBoard.MiddleActivity"
             android:exported="false" />
@@ -30,9 +40,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.start.onBoard.SetUpActivity"
+            android:name=".ui.start.splash_screen.SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

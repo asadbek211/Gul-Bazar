@@ -13,7 +13,7 @@ open class Resource<out T> constructor(val status: ResourceState, val data: T?, 
         }
 
         fun <T> loading(): Resource<T> {
-            return Resource(ResourceState.LOADING, null, null,null)
+            return Resource(ResourceState.LOADING, null, null, null)
         }
         fun <T> check(check:String?): Resource<T> {
             return Resource(ResourceState.CHECK, null, null,check)

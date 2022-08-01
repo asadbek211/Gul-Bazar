@@ -1,34 +1,37 @@
 package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.utils.Constant
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentSignUp2Binding
+import com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SmsVerifyViewModel
 import com.poovam.pinedittextfield.PinField
+import okhttp3.MultipartBody
+
+import okhttp3.RequestBody
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SignUpFragment2 : Fragment() {
-    private var _binding: FragmentSignUp2Binding? = null
-    private val binding get() = _binding!!
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSignUp2Binding.inflate(inflater, container, false)
-        return binding.root
-    }
-
+class SignUpFragment2 : Fragment(R.layout.fragment_sign_up2) {
+    private var smsCode:String? = null
+    private val binding by viewBinding { FragmentSignUp2Binding.bind(it) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        smsCode = requireArguments().getString("sms_code")
         loadView(view)
         windowStatus()
+        binding.signUpToLogin.setOnClickListener {
+            findNavController().navigate(R.id.sign_up2_login)
+        }
+
     }
 
     private fun loadView(view: View) {
@@ -46,7 +49,7 @@ class SignUpFragment2 : Fragment() {
     }
 
     private fun checkSMS(code: String, view: View) {
-        if (code == "00000") {
+        if (smsCode!=null && code == smsCode) {
             findNavController().navigate(R.id.action_signUpFragment2_to_signUpFragment3)
         } else {
             Toast.makeText(
@@ -60,5 +63,12 @@ class SignUpFragment2 : Fragment() {
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
     }
+
 }

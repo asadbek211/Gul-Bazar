@@ -157,7 +157,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:hint="Parolni tastiqlang"
+                    android:hint="Parolni tasdiqlang"
                     android:inputType="textPassword"
                     android:textColor="@color/naturalDark"
                     android:textSize="15sp"
@@ -178,11 +178,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <TextView
                 android:id="@+id/registration_done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/registration_shadow"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/button_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="Royxatdan o'tish"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +217,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+
+            android:layout_marginTop="24dp"
             android:orientation="horizontal">
 
             <TextView

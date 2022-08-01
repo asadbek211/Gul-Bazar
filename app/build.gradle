@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.bizmiz.gulbozor"
-        minSdk 23
+        minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -42,6 +43,10 @@ dependencies {
     implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.7'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.0'
+
+
+    //expandable
     def koin_version = "3.1.2"
     // Koin core features
     implementation "io.insert-koin:koin-core:$koin_version"
@@ -59,8 +64,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -87,5 +92,13 @@ dependencies {
 
     //circleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //youtubePlayer
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
+
+
+    //SlideImage uchun  reclama joyiga
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
 
 }

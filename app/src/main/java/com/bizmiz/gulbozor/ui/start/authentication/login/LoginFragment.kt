@@ -1,42 +1,44 @@
 package com.bizmiz.gulbozor.ui.start.authentication.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
+import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentLoginBinding
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginMVP
 import com.bizmiz.gulbozor.ui.start.authentication.login.MVP.LoginPresenter
 import com.bizmiz.gulbozor.ui.start.onBoard.MiddleActivity
 
-class LoginFragment : Fragment(), LoginMVP.View {
+class LoginFragment : Fragment(R.layout.fragment_login), LoginMVP.View {
     private var mIsShowPass = false
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding { FragmentLoginBinding.bind(it) }
 
     private lateinit var presenter: LoginMVP.Presenter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.white)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
         if (!LoginHelper.getHelper().login) {
             presenter = LoginPresenter(this)
             setListeners()
@@ -47,11 +49,11 @@ class LoginFragment : Fragment(), LoginMVP.View {
     }
 
     private fun setListeners() {
-        binding.logoGulbazar.setOnClickListener(View.OnClickListener {
+        /*binding.logoGulbazar.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireContext(), MiddleActivity::class.java)
             startActivity(intent)
         })
-
+*/
         binding.ivShowHidePass.setOnClickListener {
             mIsShowPass = !mIsShowPass
             showPassword(mIsShowPass)
@@ -71,14 +73,15 @@ class LoginFragment : Fragment(), LoginMVP.View {
                 password = binding.etPass.text.toString()
             )
         })
-        binding.justForToast.setOnClickListener(View.OnClickListener {
-            Toast.makeText(
-                requireContext(),
-                binding.etPhoneNumber.text?.trim().toString()
-                    .replace(" ".toRegex(), "") + binding.etPass.text.toString(),
-                Toast.LENGTH_LONG
-            ).show()
-        })
+        /*
+            binding.justForToast.setOnClickListener(View.OnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    binding.etPhoneNumber.text?.trim().toString()
+                        .replace(" ".toRegex(), "") + binding.etPass.text.toString(),
+                    Toast.LENGTH_LONG
+                ).show()
+            })*/
 
     }
 

@@ -7,12 +7,15 @@
 
     <fragment
         android:id="@+id/signUpFragment1"
-        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment1"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SignUpFragment1"
         android:label="SignUpFragment1"
         tools:layout="@layout/fragment_sign_up1">
         <action
             android:id="@+id/action_signUpFragment1_to_signUpFragment2"
             app:destination="@id/signUpFragment2" />
+        <action
+            android:id="@+id/sign_up1_login"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
@@ -22,6 +25,9 @@
         <action
             android:id="@+id/action_signUpFragment2_to_signUpFragment3"
             app:destination="@id/signUpFragment3" />
+        <action
+            android:id="@+id/sign_up2_login"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment3"
@@ -30,7 +36,9 @@
         tools:layout="@layout/fragment_sign_up3">
         <action
             android:id="@+id/action_signUpFragment3_to_signUpFragment4"
-            app:destination="@id/signUpFragment4" />
+            app:destination="@id/signUpFragment4"
+            app:popUpTo="@id/signUpFragment3"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signUpFragment3_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -39,8 +47,7 @@
         android:id="@+id/signUpFragment4"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
-        tools:layout="@layout/fragment_sign_up4">
-    </fragment>
+        tools:layout="@layout/fragment_sign_up4" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"

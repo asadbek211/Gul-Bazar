@@ -112,9 +112,9 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
     }
 
     private fun loadViews() {
-        binding.signUpToLogin.setOnClickListener(View.OnClickListener {
+        binding.signUpToLogin.setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment3_to_loginFragment)
-        })
+        }
         binding.phoneNumber.text = phoneNumber
 
         binding.ivShowHidePass1.setOnClickListener {

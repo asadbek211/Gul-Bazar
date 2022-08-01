@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="250dp"
+            android:src="@drawable/succes_ic1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ahronbd"
+            android:gravity="center"
+            android:text="E’loningiz qabul qilindi."
+            android:textColor="@color/naturalDark"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:text="Tez orada tekshiruvdan o’tgach\nommaga chiqariladi."
+            android:textColor="#B5B5B5"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/btnHome"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:fontFamily="@font/varela_round_regular"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="Asosiy oynaga qaytish"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/button_bg"
+            android:layout_marginTop="70dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
