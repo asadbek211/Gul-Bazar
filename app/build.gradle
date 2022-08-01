@@ -82,7 +82,7 @@ dependencies {
     //SMS code
     implementation 'com.github.poovamraj:PinEditTextField:1.2.6'
 
-//RxJava
+    //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.4'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'

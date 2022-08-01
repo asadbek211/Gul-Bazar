@@ -116,16 +116,12 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/homemade_flowers_cat_txt"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bucket_flowers_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Yer gullar"
-                        android:textColor="#626262"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
 
                     <TextView
                         android:id="@+id/pot_flowers_cat_txt"
@@ -137,6 +133,13 @@
                         android:textColor="#626262"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pot_flowers_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -178,8 +181,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tree_child"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="9dp"
+                android:layout_height="wrap_content"
                 android:visibility="gone">
 
                 <ImageView
@@ -215,6 +218,13 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/archa_tree_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
+
                     <TextView
                         android:id="@+id/fruit_tree_txt"
                         android:layout_width="match_parent"
@@ -226,6 +236,13 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fruit_tree_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
+
                     <TextView
                         android:id="@+id/scene_tree_txt"
                         android:layout_width="match_parent"
@@ -236,6 +253,13 @@
                         android:textColor="#626262"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/landscape_tree_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -315,6 +339,13 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dung_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
+
                     <TextView
                         android:id="@+id/pot_cat_txt"
                         android:layout_width="match_parent"
@@ -325,6 +356,13 @@
                         android:textColor="#626262"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pot_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:listitem="@layout/item_category" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

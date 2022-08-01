@@ -1,33 +1,56 @@
 package com.bizmiz.gulbozor.ui.youtube
 
-import android.util.Log
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.databinding.ItemYoutubeBinding
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.bumptech.glide.Glide
+
 
 class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
+    var mActivity: Activity = Activity()
+    var context: Context? = null
+
     var youTubeList = ArrayList<Content>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
+    fun MyAdapter(activity: Activity, context: Context) {
+        this.mActivity = activity
+        this.context = context
+    }
+
     inner class MyViewHolder(private val binding: ItemYoutubeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun workWithModel(response: Content, position: Int) {
             binding.youtubeTitle.text = response.title
-            binding.youTubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    super.onReady(youTubePlayer)
-                    val videoID = response.videoLink
-                    youTubePlayer.loadVideo(videoID, 0f)
-                    youTubePlayer.pause()
-                }
-            })
+            Glide.with(binding.imgYouTube).load(response.imageUrl).into(binding.imgYouTube)
+
+            binding.imgYouTube.setOnClickListener {
+                binding.iconYoutube.visibility = View.GONE
+                binding.imgYouTube.visibility = View.GONE
+
+                val intent = Intent(mActivity, VidePlayerActivity::class.java)
+                intent.putExtra("videoLink", response.videoLink)
+                context!!.startActivity(intent)
+
+
+                /*binding.youTubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        super.onReady(youTubePlayer)
+                        val videoID = response.videoLink
+                        youTubePlayer.loadVideo(videoID, 0f)
+                    }
+                })*/
+            }
+
         }
     }
 

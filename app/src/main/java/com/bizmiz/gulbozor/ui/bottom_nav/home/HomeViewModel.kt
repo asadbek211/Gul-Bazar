@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.models.CityDataItem
 import com.bizmiz.gulbozor.core.models.RegionData
+import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getAnnounce: MutableLiveData<Resource<AnnounceResponseData>> =
+    private val getAnnounce: MutableLiveData<Resource<GetAnnounceByIndexPage>> =
         MutableLiveData()
-    val announce: LiveData<Resource<AnnounceResponseData>>
+    val announce: LiveData<Resource<GetAnnounceByIndexPage>>
         get() = getAnnounce
 
     private val videoLinkVM: MutableLiveData<Resource<YouTubeLinkID>> = MutableLiveData()
@@ -31,8 +31,8 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     val getReklamaId: LiveData<Resource<ReklamaImages>>
         get() = reklamaVM
 
-    fun getVideoLInkByID() {
-        networkHelper.getYouTubeById(id = 1,
+    fun getVideoLInkByID(id: Int) {
+        networkHelper.getYouTubeById(id = id,
             {
                 videoLinkVM.value = Resource.success(it!!)
             }, {
