@@ -1,7 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.payment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.databinding.ActivityPaymentBinding
 
@@ -15,6 +15,7 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(binding.root)
 
     }
+
     fun getData(): AnnounceResponseData {
         return intent.extras?.get("flowerData") as AnnounceResponseData
     }

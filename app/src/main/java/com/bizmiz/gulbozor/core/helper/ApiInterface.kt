@@ -2,14 +2,16 @@ package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
 import com.bizmiz.gulbozor.core.models.user.UserDataResponse
-import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.ShopPhoneNumber
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,13 +20,21 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
-    @GET("/announce/announceList")
-    fun getAnnounce(): Call<List<AnnounceResponseData>>
+    @GET("/announce/indexPage?")
+    fun getAnnounce(
+        @Query("page") page: Int
+    ): Call<GetAnnounceByIndexPage>
+
+    @GET("videoLink?")
+    fun getVideoLinkPage(
+        @Query("page") page: Int
+    ): Call<YouTubeLinkPage>
+
 
     @Headers("Content-Type:application/json")
     @DELETE("/announce/delete/{id}")
     fun deleteAnnounceById(
-        @Path("id")announceId:Int
+        @Path("id") announceId: Int
     ): Call<Any>
 
     @Headers("Content-Type:application/json")
@@ -83,6 +93,7 @@ interface ApiInterface {
     @GET("/shop")
     fun getShopsList(): Call<List<ShopsListItem>>
 
+
     @GET("/category/byParentCategoryId/{parentId}")
     fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<ByParentIDItem>>
 
@@ -94,21 +105,23 @@ interface ApiInterface {
     @GET("videoLink/{id}")
     fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
 
-    @GET("videoLink?")
-    fun getVideoLinkPage(
-        @Query("page") page: Int
-    ): Call<YouTubeLinkPage>
 
     @GET("/announce/byShop/{shopId}?")
     fun getOneShopPosts(
         @Path("shopId") shopId: Int,
         @Query("page") page: Int
     ): Call<OneShopData>
+
+    @GET("/shop/{id}")
+    fun getShopPhoneNumber(
+        @Path("id") shopId: Int
+    ): Call<ShopPhoneNumber>
+
     @GET("/user/{userId}")
     fun getUserData(
         @Path("userId") userId: Int
     ): Call<BaseResponse<UserDataResponse>>
 
-    @GET("/reklama/{id}")
-    fun getReklamaId(@Path("id") id: Int): Call<ReklamaImages>
+    @GET("/reklama/byPlaceNumber/{placeNumber}")
+    fun getReklamaId(@Path("placeNumber") placeNumber: Int): Call<ReklamaImages>
 }

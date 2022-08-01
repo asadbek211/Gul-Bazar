@@ -3,14 +3,15 @@ package com.bizmiz.gulbozor.core.helper
 import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
-import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
-import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
+import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.ShopPhoneNumber
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,6 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,20 +63,25 @@ class NetworkHelper(
 
         })
     }
-    fun getAnnounce(
-        onSuccess: (flowerList: List<AnnounceResponseData>) -> Unit,
+
+    fun getAnnounceByPage(
+        page: Int,
+        onSuccess: (flowerListPage: GetAnnounceByIndexPage) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
-        call.enqueue(object : Callback<List<AnnounceResponseData>> {
-            override fun onResponse(call: Call<List<AnnounceResponseData>>?, response: Response<List<AnnounceResponseData>>?) {
+        val call = apiClient.create(ApiInterface::class.java).getAnnounce(page)
+        call.enqueue(object : Callback<GetAnnounceByIndexPage> {
+            override fun onResponse(
+                call: Call<GetAnnounceByIndexPage>?,
+                response: Response<GetAnnounceByIndexPage>?
+            ) {
                 if (response != null) {
                     Log.d("listUrl", response.body().toString())
                     response.body()?.let { onSuccess.invoke(it) }
                 }
             }
 
-            override fun onFailure(call: Call<List<AnnounceResponseData>>?, t: Throwable?) {
+            override fun onFailure(call: Call<GetAnnounceByIndexPage>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 
@@ -128,6 +133,30 @@ class NetworkHelper(
         })
     }
 
+    fun getOneShopNumber(
+        id: Int,
+        onSuccess: (list: ShopPhoneNumber) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call =
+            apiClient.create(ApiInterface::class.java).getShopPhoneNumber(shopId = id)
+        call.enqueue(object : Callback<ShopPhoneNumber> {
+            override fun onResponse(
+                call: Call<ShopPhoneNumber>?,
+                response: Response<ShopPhoneNumber>?
+            ) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
+
+            override fun onFailure(call: Call<ShopPhoneNumber>, t: Throwable?) {
+                onFailure.invoke("Ha Ha Ha Again Ha " + t?.localizedMessage)
+            }
+
+        })
+    }
+
     fun setAnnounce(
         announceRequestDataResponse: AnnounceRequestData,
         onSuccess: (announceBaseResponse: AnnounceBaseResponse) -> Unit,
@@ -136,7 +165,8 @@ class NetworkHelper(
         Log.d("url", announceRequestDataResponse.image1.toString())
         Log.d("url", announceRequestDataResponse.image2.toString())
         Log.d("url", announceRequestDataResponse.image3.toString())
-        val call = apiClient.create(ApiInterface::class.java).setAnnounce(announceRequestDataResponse)
+        val call =
+            apiClient.create(ApiInterface::class.java).setAnnounce(announceRequestDataResponse)
         call.enqueue(object : Callback<AnnounceBaseResponse> {
             override fun onResponse(call: Call<AnnounceBaseResponse>?, response: Response<AnnounceBaseResponse>?) {
                 if (response != null) {

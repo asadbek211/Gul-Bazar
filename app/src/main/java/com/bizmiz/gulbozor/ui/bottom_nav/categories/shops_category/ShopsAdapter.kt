@@ -22,6 +22,7 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
 
 
     private var lastPosition = -1
+
     var data: List<ShopsListItem> = listOf()
         set(value) {
             field = value

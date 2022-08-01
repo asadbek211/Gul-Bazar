@@ -4,18 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
-import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
+import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class OneTypeOfCatVM(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getParentCategory: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
+    private val getParentCategory: MutableLiveData<Resource<List<ByParentIDItem>>> =
+        MutableLiveData()
     val parentCategory: LiveData<Resource<List<ByParentIDItem>>> get() = getParentCategory
 
-    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> =
+    private val getAnnounce: MutableLiveData<Resource<GetAnnounceByIndexPage>> =
         MutableLiveData()
-    val announce: LiveData<Resource<List<AnnounceResponseData>>>
+    val announce: LiveData<Resource<GetAnnounceByIndexPage>>
         get() = getAnnounce
 
     private val reklamaVM: MutableLiveData<Resource<ReklamaImages>> = MutableLiveData()
@@ -44,12 +45,13 @@ class OneTypeOfCatVM(private val networkHelper: NetworkHelper) : ViewModel() {
         )
     }
 
-    fun getAnnounce() {
-        networkHelper.getAnnounce({
-            getAnnounce.value = Resource.success(it)
-        }, {
-            getAnnounce.value = Resource.error(it)
-        })
-    }
+    /*fun getAnnounce(page: Int) {
+        networkHelper.getAnnounceByPage(
+            page = page, {
+                getAnnounce.value = Resource.success(it)
+            }, {
+                getAnnounce.value = Resource.error(it)
+            })
+    }*/
 
 }

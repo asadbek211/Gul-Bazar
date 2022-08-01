@@ -73,6 +73,8 @@ class YouTubeFragment : Fragment() {
     }
 
     private fun announceObserve() {
+        adapter.MyAdapter(requireActivity(), binding.categoryType.context)
+
         youTubeVM.announcePage.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {

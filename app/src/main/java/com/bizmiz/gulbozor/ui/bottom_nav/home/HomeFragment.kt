@@ -8,25 +8,22 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
+import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import okhttp3.*
-import okio.IOException
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.adapter.rxjava3.Result
-import retrofit2.adapter.rxjava3.Result.response
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -35,11 +32,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
     private val slideModels: ArrayList<SlideModel> = ArrayList()
+    private var page: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel.getAnnounce()
-        homeViewModel.getVideoLInkByID()
+        homeViewModel.getAnnounce(page)
+        homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
 
@@ -75,6 +74,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.youtubeOthers.setOnClickListener(View.OnClickListener {
             val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
             Navigation.findNavController(view).navigate(action)
+        })
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                page++
+                binding.progressBarHome.visibility = View.VISIBLE
+                homeViewModel.getAnnounce(page)
+            }
         })
 
     }
@@ -112,8 +118,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         announceObserve()
 
         binding.swipeContainer.setOnRefreshListener {
-            homeViewModel.getAnnounce()
-            homeViewModel.getVideoLInkByID()
+            homeViewModel.getAnnounce(page)
+            homeViewModel.getVideoLInkByID(2)
         }
         binding.categoryWithBucket.setOnClickListener {
 //            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
@@ -143,17 +149,57 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
+    private fun onImageClick() {
+        binding.imgYoutube.setOnClickListener {
+            homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        it.let {
+                            binding.youtubeTitle.text = it.data!!.`object`.title
+                            lifecycle.addObserver(binding.youtubePlayerView)
+                            binding.youtubePlayerView.addYouTubePlayerListener(object :
+                                AbstractYouTubePlayerListener() {
+                                override fun onReady(youTubePlayer: YouTubePlayer) {
+                                    binding.progressBarYu.visibility = View.GONE
+                                    binding.swipeContainer.isRefreshing = false
+                                    youTubePlayer.loadVideo(it.data.`object`.videoLink, 0f)
+                                }
+                            })
+                        }
+                    }
+                    ResourceState.ERROR -> {
+                        binding.progressBarYu.visibility = View.GONE
+                        binding.swipeContainer.isRefreshing = false
+                        Toast.makeText(
+                            requireContext(),
+                            "Youtube Error" + it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    ResourceState.LOADING -> {
+                        binding.progressBarYu.visibility = View.VISIBLE
+                    }
+                }
+            })
+            binding.imgYoutube.visibility = View.GONE
+            binding.iconYoutube.visibility = View.GONE
+        }
+    }
+
 
     private fun announceObserve() {
         homeViewModel.announce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.swipeContainer.isRefreshing = false
-                    flowersAdapter.flowersList = (it.data as ArrayList<AnnounceResponseData>?)!!
+                    flowersAdapter.flowersList =
+                        (it.data?.content as ArrayList<AnnounceResponseData>?)!!
+                    binding.progressBarHome.visibility = View.GONE
                 }
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBarHome.visibility = View.VISIBLE
                 }
             }
         })
@@ -182,16 +228,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     it.let {
-                        binding.youtubeTitle.text = it.data!!.videoID.title
-                        lifecycle.addObserver(binding.youtubePlayerView)
-                        binding.youtubePlayerView.addYouTubePlayerListener(object :
-                            AbstractYouTubePlayerListener() {
-                            override fun onReady(youTubePlayer: YouTubePlayer) {
-                                binding.progressBarYu.visibility = View.GONE
-                                binding.swipeContainer.isRefreshing = false
-                                youTubePlayer.loadVideo(it.data.videoID.videoLink, 0f)
-                            }
-                        })
+                        binding.youtubeTitle.text = it.data!!.`object`.title
+                        Glide.with(binding.imgYoutube).load(it.data.`object`.imageUrl)
+                            .into(binding.imgYoutube)
+                        onImageClick()
                     }
                 }
                 ResourceState.ERROR -> {

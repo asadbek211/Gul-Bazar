@@ -45,6 +45,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo_place" />
 
+            <TextView
+                android:id="@+id/p_n_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:textColor="@color/green_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/logo_shop"
+                app:layout_constraintEnd_toEndOf="@id/logo_shop" />
+
+            <TextView
+                android:id="@+id/p_n_place1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/green_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/p_n_place"
+                app:layout_constraintEnd_toEndOf="@id/logo_shop" />
+
             <ImageView
                 android:id="@+id/green_line"
                 android:layout_width="match_parent"

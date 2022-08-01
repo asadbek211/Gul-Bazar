@@ -1,9 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -12,14 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.models.home.Content
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
-import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     private val slideModels: ArrayList<SlideModel> = ArrayList()
     val args: OneTypeOfCategoryArgs by navArgs()
@@ -30,11 +28,12 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     private val categoryAdapter = OneTypeAdapterCategory()
 
     private val parentId: Int = 1
+    private var page: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getParentCatByID(parentId)
-        viewModel.getAnnounce()
+        //viewModel.getAnnounce(page)
         viewModel.getReklamaImages(4)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +71,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     categoryAdapter.clearAdapter()
-                    categoryAdapter.categoryList = (it.data as ArrayList<AnnounceResponseData>?)!!
+                    categoryAdapter.categoryList = (it.data?.content as ArrayList<Content>?)!!
                     /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
                         .show()*/
 

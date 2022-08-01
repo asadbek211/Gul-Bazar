@@ -27,6 +27,13 @@ class OneShopFragment : Fragment() {
     private var _binding: FragmentOneShopBinding? = null
     private val binding get() = _binding!!
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        oneShopVM.getShopIdPage(0, args.position!!.toInt())
+        oneShopVM.getShopNumber(args.position!!.toInt())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,9 +45,7 @@ class OneShopFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        oneShopVM.getShopIdPage(0, args.position!!.toInt())
         adapter = OneShopAdapter()
-
         binding.oneShopRec.adapter = adapter
         onBackPressed()
         binding.backPressed.setOnClickListener(View.OnClickListener {
@@ -69,6 +74,17 @@ class OneShopFragment : Fragment() {
             }
             if (it.data!!.content.isEmpty()) {
                 binding.notPostYet.visibility = View.VISIBLE
+            }
+        })
+        oneShopVM.shopNumber.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    binding.pNPlace1.text = it.data!!.`object`.phoneNumber1
+                    binding.pNPlace.text = it.data.`object`.phoneNumber2
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
