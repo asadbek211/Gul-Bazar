@@ -4,9 +4,8 @@ import android.util.Log
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
-import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
-import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
+import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
@@ -19,7 +18,6 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,20 +61,25 @@ class NetworkHelper(
 
         })
     }
-    fun getAnnounce(
-        onSuccess: (flowerList: List<AnnounceResponseData>) -> Unit,
+
+    fun getAnnounceByPage(
+        page: Int,
+        onSuccess: (flowerListPage: AnnounceResponseData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getAnnounce()
-        call.enqueue(object : Callback<List<AnnounceResponseData>> {
-            override fun onResponse(call: Call<List<AnnounceResponseData>>?, response: Response<List<AnnounceResponseData>>?) {
+        val call = apiClient.create(ApiInterface::class.java).getAnnounce(page)
+        call.enqueue(object : Callback<AnnounceResponseData> {
+            override fun onResponse(
+                call: Call<AnnounceResponseData>?,
+                response: Response<AnnounceResponseData>?
+            ) {
                 if (response != null) {
                     Log.d("listUrl", response.body().toString())
                     response.body()?.let { onSuccess.invoke(it) }
                 }
             }
 
-            override fun onFailure(call: Call<List<AnnounceResponseData>>?, t: Throwable?) {
+            override fun onFailure(call: Call<AnnounceResponseData>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

@@ -119,7 +119,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/button_bg_share"
             android:padding="5dp"
-            android:src="@drawable/share_flower"
+            android:src="@drawable/ic_share_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgRemove1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -133,7 +133,7 @@
             android:layout_marginEnd="25dp"
             android:background="@drawable/button_bg_red"
             android:padding="8dp"
-            android:src="@drawable/delete"
+            android:src="@drawable/ic_delate_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -200,7 +200,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/button_bg_share"
             android:padding="5dp"
-            android:src="@drawable/share_flower"
+            android:src="@drawable/ic_share_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgRemove2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -214,7 +214,7 @@
             android:layout_marginEnd="25dp"
             android:background="@drawable/button_bg_red"
             android:padding="8dp"
-            android:src="@drawable/delete"
+            android:src="@drawable/ic_delate_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -281,7 +281,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/button_bg_share"
             android:padding="5dp"
-            android:src="@drawable/share_flower"
+            android:src="@drawable/ic_share_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgRemove3"
             app:layout_constraintTop_toTopOf="parent" />
@@ -295,7 +295,7 @@
             android:layout_marginEnd="25dp"
             android:background="@drawable/button_bg_red"
             android:padding="8dp"
-            android:src="@drawable/delete"
+            android:src="@drawable/ic_delate_comp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

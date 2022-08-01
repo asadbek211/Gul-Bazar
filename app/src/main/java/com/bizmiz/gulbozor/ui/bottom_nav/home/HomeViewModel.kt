@@ -7,17 +7,14 @@ import com.bizmiz.gulbozor.core.helper.NetworkHelper
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.models.CityDataItem
 import com.bizmiz.gulbozor.core.models.RegionData
-import com.bizmiz.gulbozor.core.models.SmsRequestData
-import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.utils.Resource
-import okhttp3.RequestBody
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val getAnnounce: MutableLiveData<Resource<List<AnnounceResponseData>>> =
+    private val getAnnounce: MutableLiveData<Resource<AnnounceResponseData>> =
         MutableLiveData()
-    val announce: LiveData<Resource<List<AnnounceResponseData>>>
+    val announce: LiveData<Resource<AnnounceResponseData>>
         get() = getAnnounce
 
     private val videoLinkVM: MutableLiveData<Resource<YouTubeLinkID>> = MutableLiveData()
@@ -56,11 +53,12 @@ class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
     }
 
 
-    fun getAnnounce() {
-        networkHelper.getAnnounce({
-            getAnnounce.value = Resource.success(it)
-        }, {
-            getAnnounce.value = Resource.error(it)
-        })
+    fun getAnnounce(page: Int) {
+        networkHelper.getAnnounceByPage(
+            page = page, {
+                getAnnounce.value = Resource.success(it)
+            }, {
+                getAnnounce.value = Resource.error(it)
+            })
     }
 }
