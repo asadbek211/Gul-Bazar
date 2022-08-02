@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory
+package com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.databinding.ItemCategoryBinding
 
-class CategoryAdapter5 : RecyclerView.Adapter<CategoryAdapter5.ViewHolder>() {
+class CategoryAdapter2 : RecyclerView.Adapter<CategoryAdapter2.ViewHolder>() {
     var categoryList: List<ByParentIDItem> = listOf()
         set(value) {
             field = value
@@ -19,18 +19,30 @@ class CategoryAdapter5 : RecyclerView.Adapter<CategoryAdapter5.ViewHolder>() {
         listener: onItemClickListenerCat
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: ByParentIDItem, position: Int) {
+        fun workWithModel(
+            response: ByParentIDItem,
+            position: Int,
+            listener: onItemClickListenerCat
+        ) {
             if (lastPosition < position) {
                 binding.childCategoryTxt.text = response.name
                 lastPosition = position
             }
+            binding.childCategoryTxt.setOnClickListener {
+                listener.onItemClick(id = response.id, categoryName = response.name)
+            }
+
         }
 
-        init {
+        /*init {
             binding.childCategoryTxt.setOnClickListener {
                 listener.onItemClick(position = bindingAdapterPosition)
             }
-        }
+        }*/
+    }
+
+    interface onItemClickListenerCat {
+        fun onItemClick(id: Int, categoryName: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,15 +53,12 @@ class CategoryAdapter5 : RecyclerView.Adapter<CategoryAdapter5.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder.bindingAdapterPosition > lastPosition) {
-            return holder.workWithModel(categoryList[position], position)
+            return holder.workWithModel(categoryList[position], position, mListener)
         }
     }
 
     override fun getItemCount(): Int = categoryList.size
 
-    interface onItemClickListenerCat {
-        fun onItemClick(position: Int)
-    }
 
     private lateinit var mListener: onItemClickListenerCat
 

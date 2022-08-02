@@ -16,6 +16,7 @@ import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.categories.mainCategory.adapters.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoryFragment : Fragment(R.layout.fragment_category) {
@@ -46,6 +47,13 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getByPArentCatId(4)
+        viewModel.getByPArentCatId1(5)
+        viewModel.getByPArentCatId2(6)
+        viewModel.getByPArentCatId3(17)
+        viewModel.getByPArentCatId4(7)
+        viewModel.getByPArentCatId5(29)
+        viewModel.getByPArentCatId6(8)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,10 +62,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         checking()
         onBackPressed()
         loadListener(view)
-        setListeners()
+        setListeners(view)
     }
 
-    private fun setListeners() {
+    private fun setListeners(view: View) {
         binding.bucketFlowersRecycler.adapter = categoryAdapter1
         binding.bucketFlowersRecycler.layoutManager = LinearLayoutManager(requireContext())
 
@@ -80,55 +88,76 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.dungRecycler.layoutManager = LinearLayoutManager(requireContext())
 
         categoryAdapter1.setOnItemClickListener(object : CategoryAdapter1.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
 
         })
         categoryAdapter2.setOnItemClickListener(object : CategoryAdapter2.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
 
         })
         categoryAdapter3.setOnItemClickListener(object : CategoryAdapter3.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
         })
         categoryAdapter4.setOnItemClickListener(object : CategoryAdapter4.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
         })
 
         categoryAdapter5.setOnItemClickListener(object : CategoryAdapter5.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
         })
         categoryAdapter6.setOnItemClickListener(object : CategoryAdapter6.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
         })
         categoryAdapter7.setOnItemClickListener(object : CategoryAdapter7.onItemClickListenerCat {
-            override fun onItemClick(position: Int) {
-                /*val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)*/
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            override fun onItemClick(id: Int, categoryName: String) {
+                val action = CategoryFragmentDirections.navCategoryToOne(
+                    categoryName,
+                    "category",
+                    id.toString()
+                )
+                Navigation.findNavController(view).navigate(action)
             }
         })
     }
@@ -328,7 +357,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
     private fun dungPotParent() {
         binding.potCatTxt.setOnClickListener(View.OnClickListener {
-            viewModel.getByPArentCatId5(9)
+            //viewModel.getByPArentCatId5(9)
             binding.potRecycler.visibility = View.VISIBLE
             binding.dungRecycler.visibility = View.GONE
             binding.dungTxt.setTextColor(Color.parseColor("#626262"))
@@ -343,11 +372,9 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 }
             })
-            /*val action = CategoryFragmentDirections.navCategoryToOne("Tuvaklar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
         binding.dungTxt.setOnClickListener(View.OnClickListener {
-            viewModel.getByPArentCatId6(8)
+            /*viewModel.getByPArentCatId6(8)*/
             binding.potRecycler.visibility = View.GONE
             binding.dungRecycler.visibility = View.VISIBLE
             binding.dungTxt.setTextColor(Color.parseColor("#00B83F"))
@@ -372,7 +399,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.sceneTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum5 = 1
             if (categoryNum5 == 1) {
-                viewModel.getByPArentCatId4(7)
+                //viewModel.getByPArentCatId4(7)
                 binding.fruitTreeRecycler.visibility = View.GONE
                 binding.landscapeTreeRecycler.visibility = View.VISIBLE
                 binding.archaTreeRecycler.visibility = View.GONE
@@ -397,7 +424,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.archalarTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum4 = 1
             if (categoryNum4 == 1) {
-                viewModel.getByPArentCatId3(8)
+                //viewModel.getByPArentCatId3(8)
                 binding.fruitTreeRecycler.visibility = View.GONE
                 binding.landscapeTreeRecycler.visibility = View.GONE
                 binding.archaTreeRecycler.visibility = View.VISIBLE
@@ -421,7 +448,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.fruitTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum3 = 1
             if (categoryNum3 == 1) {
-                viewModel.getByPArentCatId2(6)
+                // viewModel.getByPArentCatId2(6)
                 binding.fruitTreeRecycler.visibility = View.VISIBLE
                 binding.landscapeTreeRecycler.visibility = View.GONE
                 binding.archaTreeRecycler.visibility = View.GONE
@@ -448,7 +475,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.bucketFlowersTxt.setOnClickListener(View.OnClickListener {
             categoryNum1 = 1
             if (categoryNum1 == 1) {
-                viewModel.getByPArentCatId(4)
+                //viewModel.getByPArentCatId(4)
                 binding.potFlowersRecycler.visibility = View.GONE
                 binding.bucketFlowersRecycler.visibility = View.VISIBLE
                 binding.bucketFlowersTxt.setTextColor(Color.parseColor("#00B83F"))
@@ -470,7 +497,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         binding.potFlowersCatTxt.setOnClickListener(View.OnClickListener {
             categoryNum2 = 1
             if (categoryNum2 == 1) {
-                viewModel.getByPArentCatId1(5)
+                //viewModel.getByPArentCatId1(5)
                 binding.potFlowersRecycler.visibility = View.VISIBLE
                 binding.bucketFlowersRecycler.visibility = View.GONE
                 binding.potFlowersCatTxt.setTextColor(Color.parseColor("#00B83F"))

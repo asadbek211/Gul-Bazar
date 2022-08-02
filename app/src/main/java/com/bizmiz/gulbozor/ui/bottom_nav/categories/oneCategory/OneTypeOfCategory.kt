@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.home.Content
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentOneCategoryBinding
@@ -27,14 +26,17 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
 
     private val categoryAdapter = OneTypeAdapterCategory()
 
-    private val parentId: Int = 1
     private var page: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getParentCatByID(parentId)
-        //viewModel.getAnnounce(page)
+        if (args.onBack == "home") {
+            viewModel.getDepartment(args.categoryId.toInt(), page)
+        } else if (args.onBack == "category") {
+            viewModel.getByCategoryID(args.categoryId.toInt(), page)
+        }
         viewModel.getReklamaImages(4)
+        //viewModel.getAnnounce(0)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,28 +61,37 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     }
 
     private fun announceObserve() {
+        if (args.onBack == "category") {
+            viewModel.parentCategory.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        categoryAdapter.clearAdapter()
+                        categoryAdapter.categoryList =
+                            it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
+                        /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
+                            .show()*/
 
-        viewModel.parentCategory.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
+                    }
+                    ResourceState.ERROR -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        } else if (args.onBack == "home") {
+            viewModel.department.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ResourceState.SUCCESS -> {
+                        categoryAdapter.clearAdapter()
+                        categoryAdapter.categoryList =
+                            it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
+                    }
+                    ResourceState.ERROR -> {
 
+                    }
                 }
-            }
-        })
-        viewModel.announce.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
-                    categoryAdapter.clearAdapter()
-                    categoryAdapter.categoryList = (it.data?.content as ArrayList<Content>?)!!
-                    /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
-                        .show()*/
+            })
+        }
 
-                }
-                ResourceState.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
         viewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {

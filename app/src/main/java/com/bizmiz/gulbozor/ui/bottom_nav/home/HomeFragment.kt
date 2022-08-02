@@ -119,27 +119,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         announceObserve()
 
         binding.swipeContainer.setOnRefreshListener {
-            homeViewModel.getAnnounce(page)
+            homeViewModel.getAnnounce(0)
             homeViewModel.getVideoLInkByID(2)
         }
         binding.categoryWithBucket.setOnClickListener {
-//            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
-//            Navigation.findNavController(view).navigate(action)
+            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home", "1")
+            Navigation.findNavController(view).navigate(action)
         }
         binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home")
+            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home", "2")
             Navigation.findNavController(view).navigate(action)
         })
         binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home")
+            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home", "3")
             Navigation.findNavController(view).navigate(action)
         })
         binding.potFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home")
+            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home", "5")
             Navigation.findNavController(view).navigate(action)
         })
         binding.customersCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Haridorlar", "home")
+            val action = HomeFragmentDirections.homeToCustomers("customer")
             Navigation.findNavController(view).navigate(action)
         })
         binding.shopsCat.setOnClickListener(View.OnClickListener {

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
@@ -34,21 +33,10 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
             Glide.with(binding.imgYouTube).load(response.imageUrl).into(binding.imgYouTube)
 
             binding.imgYouTube.setOnClickListener {
-                binding.iconYoutube.visibility = View.GONE
-                binding.imgYouTube.visibility = View.GONE
-
                 val intent = Intent(mActivity, VidePlayerActivity::class.java)
                 intent.putExtra("videoLink", response.videoLink)
                 context!!.startActivity(intent)
 
-
-                /*binding.youTubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                    override fun onReady(youTubePlayer: YouTubePlayer) {
-                        super.onReady(youTubePlayer)
-                        val videoID = response.videoLink
-                        youTubePlayer.loadVideo(videoID, 0f)
-                    }
-                })*/
             }
 
         }

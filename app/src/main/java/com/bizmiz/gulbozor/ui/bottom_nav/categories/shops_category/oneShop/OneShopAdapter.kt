@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
-import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.Content
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 
 class OneShopAdapter : RecyclerView.Adapter<OneShopAdapter.MyViewHolder>() {
-    var oneShopList = ArrayList<Content>()
+    var oneShopList = ArrayList<com.bizmiz.gulbozor.core.models.category.Content>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -17,11 +16,14 @@ class OneShopAdapter : RecyclerView.Adapter<OneShopAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: Content, position: Int) {
+        fun workWithModel(
+            response: com.bizmiz.gulbozor.core.models.category.Content,
+            position: Int
+        ) {
             Glide.with(binding.root.context).load(response.image1)
                 .into(binding.flowerImage)
             binding.flowerName.text = response.title
-            binding.flowerDescription.text = response.createAt
+            binding.flowerDescription.text = response.createAt.toString()
             val df = DecimalFormat("#,###.##")
             val number = df.format(response.price)
             binding.flowerPrice.text = number

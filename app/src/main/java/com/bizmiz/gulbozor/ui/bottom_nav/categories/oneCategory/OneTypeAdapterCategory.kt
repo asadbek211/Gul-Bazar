@@ -3,7 +3,6 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bizmiz.gulbozor.core.models.home.Content
 import com.bizmiz.gulbozor.core.utils.checkMonth
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
@@ -11,7 +10,7 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewHolder>() {
-    var categoryList = ArrayList<Content>()
+    var categoryList = ArrayList<com.bizmiz.gulbozor.core.models.category.Content>()
         set(value) {
             field.addAll(value)
             notifyDataSetChanged()
@@ -24,7 +23,10 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
 
     inner class ViewHolder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workWithModel(response: Content, position: Int) {
+        fun workWithModel(
+            response: com.bizmiz.gulbozor.core.models.category.Content,
+            position: Int
+        ) {
             ///binding.youtubeTitle.text=response.videoID.categoryId.toString()
             Glide.with(binding.root.context).load(response.image1)
                 .into(binding.flowerImage)
@@ -41,8 +43,10 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
         }
     }
 
-    private var onclick: (flowerListResponse: Content) -> Unit = {}
-    fun onClickListener(onclick: (flowerListResponse: Content) -> Unit) {
+    private var onclick: (flowerListResponse: com.bizmiz.gulbozor.core.models.category.Content) -> Unit =
+        {}
+
+    fun onClickListener(onclick: (flowerListResponse: com.bizmiz.gulbozor.core.models.category.Content) -> Unit) {
         this.onclick = onclick
     }
 
