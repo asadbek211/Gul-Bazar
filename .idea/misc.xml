@@ -51,6 +51,7 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_arrowup_white.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_bottom_competition.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_cat.xml" value="0.1665" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_cat_bucket.xml" value="0.1735" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_filter_dark.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_flag_uzb.xml" value="0.1665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/drawable/ic_flower_new.xml" value="0.1665" />
@@ -127,7 +128,7 @@
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_fetilizers_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_filter.xml" value="0.2" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_flower_details.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_category.xml" value="0.15828738241972104" />
         <entry key="..\:/Users/user/3D Objects/RealProjects/GulBazar1/app/src/main/res/layout/fragment_one_shop.xml" value="0.1471652593486128" />

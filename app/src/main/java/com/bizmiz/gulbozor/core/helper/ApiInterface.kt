@@ -1,6 +1,7 @@
 package com.bizmiz.gulbozor.core.helper
 
 import com.bizmiz.gulbozor.core.models.*
+import com.bizmiz.gulbozor.core.models.category.ByCategoryID
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
@@ -10,7 +11,6 @@ import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
-import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.OneShopData
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.ShopPhoneNumber
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
 import okhttp3.MultipartBody
@@ -29,6 +29,11 @@ interface ApiInterface {
     fun getVideoLinkPage(
         @Query("page") page: Int
     ): Call<YouTubeLinkPage>
+
+    @GET("announce/announceOfCustomer?")
+    fun announceOfCustomers(
+        @Query("page") page: Int
+    ): Call<ByCategoryID>
 
 
     @Headers("Content-Type:application/json")
@@ -110,7 +115,20 @@ interface ApiInterface {
     fun getOneShopPosts(
         @Path("shopId") shopId: Int,
         @Query("page") page: Int
-    ): Call<OneShopData>
+    ): Call<ByCategoryID>
+
+    @GET("announce/byCategory/{categoryId}?")
+    fun getOneCategoryPosts(
+        @Path("categoryId") categoryId: Int,
+        @Query("page") page: Int
+    ): Call<ByCategoryID>
+
+    @GET("/announce/byDepartment/{departmentId}")
+    fun getDepartmentId(
+        @Path("departmentId") departmentId: Int,
+        @Query("page") page: Int
+    ): Call<ByCategoryID>
+
 
     @GET("/shop/{id}")
     fun getShopPhoneNumber(
