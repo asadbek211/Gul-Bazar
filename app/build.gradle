@@ -19,8 +19,7 @@ android {
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-
-        buildConfigField "String", "SMS_TOKEN", "\"${properties.getProperty("SMS_TOKEN")}\""
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
     }
 
     buildTypes {
