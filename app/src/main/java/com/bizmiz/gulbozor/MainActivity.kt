@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         LoginHelper.getHelper().login = true
-
     }
 
 
