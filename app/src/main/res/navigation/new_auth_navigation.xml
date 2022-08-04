@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_auth_navigation"
+    app:startDestination="@id/newLoginFragment">
+
+    <fragment
+        android:id="@+id/newLoginFragment"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.new_auth.login.NewLoginFragment"
+        android:label="fragment_new_login"
+        tools:layout="@layout/fragment_new_login" >
+        <action
+            android:id="@+id/action_newLoginFragment_to_newSmsVerifyFragment"
+            app:destination="@id/newSmsVerifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newSmsVerifyFragment"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.new_auth.sms_verify.NewSmsVerifyFragment"
+        android:label="fragment_new_sms_verify"
+        tools:layout="@layout/fragment_new_sms_verify" />
+</navigation>

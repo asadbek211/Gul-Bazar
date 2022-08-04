@@ -46,43 +46,44 @@ import java.io.File
 class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
     private val binding by viewBinding { FragmentAddBuketBinding.bind(it) }
     private val addBuketViewModel: AddBuketViewModel by viewModel()
-    private var regionIdList:ArrayList<Int> = arrayListOf()
-    private var cityIdList:ArrayList<Int> = arrayListOf()
-    private var regionId:Int? = null
-    private var cityId:Int? = null
+    private var regionIdList: ArrayList<Int> = arrayListOf()
+    private var cityIdList: ArrayList<Int> = arrayListOf()
+    private var regionId: Int? = null
+    private var cityId: Int? = null
     private val imageUrlList: ArrayList<Uri> = arrayListOf()
-    private var file1:File? = null
-    private var file2:File? = null
-    private var file3:File? = null
-    private var file4:File? = null
-    private var file5:File? = null
-    private var file6:File? = null
-    private var file7:File? = null
-    private var file8:File? = null
-    private var img1:String? = null
-    private var img2:String? = null
-    private var img3:String? = null
-    private var img4:String? = null
-    private var img5:String? = null
-    private var img6:String? = null
-    private var img7:String? = null
-    private var img8:String? = null
-    private var imageViewList:List<ImageView> = listOf()
+    private var file1: File? = null
+    private var file2: File? = null
+    private var file3: File? = null
+    private var file4: File? = null
+    private var file5: File? = null
+    private var file6: File? = null
+    private var file7: File? = null
+    private var file8: File? = null
+    private var img1: String? = null
+    private var img2: String? = null
+    private var img3: String? = null
+    private var img4: String? = null
+    private var img5: String? = null
+    private var img6: String? = null
+    private var img7: String? = null
+    private var img8: String? = null
+    private var imageViewList: List<ImageView> = listOf()
     private val sectionList: List<String> = listOf("so'm")
-    private var departmentId:Int? = null
-    private var isSeller:Boolean? = null
-    private var flowerTypeList:ArrayList<Int> = arrayListOf()
-    private var flowerTypeId:Int? = null
-    private var spFlowerPosition:Int = 0
-    private var spRegionPosition:Int = 0
-    private var spCityPosition:Int = 0
-    private lateinit var flowerNameList:ArrayList<String>
+    private var departmentId: Int? = null
+    private var isSeller: Boolean? = null
+    private var flowerTypeList: ArrayList<Int> = arrayListOf()
+    private var flowerTypeId: Int? = null
+    private var spFlowerPosition: Int = 0
+    private var spRegionPosition: Int = 0
+    private var spCityPosition: Int = 0
+    private lateinit var flowerNameList: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addBuketViewModel.getRegion()
         addBuketViewModel.getParentCatByID(Constant.BUCKET_CATEGORY_ID)
         flowerNameList = arrayListOf()
     }
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,7 +118,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 1003
             )
         }
-        setAdapter(binding.spPriceType,sectionList)
+        setAdapter(binding.spPriceType, sectionList)
         imageViewList = listOf(
             binding.image1,
             binding.image2,
@@ -128,8 +129,8 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             binding.image7,
             binding.image8
         )
-        if (imageUrlList.isNotEmpty()){
-            for (i in 0 until imageUrlList.size){
+        if (imageUrlList.isNotEmpty()) {
+            for (i in 0 until imageUrlList.size) {
                 val thumbnailRequest = Glide
                     .with(requireContext())
                     .load(R.drawable.ic_group_1)
@@ -217,7 +218,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                     val compressImage6 = compressImage(file6)
                     val compressImage7 = compressImage(file7)
                     val compressImage8 = compressImage(file8)
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         addBuketViewModel.addFlower(
                             compressImage1?.let { it1 -> createFormData(it1, "image1") },
                             compressImage2?.let { it1 -> createFormData(it1, "image2") },
@@ -302,7 +303,8 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                         image7 = img7,
                         image8 = img8,
                         price = binding.etPrice.text?.trim().toString()
-                            .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
+                            .replace("\\s".toRegex(), "").replace(",", "").replace(".", "")
+                            .toLong(),
                         title = binding.etTitle.text.toString().trim(),
                         weight = null,
                         withFertilizer = null,
@@ -318,7 +320,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                         phoneNumber =
                         "+998${
                             binding.etNumber.text?.trim().toString()
-                            .replace("\\s".toRegex(), "")
+                                .replace("\\s".toRegex(), "")
                         }",
                         seller = isSeller,
                         id = null,
@@ -402,14 +404,14 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
 
         })
-        binding.spVilList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spVilList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if (regionIdList.isNotEmpty()){
+                if (regionIdList.isNotEmpty()) {
                     regionId = regionIdList[position]
                     addBuketViewModel.getCity(regionId!!)
                 }
@@ -420,7 +422,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
 
         }
-        binding.spFlowerType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spFlowerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -435,14 +437,14 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
 
         }
-        binding.spTumanList.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        binding.spTumanList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                if (cityIdList.isNotEmpty()){
+                if (cityIdList.isNotEmpty()) {
                     cityId = cityIdList[position]
                 }
                 spCityPosition = position
@@ -452,11 +454,12 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
 
         }
-        if (regionIdList.isNotEmpty()){
+        if (regionIdList.isNotEmpty()) {
             regionId = regionIdList[spRegionPosition]
             addBuketViewModel.getCity(regionId!!)
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE) {
@@ -484,7 +487,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                     if (data!!.clipData != null) {
                         val count = data.clipData!!.itemCount
                         for (i in 0 until count) {
-                            if (imageUrlList.size<8){
+                            if (imageUrlList.size < 8) {
                                 val imageUrl = data.clipData!!.getItemAt(i).uri
                                 imageUrlList.add(imageUrl)
                                 val thumbnailRequest = Glide
@@ -497,8 +500,9 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                                     .into(imageViewList[i])
                             }
                         }
-                        if (count >8)
-                            Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT).show()
+                        if (count > 8)
+                            Toast.makeText(requireActivity(), "Max 8 photos!", Toast.LENGTH_SHORT)
+                                .show()
                     } else {
                         val imageUrl = data.data
                         if (imageUrl != null) {
@@ -546,7 +550,8 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                             image7 = img7,
                             image8 = img8,
                             price = binding.etPrice.text?.trim().toString()
-                                .replace("\\s".toRegex(), "").replace(",", "").replace(".", "").toLong(),
+                                .replace("\\s".toRegex(), "").replace(",", "").replace(".", "")
+                                .toLong(),
                             title = binding.etTitle.text.toString().trim(),
                             weight = null,
                             withFertilizer = null,
@@ -562,7 +567,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                             phoneNumber =
                             "+998${
                                 binding.etNumber.text?.trim().toString()
-                                .replace("\\s".toRegex(), "")
+                                    .replace("\\s".toRegex(), "")
                             }",
                             seller = isSeller
                         )
@@ -570,15 +575,16 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 }
                 ResourceState.ERROR -> {
                     binding.progress.visibility = View.GONE
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
+
     private fun announceResultObserve() {
         addBuketViewModel.resultAnnounce.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     val navController =
                         Navigation.findNavController(
                             requireActivity(),
@@ -588,26 +594,28 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 }
                 ResourceState.ERROR -> {
                     binding.progress.visibility = View.GONE
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
+
     companion object {
         const val PICK_IMAGE_REQUEST_CODE = 1000
         const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001
     }
+
     private fun typeResultObserve() {
         addBuketViewModel.parentCategory.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     flowerTypeList.clear()
                     flowerNameList.clear()
                     it.data?.forEach {
                         flowerNameList.add(it.name)
                         flowerTypeList.add(it.id)
                     }
-                    setAdapter(binding.spFlowerType,flowerNameList)
+                    setAdapter(binding.spFlowerType, flowerNameList)
                     flowerTypeId = flowerTypeList[0]
                     binding.spFlowerType.setSelection(spFlowerPosition)
                 }
@@ -617,16 +625,17 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         })
     }
+
     private fun regionResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         addBuketViewModel.regionList.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     it.data?.forEach {
                         list.add(it.name)
                         regionIdList.add(it.id)
                     }
-                    if (regionIdList.isNotEmpty()){
+                    if (regionIdList.isNotEmpty()) {
                         regionId = regionIdList[0]
                     }
                     setAdapter(binding.spVilList, list)
@@ -638,21 +647,22 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         })
     }
+
     private fun cityResultObserve() {
-        val list:ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         addBuketViewModel.cityData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     list.clear()
                     cityIdList.clear()
                     it.data?.forEach {
                         list.add(it.name)
                         cityIdList.add(it.id)
                     }
-                    if (cityIdList.isNotEmpty()){
+                    if (cityIdList.isNotEmpty()) {
                         cityId = cityIdList[0]
                     }
-                setAdapter(binding.spTumanList, list)
+                    setAdapter(binding.spTumanList, list)
                     binding.spTumanList.setSelection(spCityPosition)
                 }
                 ResourceState.ERROR -> {
@@ -661,6 +671,7 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         })
     }
+
     private fun checkAnnounce(): Boolean {
         return when {
             binding.etTitle.text?.isEmpty() == true -> {
@@ -673,8 +684,12 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                     .show()
                 false
             }
-            flowerTypeId==null -> {
-                Toast.makeText(requireActivity(), "O'simlik turini olib bo'lmadi\nInternet aloqasini tekshiring", Toast.LENGTH_SHORT)
+            flowerTypeId == null -> {
+                Toast.makeText(
+                    requireActivity(),
+                    "O'simlik turini olib bo'lmadi\nInternet aloqasini tekshiring",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 false
             }
@@ -684,19 +699,24 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
                 false
             }
             binding.etNumber.text?.isEmpty() == true -> {
-                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Telefon raqam kiriting", Toast.LENGTH_SHORT)
+                    .show()
                 binding.etNumber.showSoftKeyboard()
                 false
             }
-            regionId==null -> {
-                Toast.makeText(requireActivity(), "Viloyat nomini olib bo'lmadi\n" +
-                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+            regionId == null -> {
+                Toast.makeText(
+                    requireActivity(), "Viloyat nomini olib bo'lmadi\n" +
+                            "Internet aloqasini tekshiring", Toast.LENGTH_SHORT
+                )
                     .show()
                 false
             }
-            cityId==null -> {
-                Toast.makeText(requireActivity(), "Tuman nomini olib bo'lmadi\n" +
-                        "Internet aloqasini tekshiring", Toast.LENGTH_SHORT)
+            cityId == null -> {
+                Toast.makeText(
+                    requireActivity(), "Tuman nomini olib bo'lmadi\n" +
+                            "Internet aloqasini tekshiring", Toast.LENGTH_SHORT
+                )
                     .show()
                 false
             }
@@ -715,7 +735,12 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             1001 -> {
@@ -726,8 +751,13 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         }
     }
+
     private fun pickImage() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             val intent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.INTERNAL_CONTENT_URI
@@ -743,9 +773,16 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             )
         }
     }
+
     private fun uriToImageFile(uri: Uri): File? {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = (activity as AddAnnounceActivity).contentResolver.query(uri, filePathColumn, null, null, null)
+        val cursor = (activity as AddAnnounceActivity).contentResolver.query(
+            uri,
+            filePathColumn,
+            null,
+            null,
+            null
+        )
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 val columnIndex = cursor.getColumnIndex(filePathColumn[0])
@@ -757,18 +794,20 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
         }
         return null
     }
-    private fun createFormData(file: File,imgName:String): MultipartBody.Part {
+
+    private fun createFormData(file: File, imgName: String): MultipartBody.Part {
         val requestFile: RequestBody = RequestBody.create(
             "image/*".toMediaTypeOrNull(),
             file
         )
         return MultipartBody.Part.createFormData(imgName, file.name, requestFile)
     }
+
     @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun compressImage(file:File?): File? {
+    private suspend fun compressImage(file: File?): File? {
         val compressedImageFile =
             file?.let { it1 ->
-                Compressor.compress(requireContext(), it1){
+                Compressor.compress(requireContext(), it1) {
                     resolution(1280, 720)
                     quality(80)
                     format(Bitmap.CompressFormat.WEBP)
@@ -777,7 +816,8 @@ class AddBuketFragment : Fragment(R.layout.fragment_add_buket) {
             }
         return compressedImageFile
     }
-    private fun setAdapter(sp:Spinner,list:List<String>){
+
+    private fun setAdapter(sp: Spinner, list: List<String>) {
         val adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item, list)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sp.adapter = adapter
