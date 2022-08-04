@@ -1,20 +1,15 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
-import com.bizmiz.gulbozor.core.models.CityDataItem
-import com.bizmiz.gulbozor.core.models.RegionDataItem
 import com.bizmiz.gulbozor.core.utils.checkMonth
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     var flowersList:ArrayList<AnnounceResponseData> = arrayListOf()
@@ -25,16 +20,20 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     inner class Myholder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun populateModel(flowerListResponse: AnnounceResponseData, position: Int) {
-                Glide.with(binding.root.context).load(flowerListResponse.image1)
-                    .into(binding.flowerImage)
+            Glide.with(binding.root.context)
+                .load(flowerListResponse.image1)// TODO: we need to add placeHolder but it does not sound ok(
+                .into(binding.flowerImage)
             binding.flowerName.text = flowerListResponse.title
-            binding.flowerDescription.text = "${flowerListResponse.regionName}, ${flowerListResponse.cityName} ${dataSettings(flowerListResponse.createAt)}"
+            binding.flowerDescription.text =
+                "${flowerListResponse.regionName}, ${flowerListResponse.cityName} ${
+                    dataSettings(flowerListResponse.createAt)
+                }"
             val df = DecimalFormat("#,###.##")
             val number = df.format(flowerListResponse.price)
-            binding.flowerPrice.text = number.replace("."," ").replace(","," ")
-             binding.cardView.setOnClickListener {
-                 onclick.invoke(flowerListResponse)
-             }
+            binding.flowerPrice.text = number.replace(".", " ").replace(",", " ")
+            binding.cardView.setOnClickListener {
+                onclick.invoke(flowerListResponse)
+            }
         }
 
     }

@@ -6,145 +6,181 @@
     android:layout_height="match_parent"
     android:background="@color/gray_main">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/logo_place"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?actionBarSize"
+            android:background="#fff"
+            android:paddingBottom="4dp"
+            android:src="@drawable/ic_gulbazar_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/logo_place"
+        <ImageView
+            android:id="@+id/back_pressed"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="5dp"
+            android:padding="16dp"
+            android:src="@drawable/ic_back_icon"
+            app:layout_constraintStart_toStartOf="@id/logo_place"
+            app:layout_constraintTop_toTopOf="@id/logo_place" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ECEBEB"
+            android:paddingBottom="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo_place">
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_nested"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="#fff"
-                android:paddingBottom="4dp"
-                android:src="@drawable/ic_gulbazar_logo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/back_pressed"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="5dp"
-                android:padding="16dp"
-                android:src="@drawable/ic_back_icon"
-                app:layout_constraintStart_toStartOf="@id/logo_place"
-                app:layout_constraintTop_toTopOf="@id/logo_place" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:id="@+id/smth"
-                android:background="#fff"
-                android:layout_height="222dp"
-                app:layout_constraintTop_toBottomOf="@id/logo_place">
-
-                <TextView
-                    android:id="@+id/logo_shop"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    android:textColor="#F15A24"
-                    android:textSize="44sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/bottom_main_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/naturalDark"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@id/logo_shop"
-                    app:layout_constraintStart_toStartOf="@id/logo_shop"
-
-                    app:layout_constraintTop_toBottomOf="@id/logo_shop"
-
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
 
-            <TextView
-                android:id="@+id/p_n_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-                android:textColor="@color/green_color"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/smth"
-                app:layout_constraintEnd_toEndOf="@id/smth" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/smth"
+                            android:layout_width="match_parent"
+                            android:layout_height="222dp"
+                            android:background="#fff"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/p_n_place1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="7dp"
-                android:textColor="@color/green_color"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/p_n_place"
-                app:layout_constraintEnd_toEndOf="@id/smth" />
+                            <TextView
+                                android:id="@+id/logo_shop"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#fff"
+                                android:gravity="center"
 
-            <ImageView
-                android:id="@+id/green_line"
-                android:layout_width="match_parent"
-                android:layout_height="11dp"
-                android:background="@color/green_color"
-                app:layout_constraintTop_toBottomOf="@id/smth" />
+                                android:textColor="#F15A24"
+                                android:textSize="44sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txt_all_p"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="7dp"
-                android:text="Barcha e'lonlar"
-                android:textColor="@color/naturalDark"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/green_line" />
+                            <TextView
+                                android:id="@+id/bottom_main_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/naturalDark"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="@id/logo_shop"
+                                app:layout_constraintStart_toStartOf="@id/logo_shop"
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/oneShopRec"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_all_p"
-                app:spanCount="2"
-                tools:listitem="@layout/flower_item" />
+                                app:layout_constraintTop_toBottomOf="@id/logo_shop"
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                app:layout_constraintTop_toBottomOf="@id/oneShopRec" />
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/not_post_yet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="77dp"
-                android:gravity="center"
-                android:text="Bu do'kon hali elon bergani yo'q"
-                android:textColor="@color/naturalDark"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_all_p" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+
+                        <TextView
+                            android:id="@+id/p_n_place"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="7dp"
+                            android:textColor="@color/green_color"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/smth"
+                            app:layout_constraintEnd_toEndOf="@id/smth" />
+
+                        <TextView
+                            android:id="@+id/p_n_place1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="7dp"
+                            android:textColor="@color/green_color"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/p_n_place"
+                            app:layout_constraintEnd_toEndOf="@id/smth" />
+
+                        <ImageView
+                            android:id="@+id/green_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="11dp"
+                            android:background="@color/green_color"
+                            app:layout_constraintTop_toBottomOf="@id/smth" />
+
+                        <TextView
+                            android:id="@+id/txt_all_p"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="11dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="7dp"
+                            android:text="Barcha e'lonlar"
+                            android:textColor="@color/naturalDark"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/green_line" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/oneShopRec"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_all_p"
+                            app:spanCount="2"
+                            tools:listitem="@layout/flower_item" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_one_cat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="7dp"
+                            android:indeterminateDrawable="@drawable/progress_bar"
+                            app:layout_constraintTop_toBottomOf="@id/oneShopRec" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="66dp"
+                            app:layout_constraintTop_toBottomOf="@id/oneShopRec" />
+
+                        <TextView
+                            android:id="@+id/not_post_yet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="77dp"
+                            android:gravity="center"
+                            android:text="Bu do'kon hali elon bergani yo'q"
+                            android:textColor="@color/naturalDark"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_all_p" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

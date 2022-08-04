@@ -61,7 +61,6 @@ class YouTubeFragment : Fragment() {
 
         binding.swipeContainer.setOnRefreshListener {
             youTubeVM.getYouTubePage(0)
-            youTubeVM.getReklamaImages(2)
         }
     }
 
