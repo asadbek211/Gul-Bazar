@@ -42,16 +42,20 @@ class NetworkHelper(
         onSuccess: (data: ImageResponseData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).addFlowerImage(img1,img2,img3,img4, img5, img6, img7, img8)
+        val call = apiClient.create(ApiInterface::class.java)
+            .addFlowerImage(img1, img2, img3, img4, img5, img6, img7, img8)
         call.enqueue(object : Callback<ImageResponseData> {
-            override fun onResponse(call: Call<ImageResponseData>?, response: Response<ImageResponseData>?) {
+            override fun onResponse(
+                call: Call<ImageResponseData>?,
+                response: Response<ImageResponseData>?
+            ) {
                 Log.d("results", response.toString())
                 if (response != null) {
                     Log.d("results", response.body().toString())
                 }
                 if (response != null) {
                     response.body()?.let { onSuccess.invoke(it) }
-                }else{
+                } else {
                     onFailure.invoke("Xatolik yuz berdi qaytadan urinib ko'ring")
                 }
             }
@@ -168,7 +172,10 @@ class NetworkHelper(
         val call =
             apiClient.create(ApiInterface::class.java).setAnnounce(announceRequestDataResponse)
         call.enqueue(object : Callback<AnnounceBaseResponse> {
-            override fun onResponse(call: Call<AnnounceBaseResponse>?, response: Response<AnnounceBaseResponse>?) {
+            override fun onResponse(
+                call: Call<AnnounceBaseResponse>?,
+                response: Response<AnnounceBaseResponse>?
+            ) {
                 if (response != null) {
                     Log.d("results", response.body().toString())
                 }
@@ -184,6 +191,7 @@ class NetworkHelper(
 
         })
     }
+
     fun getRegion(
         onSuccess: (regionData: RegionData) -> Unit,
         onFailure: (msg: String?) -> Unit
@@ -202,18 +210,19 @@ class NetworkHelper(
 
         })
     }
+
     fun getCity(
-        id:Int,
+        id: Int,
         onSuccess: (cityData: ArrayList<CityDataItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getCity()
-        val list:ArrayList<CityDataItem> = arrayListOf()
+        val list: ArrayList<CityDataItem> = arrayListOf()
         call.enqueue(object : Callback<CityData> {
             override fun onResponse(call: Call<CityData>?, response: Response<CityData>?) {
                 if (response != null) {
                     response.body()?.forEach {
-                        if (it.regionId==id){
+                        if (it.regionId == id) {
                             list.add(it)
                         }
                     }
@@ -227,17 +236,22 @@ class NetworkHelper(
 
         })
     }
+
     fun getFlowerType(
         onSuccess: (typeData: FlowerTypeData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getFlowerType()
         call.enqueue(object : Callback<FlowerTypeData> {
-            override fun onResponse(call: Call<FlowerTypeData>?, response: Response<FlowerTypeData>?) {
+            override fun onResponse(
+                call: Call<FlowerTypeData>?,
+                response: Response<FlowerTypeData>?
+            ) {
                 if (response != null) {
                     response.body()?.let { onSuccess.invoke(it) }
                 }
             }
+
             override fun onFailure(call: Call<FlowerTypeData>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
@@ -266,18 +280,24 @@ class NetworkHelper(
 
         })
     }
+
     fun getFlowerTypeById(
-        id:Int,
+        id: Int,
         onSuccess: (typeData: FlowerTypeDataItem) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getFlowerTypeById(id)
         call.enqueue(object : Callback<BaseResponse<FlowerTypeDataItem>> {
-            override fun onResponse(call: Call<BaseResponse<FlowerTypeDataItem>>?, response: Response<BaseResponse<FlowerTypeDataItem>>?) {
+            override fun onResponse(
+                call: Call<BaseResponse<FlowerTypeDataItem>>?,
+                response: Response<BaseResponse<FlowerTypeDataItem>>?
+            ) {
                 if (response != null) {
-                    response.body()?.let { response.body()?.`object`?.let { it1 -> onSuccess.invoke(it1) } }
+                    response.body()
+                        ?.let { response.body()?.`object`?.let { it1 -> onSuccess.invoke(it1) } }
                 }
             }
+
             override fun onFailure(call: Call<BaseResponse<FlowerTypeDataItem>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
@@ -362,6 +382,7 @@ class NetworkHelper(
 
         })
     }
+
     fun createShop(
         createShopRequest: CreateShopRequest,
         onSuccess: (createShopRequest: CreateShopRequest) -> Unit,
@@ -369,7 +390,10 @@ class NetworkHelper(
     ) {
         val call = apiClient.create(ApiInterface::class.java).createShop(createShopRequest)
         call.enqueue(object : Callback<BaseResponse<CreateShopRequest>> {
-            override fun onResponse(call: Call<BaseResponse<CreateShopRequest>>?, response: Response<BaseResponse<CreateShopRequest>>?) {
+            override fun onResponse(
+                call: Call<BaseResponse<CreateShopRequest>>?,
+                response: Response<BaseResponse<CreateShopRequest>>?
+            ) {
                 if (response != null) {
                     Log.d("resultsShop", response.body()?.`object`.toString())
                 }
@@ -377,6 +401,7 @@ class NetworkHelper(
                     response.body()?.`object`?.let { onSuccess.invoke(it) }
                 }
             }
+
             override fun onFailure(call: Call<BaseResponse<CreateShopRequest>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
@@ -384,9 +409,10 @@ class NetworkHelper(
 
         })
     }
+
     fun deleteAnnounceById(
-        announceId:Int,
-        onSuccess: (data:Any) -> Unit,
+        announceId: Int,
+        onSuccess: (data: Any) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).deleteAnnounceById(announceId)
@@ -399,6 +425,7 @@ class NetworkHelper(
                     response.body()?.let { onSuccess.invoke(it) }
                 }
             }
+
             override fun onFailure(call: Call<Any>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
@@ -406,15 +433,19 @@ class NetworkHelper(
 
         })
     }
+
     fun updateShopId(
         sellerId: Int,
         shopId: Int,
         onSuccess: (data: Any) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId,shopId)
+        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId, shopId)
         call.enqueue(object : Callback<BaseResponse<Any>> {
-            override fun onResponse(call: Call<BaseResponse<Any>>?, response: Response<BaseResponse<Any>>?) {
+            override fun onResponse(
+                call: Call<BaseResponse<Any>>?,
+                response: Response<BaseResponse<Any>>?
+            ) {
                 if (response != null) {
                     Log.d("resultsShopId", response.toString())
                     Log.d("resultsShopId", response.body()?.`object`.toString())
@@ -423,6 +454,7 @@ class NetworkHelper(
                     response.body()?.`object`?.let { onSuccess.invoke(it) }
                 }
             }
+
             override fun onFailure(call: Call<BaseResponse<Any>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
@@ -430,8 +462,9 @@ class NetworkHelper(
 
         })
     }
+
     fun smsSend(
-        token:String,
+        token: String,
         data: RequestBody,
         onSuccess: (status: String) -> Unit,
         onFailure: (msg: String?) -> Unit
@@ -451,21 +484,25 @@ class NetworkHelper(
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 CoroutineScope(Dispatchers.Main).launch {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         onSuccess.invoke("success")
                     }
                 }
             }
         })
     }
+
     fun getUserData(
-        userId:Int,
-        onSuccess: (userData:UserDataResponse) -> Unit,
+        userId: Int,
+        onSuccess: (userData: UserDataResponse) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java).getUserData(userId)
         call.enqueue(object : Callback<BaseResponse<UserDataResponse>> {
-            override fun onResponse(call: Call<BaseResponse<UserDataResponse>>?, response: Response<BaseResponse<UserDataResponse>>?) {
+            override fun onResponse(
+                call: Call<BaseResponse<UserDataResponse>>?,
+                response: Response<BaseResponse<UserDataResponse>>?
+            ) {
                 if (response != null) {
                     response.body()?.`object`.let {
                         if (it != null) {
