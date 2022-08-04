@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,6 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
             viewModel.getByCategoryID(args.categoryId.toInt(), page)
         }
         viewModel.getReklamaImages(4)
-        //viewModel.getAnnounce(0)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +58,24 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 findNavController().navigate(R.id.onBack_to_category)
             }
         })
+        binding.swipeContainer.setOnRefreshListener {
+            if (args.onBack == "home") {
+                viewModel.getDepartment(args.categoryId.toInt(), 0)
+            } else if (args.onBack == "category") {
+                viewModel.getByCategoryID(args.categoryId.toInt(), 0)
+            }
+        }
+        binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                page++
+                binding.progressBarOneCat.visibility = View.VISIBLE
+                if (args.onBack == "home") {
+                    viewModel.getDepartment(args.categoryId.toInt(), page)
+                } else if (args.onBack == "category") {
+                    viewModel.getByCategoryID(args.categoryId.toInt(), page)
+                }
+            }
+        })
     }
 
     private fun announceObserve() {
@@ -66,6 +84,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         categoryAdapter.clearAdapter()
+                        binding.swipeContainer.isRefreshing = false
                         categoryAdapter.categoryList =
                             it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
                         /*Toast.makeText(requireContext(), it.data.toString(), Toast.LENGTH_SHORT)
@@ -73,6 +92,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
 
                     }
                     ResourceState.ERROR -> {
+                        binding.swipeContainer.isRefreshing = false
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -82,11 +102,12 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         categoryAdapter.clearAdapter()
+                        binding.swipeContainer.isRefreshing = false
                         categoryAdapter.categoryList =
                             it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
                     }
                     ResourceState.ERROR -> {
-
+                        binding.swipeContainer.isRefreshing = false
                     }
                 }
             })
@@ -95,6 +116,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         viewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
+                    binding.swipeContainer.isRefreshing = false
                     slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
                     slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
                     slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
@@ -104,6 +126,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.swipeContainer.isRefreshing = false
                 }
             }
         })

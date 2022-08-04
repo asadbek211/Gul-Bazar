@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -26,14 +27,14 @@ class OneShopFragment : Fragment() {
     private var _binding: FragmentOneShopBinding? = null
     private val binding get() = _binding!!
 
-
+    private var page: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (args.position == "customer") {
-            oneShopVM.getAnnounceOfCustomer(0)
+            oneShopVM.getAnnounceOfCustomer(page)
         } else {
-            oneShopVM.getShopIdPage(0, args.position!!.toInt())
-            oneShopVM.getShopNumber(args.position!!.toInt())
+            oneShopVM.getShopIdPage(page, args.position.toInt())
+            oneShopVM.getShopNumber(args.position.toInt())
         }
     }
 
@@ -63,27 +64,48 @@ class OneShopFragment : Fragment() {
             binding.logoShop.text = "Haridorlar"
         }
 
+        binding.swipeContainer.setOnRefreshListener {
+            if (args.position == "customer") {
+                oneShopVM.getAnnounceOfCustomer(0)
+            } else {
+                oneShopVM.getShopIdPage(0, args.position.toInt())
+                oneShopVM.getShopNumber(args.position.toInt())
+            }
+        }
+        binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                page++
+                binding.progressBarOneCat.visibility = View.VISIBLE
+                if (args.position == "customer") {
+                    oneShopVM.getAnnounceOfCustomer(page)
+                } else {
+                    oneShopVM.getShopIdPage(page, args.position.toInt())
+                    oneShopVM.getShopNumber(args.position.toInt())
+                }
+            }
+        })
+
         windowStatus()
 
         announceObserve()
     }
 
-    private fun windowStatus() {
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), R.color.white)
-    }
 
     private fun announceObserve() {
         if (args.position == "customer") {
             oneShopVM.customerPost.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        binding.swipeContainer.isRefreshing = false
+                        if (it.data!!.content.isEmpty()) {
+                            binding.progressBarOneCat.visibility = View.GONE
+                        }
                         adapter.oneShopList =
-                            it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
-                        /*binding.bottomMainTxt.text = "Eksportchi tashkilotlar"
-                        binding.logoShop.text = "Haridorlar"*/
+                            it.data.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
+
                     }
                     ResourceState.ERROR -> {
+                        binding.swipeContainer.isRefreshing = false
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -92,10 +114,15 @@ class OneShopFragment : Fragment() {
             oneShopVM.shopIdPage.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        binding.swipeContainer.isRefreshing = false
                         adapter.oneShopList =
                             it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
+                        if (it.data.content.isEmpty()) {
+                            binding.progressBarOneCat.visibility = View.GONE
+                        }
                     }
                     ResourceState.ERROR -> {
+                        binding.swipeContainer.isRefreshing = false
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -106,19 +133,25 @@ class OneShopFragment : Fragment() {
             oneShopVM.shopNumber.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        binding.swipeContainer.isRefreshing = false
                         binding.pNPlace1.text = it.data!!.`object`.phoneNumber1
                         binding.pNPlace.text = it.data.`object`.phoneNumber2
                         binding.bottomMainTxt.text = "Gul do'koni"
                         binding.logoShop.text = it.data.`object`.shopName
                     }
                     ResourceState.ERROR -> {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        binding.swipeContainer.isRefreshing = false
                     }
                 }
             })
 
         }
 
+    }
+
+    private fun windowStatus() {
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.white)
     }
 
     private fun onBackPressed() {

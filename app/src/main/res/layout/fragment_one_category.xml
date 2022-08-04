@@ -6,104 +6,130 @@
     android:layout_height="match_parent"
     android:background="@color/gray_main">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logo_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/logo_place"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/logo_place"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:background="#fff"
-                    android:paddingBottom="4dp"
-                    android:src="@drawable/ic_gulbazar_logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="?actionBarSize"
+            android:background="#fff"
+            android:paddingBottom="4dp"
+            android:src="@drawable/ic_gulbazar_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-                <ImageView
-                    android:id="@+id/back_pressed"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="5dp"
-                    android:padding="16dp"
-                    android:src="@drawable/ic_back_icon"
-                    app:layout_constraintStart_toStartOf="@id/logo_place"
-                    app:layout_constraintTop_toTopOf="@id/logo_place" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/back_pressed"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="5dp"
+            android:padding="16dp"
+            android:src="@drawable/ic_back_icon"
+            app:layout_constraintStart_toStartOf="@id/logo_place"
+            app:layout_constraintTop_toTopOf="@id/logo_place" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ECEBEB"
+        android:paddingBottom="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_action">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/rec_view"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_nested"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
 
-                <LinearLayout
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/rec_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
 
-                    <com.denzcoskun.imageslider.ImageSlider
-                        android:id="@+id/imageSlider"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="222dp"
-                        app:iss_auto_cycle="true"
-                        app:iss_corner_radius="10"
-                        app:iss_delay="1000"
-                        app:iss_period="1000"
-                        app:iss_placeholder="@drawable/ic_gulbazar_logo" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/category_u_"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="22dp"
-                android:background="@drawable/button_bg"
-                android:paddingStart="50dp"
-                android:paddingTop="12dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="12dp"
-                android:text="Filtrlash      "
-                android:textColor="#226338"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:drawableEndCompat="@drawable/ic_filter_dark" />
+                        <com.denzcoskun.imageslider.ImageSlider
+                            android:id="@+id/imageSlider"
+                            android:layout_width="match_parent"
+                            android:layout_height="222dp"
+                            app:iss_auto_cycle="true"
+                            app:iss_corner_radius="10"
+                            app:iss_delay="1000"
+                            app:iss_period="1000"
+                            app:iss_placeholder="@drawable/ic_gulbazar_logo" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/one_cat_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginBottom="12dp"
-                android:text="Buket gullar"
-                android:textColor="#226338"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/category_u_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="22dp"
+                    android:background="@drawable/button_bg"
+                    android:paddingStart="50dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="12dp"
+                    android:text="Filtrlash      "
+                    android:textColor="#226338"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/ic_filter_dark" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/flower_item" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/one_cat_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="Buket gullar"
+                    android:textColor="#226338"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/category_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/flower_item" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar_one_cat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:indeterminateDrawable="@drawable/progress_bar" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
