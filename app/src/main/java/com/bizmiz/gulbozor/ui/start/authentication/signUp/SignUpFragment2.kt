@@ -28,10 +28,6 @@ class SignUpFragment2 : Fragment(R.layout.fragment_sign_up2) {
         smsCode = requireArguments().getString("sms_code")
         loadView(view)
         windowStatus()
-        binding.signUpToLogin.setOnClickListener {
-            findNavController().navigate(R.id.sign_up2_login)
-        }
-
     }
 
     private fun loadView(view: View) {
@@ -39,16 +35,16 @@ class SignUpFragment2 : Fragment(R.layout.fragment_sign_up2) {
         linePinField.onTextCompleteListener = object : PinField.OnTextCompleteListener {
 
             override fun onTextComplete(enteredText: String): Boolean {
-                checkSMS(enteredText, view)
-                binding.nextSignUp.setOnClickListener(View.OnClickListener {
-                    checkSMS(enteredText, view)
-                })
-                return true // Return false to keep the keyboard open else return true to close the keyboard
+                checkSMS(enteredText)
+                binding.nextSignUp.setOnClickListener {
+                    checkSMS(enteredText)
+                }
+                return true
             }
         }
     }
 
-    private fun checkSMS(code: String, view: View) {
+    private fun checkSMS(code: String) {
         if (smsCode!=null && code == smsCode) {
             findNavController().navigate(R.id.action_signUpFragment2_to_signUpFragment3)
         } else {

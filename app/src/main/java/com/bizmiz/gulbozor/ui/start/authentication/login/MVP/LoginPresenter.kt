@@ -1,6 +1,5 @@
 package com.bizmiz.gulbozor.ui.start.authentication.login.MVP
 
-import android.util.Log
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.helper.ApiClient
 import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginRequest
@@ -22,25 +21,19 @@ class LoginPresenter(val view: LoginMVP.View) : LoginMVP.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun loginWithPhoneNumber(phoneNumber: String, password: String) {
+    override fun loginWithPhoneNumber(phoneNumber: String) {
         val body = LoginRequest(
-            phoneNumber = phoneNumber,
-            password = password
+            phoneNumber = phoneNumber
         )
-        Log.d("tel",phoneNumber)
         val disposable = loginService.loginGetToken(loginRequest = body)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<Response<LoginResponse>>() {
                 override fun onSuccess(t: Response<LoginResponse>) {
-
-                    Log.d("TAGAAA", t.code().toString())
-
                     if (t.code() == 200) {
                         view.setData("successful")
                         AppCache.getHelper().token = t.body()?.token
                         AppCache.getHelper().userId = t.body()?.user_id!!
-                        Log.d("TAGVVV", t.body()?.user_id.toString())
                     } else if (t.code() in 400..499) {
                         view.setData("networkError")
                     } else {
@@ -50,8 +43,6 @@ class LoginPresenter(val view: LoginMVP.View) : LoginMVP.Presenter {
 
                 override fun onError(e: Throwable) {
                     view.onError(e.message.toString())
-
-                    Log.d("TAGAAAQ", e.message.toString())
                 }
 
             })

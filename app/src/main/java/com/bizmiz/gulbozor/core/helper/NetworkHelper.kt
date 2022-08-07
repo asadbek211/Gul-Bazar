@@ -453,6 +453,8 @@ class NetworkHelper(
                 CoroutineScope(Dispatchers.Main).launch {
                     if (response.isSuccessful){
                         onSuccess.invoke("success")
+                    }else{
+                        onFailure.invoke("Qandaydir xatolik yuz berdi qayta urinib ko'ring")
                     }
                 }
             }

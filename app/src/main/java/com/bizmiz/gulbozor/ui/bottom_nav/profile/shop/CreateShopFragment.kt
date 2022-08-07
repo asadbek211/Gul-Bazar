@@ -83,8 +83,8 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
         cityResultObserve()
         binding.btnNext.setOnClickListener {
             createShopViewModel.updateShopId(
-                3,
-                Constant.SHOP_ID
+                7,
+                2
             )
 //            if (checkShop()){
 //                createShopViewModel.createShop(

@@ -16,11 +16,11 @@ class AddNavigationFragment : Fragment(R.layout.fragment_add_navigation) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSeller.setOnClickListener {
             navigation()
-            isSeller = true
+            isSeller = false
         }
         binding.btnShopping.setOnClickListener {
             navigation()
-            isSeller = false
+            isSeller = true
         }
     }
 

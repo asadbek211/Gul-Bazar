@@ -15,24 +15,9 @@ import com.bizmiz.gulbozor.databinding.FragmentEditProfileBinding
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val binding by viewBinding { FragmentEditProfileBinding.bind(it) }
-    private var mIsShowPass = false
-    private var mIsShowPass1 = false
-    private var mIsShowPass2 = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivShowHidePass1.setOnClickListener {
-            mIsShowPass1 = !mIsShowPass1
-            showPassword(binding.etPass1, binding.ivShowHidePass1, mIsShowPass1)
-        }
-        binding.ivShowHidePass.setOnClickListener {
-            mIsShowPass = !mIsShowPass
-            showPassword(binding.etPass, binding.ivShowHidePass, mIsShowPass)
-        }
-        binding.ivShowHidePass2.setOnClickListener {
-            mIsShowPass2 = !mIsShowPass2
-            showPassword(binding.etPass2, binding.ivShowHidePass2, mIsShowPass2)
-        }
         binding.btnNext.setOnClickListener {
             val navController =
                 Navigation.findNavController(
@@ -49,16 +34,5 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 )
             navController.popBackStack()
         }
-    }
-
-    private fun showPassword(et: EditText, img: ImageView, isShow: Boolean) {
-        if (isShow) {
-            et.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            img.setImageResource(R.drawable.visibility_on)
-        } else {
-            et.transformationMethod = PasswordTransformationMethod.getInstance()
-            img.setImageResource(R.drawable.ic_eye_off)
-        }
-        et.setSelection(binding.etPass1.text.toString().length)
     }
 }

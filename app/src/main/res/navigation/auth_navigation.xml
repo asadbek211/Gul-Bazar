@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/set_up_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/signUpFragment1">
 
     <fragment
         android:id="@+id/signUpFragment1"
@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_signUpFragment1_to_signUpFragment2"
             app:destination="@id/signUpFragment2" />
-        <action
-            android:id="@+id/sign_up1_login"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
@@ -24,10 +21,9 @@
         tools:layout="@layout/fragment_sign_up2">
         <action
             android:id="@+id/action_signUpFragment2_to_signUpFragment3"
-            app:destination="@id/signUpFragment3" />
-        <action
-            android:id="@+id/sign_up2_login"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/signUpFragment3"
+            app:popUpTo="@id/signUpFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment3"
@@ -39,23 +35,10 @@
             app:destination="@id/signUpFragment4"
             app:popUpTo="@id/signUpFragment3"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_signUpFragment3_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment4"
         android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment4"
         android:label="SignUpFragment4"
-        tools:layout="@layout/fragment_sign_up4" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.bizmiz.gulbozor.ui.start.authentication.login.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_signUpFragment1"
-            app:destination="@id/signUpFragment1" />
-    </fragment>
-
+        tools:layout="@layout/fragment_sign_up4"/>
 </navigation>

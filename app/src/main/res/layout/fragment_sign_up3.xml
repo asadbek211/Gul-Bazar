@@ -58,13 +58,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:hint="Ism Familiya"
+                android:hint="Ism"
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/naturalDark"
                 android:textSize="15sp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/login_phone_num__back"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:padding="1dp"
+                android:src="@drawable/ic_edit_text_profile_ic" />
+
+            <EditText
+                android:id="@+id/userSurname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="Familiya"
+                android:inputType="text"
+                android:padding="8dp"
+                android:textColor="@color/naturalDark"
+                android:textSize="15sp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -90,88 +116,6 @@
                 android:textColor="@color/naturalDark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/login_phone_num__back"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_outline_lock_login" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/et_pass"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:hint="Parol"
-                    android:inputType="textPassword"
-                    android:textColor="@color/naturalDark"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@id/ivShowHidePass"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <ImageView
-                    android:id="@+id/ivShowHidePass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_eye_off"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="17dp"
-            android:background="@drawable/login_phone_num__back"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_outline_lock_login" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/et_pass1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:hint="Parolni tasdiqlang"
-                    android:inputType="textPassword"
-                    android:textColor="@color/naturalDark"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toStartOf="@id/ivShowHidePass1"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <ImageView
-                    android:id="@+id/ivShowHidePass1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_eye_off"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -213,30 +157,5 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hisobingiz mavjudmi?"
-                android:textColor="#9098B1"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/signUp_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:text="Kirish"
-                android:textColor="@color/naturalDark"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
