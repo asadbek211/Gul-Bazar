@@ -80,6 +80,7 @@ class FragmentShops : Fragment() {
             shopsViewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
+                        slideModels.clear()
                         slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
                         slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
                         slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))

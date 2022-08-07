@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
@@ -26,6 +28,8 @@ class OneShopFragment : Fragment() {
 
     private var _binding: FragmentOneShopBinding? = null
     private val binding get() = _binding!!
+
+    private var isLastPage: Boolean = false
 
     private var page: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,28 +70,79 @@ class OneShopFragment : Fragment() {
 
         binding.swipeContainer.setOnRefreshListener {
             if (args.position == "customer") {
+                adapter.clearAdapter()
                 oneShopVM.getAnnounceOfCustomer(0)
+                isLastPage = false
             } else {
+                adapter.clearAdapter()
                 oneShopVM.getShopIdPage(0, args.position.toInt())
                 oneShopVM.getShopNumber(args.position.toInt())
+                isLastPage = false
             }
         }
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                page++
-                binding.progressBarOneCat.visibility = View.VISIBLE
-                if (args.position == "customer") {
-                    oneShopVM.getAnnounceOfCustomer(page)
+                if (!isLastPage) {
+                    page++
+                    binding.progressBarOneCat.visibility = View.VISIBLE
+                    if (args.position == "customer") {
+                        oneShopVM.getAnnounceOfCustomer(page)
+                    } else {
+                        oneShopVM.getShopIdPage(page, args.position.toInt())
+                        oneShopVM.getShopNumber(args.position.toInt())
+                    }
                 } else {
-                    oneShopVM.getShopIdPage(page, args.position.toInt())
-                    oneShopVM.getShopNumber(args.position.toInt())
+                    Toast.makeText(
+                        requireContext(),
+                        "Boshqa elonlar mavjud emas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.progressBarOneCat.visibility = View.GONE
                 }
+
             }
         })
 
         windowStatus()
 
         announceObserve()
+
+        intent()
+    }
+
+    private fun intent() {
+        adapter.onClickListener {
+            if (it.department != null) {
+                val bundle = bundleOf(
+                    "flowerData" to it,
+                    "desId" to 0,
+                )
+                destination(it.department, bundle)
+            }
+        }
+    }
+
+    private fun destination(categoryId: Int, bundle: Bundle?) {
+        val navController = Navigation.findNavController(
+            requireActivity(), R.id.mainContainer
+        )
+        when (categoryId) {
+            1 -> {
+                navController.navigate(R.id.home_to_buketDetails, bundle)
+            }
+            2 -> {
+                navController.navigate(R.id.home_to_flowerDetails, bundle)
+            }
+            3 -> {
+                navController.navigate(R.id.home_to_treeDetails, bundle)
+            }
+            4 -> {
+                navController.navigate(R.id.home_to_potDetails, bundle)
+            }
+            5 -> {
+                navController.navigate(R.id.home_to_fetilizersDetails, bundle)
+            }
+        }
     }
 
 
@@ -97,11 +152,10 @@ class OneShopFragment : Fragment() {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
-                        if (it.data!!.content.isEmpty()) {
-                            binding.progressBarOneCat.visibility = View.GONE
+                        if (it.data!!.empty) {
+                            isLastPage = true
                         }
-                        adapter.oneShopList =
-                            it.data.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
+                        adapter.addOneShopListData(it.data.content)
 
                     }
                     ResourceState.ERROR -> {
@@ -115,10 +169,9 @@ class OneShopFragment : Fragment() {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
-                        adapter.oneShopList =
-                            it.data!!.content as ArrayList<com.bizmiz.gulbozor.core.models.category.Content>
-                        if (it.data.content.isEmpty()) {
-                            binding.progressBarOneCat.visibility = View.GONE
+                        adapter.addOneShopListData(it.data!!.content)
+                        if (it.data.empty) {
+                            isLastPage = true
                         }
                     }
                     ResourceState.ERROR -> {

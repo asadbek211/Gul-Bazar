@@ -15,11 +15,17 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
     var mActivity: Activity = Activity()
     var context: Context? = null
 
+
     var youTubeList = ArrayList<Content>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    fun addYouTubeListData(response: List<Content>) {
+        this.youTubeList.addAll(response)
+        notifyItemRangeInserted(this.youTubeList.size - response.size, response.size)
+    }
+
+    fun clearAdapter() {
+        youTubeList.clear()
+        notifyDataSetChanged()
+    }
 
     fun MyAdapter(activity: Activity, context: Context) {
         this.mActivity = activity

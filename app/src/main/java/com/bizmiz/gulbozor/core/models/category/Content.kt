@@ -9,7 +9,7 @@ data class Content(
     val cityName: String,
     val createAt: Long,
     val customer: Boolean,
-    val department: Int,
+    val department: Int?,
     val description: String,
     val diameter: Int,
     val height: Int,
