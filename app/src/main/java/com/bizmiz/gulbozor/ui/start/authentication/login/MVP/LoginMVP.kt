@@ -4,8 +4,7 @@ interface LoginMVP {
 
     interface Presenter {
         fun loginWithPhoneNumber(
-            phoneNumber: String,
-            password: String,
+            phoneNumber: String
         )
 
         fun cancelRequest()

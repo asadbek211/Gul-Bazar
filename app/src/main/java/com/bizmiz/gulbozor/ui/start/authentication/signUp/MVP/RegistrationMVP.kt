@@ -9,8 +9,8 @@ interface RegistrationMVP {
     interface Presenter {
         fun sendRegisterData(
             userName: String,
-            phoneNumber: String,
-            password: String
+            userSurname: String,
+            phoneNumber: String
         )
 
         fun cancelRequest()

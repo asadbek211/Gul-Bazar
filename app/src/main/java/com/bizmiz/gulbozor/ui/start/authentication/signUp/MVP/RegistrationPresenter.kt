@@ -19,11 +19,11 @@ class RegistrationPresenter(val view: RegistrationMVP.View) : RegistrationMVP.Pr
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun sendRegisterData(userName: String, phoneNumber: String, password: String) {
+    override fun sendRegisterData(userName: String, phoneNumber: String, userSurname: String) {
         val body = RegistrationRequest(
-            userName = userName,
+            name = userName,
             phoneNumber = phoneNumber,
-            password = password
+            surname = userSurname
         )
         val disposable = registerService.registerSend(body)
             .subscribeOn(Schedulers.io())

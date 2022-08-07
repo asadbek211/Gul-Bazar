@@ -1,6 +1,7 @@
 package com.bizmiz.gulbozor.core.models
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -26,6 +27,7 @@ data class AnnounceRequestData(
     val phoneNumber: String? = null,
     val price: Long? = null,
     val regionId: Int? = null,
+    @SerializedName("customer")
     val seller: Boolean? = null,
     val sellerId: Int? = null,
     val shopId: Int? = null,

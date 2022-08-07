@@ -25,8 +25,8 @@
             android:layout_marginTop="10dp"
             android:text="@string/gulbazarga_xush_kelibsiz"
             android:textColor="@color/naturalDark"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textSize="16dp"
+            android:fontFamily="@font/poppins_bold"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -40,9 +40,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -56,34 +56,37 @@
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_flag_uzb" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
+                    android:paddingTop="8dp"
                     android:gravity="center"
                     android:text="+998"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/naturalDark"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="18dp"/>
             </LinearLayout>
-
             <com.santalu.maskedittext.MaskEditText
                 android:id="@+id/edit_text_phone_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/login_phone_num__back"
-                android:hint="Phone number"
-                android:inputType="phone"
-                android:padding="8dp"
+                android:hint="(00) 000 00 00"
+                android:fontFamily="@font/poppins_bold"
+                android:inputType="number"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:textColor="@color/naturalDark"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:met_mask="## ### ## ##" />
+                android:textSize="18dp"
+                app:met_mask="(##) ### ## ##" />
 
         </LinearLayout>
 
@@ -97,39 +100,15 @@
             android:background="@drawable/button_bg"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/poppins_regular"
+            android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:paddingTop="15dp"
+            android:paddingTop="18dp"
             android:paddingBottom="15dp"
             android:text="Keyingisi"
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="15dp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hisobingiz mavjudmi?"
-                android:textColor="#9098B1"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/signUp_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:text="Kirish"
-                android:textColor="@color/naturalDark"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:visibility="gone"

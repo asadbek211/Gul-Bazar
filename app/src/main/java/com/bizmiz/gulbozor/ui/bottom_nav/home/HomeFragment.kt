@@ -193,8 +193,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.swipeContainer.isRefreshing = false
-                    flowersAdapter.flowersList =
-                        (it.data?.content as ArrayList<AnnounceResponseData>?)!!
+                    it.data?.content?.let { it1 -> flowersAdapter.flowersList.addAll(it1) }
                     binding.progressBarHome.visibility = View.GONE
                 }
                 ResourceState.ERROR -> {

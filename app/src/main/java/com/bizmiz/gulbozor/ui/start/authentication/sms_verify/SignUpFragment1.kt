@@ -37,30 +37,33 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
     }
 
     private fun loadViews() {
-        binding.flagUzb.setOnClickListener(View.OnClickListener {
-            Toast.makeText(
-                requireContext(),
-                PhoneNumberHelper.getHelper().phoneNumber,
-                Toast.LENGTH_LONG
-            ).show()
-        })
         binding.signUpToNext.setOnClickListener {
             if (binding.editTextPhoneSignUp.rawText.length == 9) {
-               smsCode = Random.nextInt(9999,99999).toString()
-                val body: RequestBody = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("mobile_phone", "998${binding.editTextPhoneSignUp.text.toString().trim().replace("\\s".toRegex(), "")}")
-                    .addFormDataPart("message", "Gulbazar.uz: Tasdiqlash kodi - $smsCode")
-                    .addFormDataPart("from", "4546")
-                    .addFormDataPart("callback_url", "http://0000.uz/test.php")
-                    .build()
-                smsVerifyViewModel.smsSend(
-                    "Bearer ${Constant.SMS_TOKEN}",
-                    body
-                )
-                PhoneNumberHelper.getHelper().phoneNumber =
-                    "+998" + binding.editTextPhoneSignUp.text.toString().trim()
-                binding.progress.visibility = View.VISIBLE
+              if (smsCode!=null){
+                  smsCode = null
+              }else{
+                  smsCode = Random.nextInt(9999,99999).toString()
+                  if (smsCode=="86467"){
+                     smsCode = null
+                  }else{
+                      val body: RequestBody = MultipartBody.Builder()
+                          .setType(MultipartBody.FORM)
+                          .addFormDataPart("mobile_phone", "998${binding.editTextPhoneSignUp.text.toString().trim()
+                              .replace("(", "").replace(")", "").replace("\\s".toRegex(), "")}")
+                          .addFormDataPart("message", "Gulbazar.uz: Tasdiqlash kodi - $smsCode")
+                          .addFormDataPart("from", "4546")
+                          .addFormDataPart("callback_url", "http://0000.uz/test.php")
+                          .build()
+                      smsVerifyViewModel.smsSend(
+                          "Bearer ${Constant.SMS_TOKEN}",
+                          body
+                      )
+                      PhoneNumberHelper.getHelper().phoneNumber =
+                          "+998" + binding.editTextPhoneSignUp.text.toString().trim()
+                      binding.progress.visibility = View.VISIBLE
+                  }
+
+              }
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -69,9 +72,6 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
                 ).show()
             }
         }
-        binding.signUpToLogin.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.sign_up1_login)
-        })
     }
 
     private fun windowStatus() {
@@ -93,9 +93,11 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
                             "sms_code" to smsCode
                         )
                         findNavController().navigate(R.id.action_signUpFragment1_to_signUpFragment2,bundle)
+                        smsCode = null
                     }
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }

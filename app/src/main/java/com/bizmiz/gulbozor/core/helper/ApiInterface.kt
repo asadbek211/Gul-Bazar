@@ -122,6 +122,12 @@ interface ApiInterface {
         @Path("userId") userId: Int
     ): Call<BaseResponse<UserDataResponse>>
 
+    @GET("/api/v1/sms/{id}")
+    fun getSMSToken(
+        @Path("id") id: Int,
+       @Field("password")password:String
+    ): Call<BaseResponse<Any>>
+
     @GET("/reklama/byPlaceNumber/{placeNumber}")
     fun getReklamaId(@Path("placeNumber") placeNumber: Int): Call<ReklamaImages>
 }

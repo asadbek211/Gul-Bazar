@@ -29,6 +29,7 @@ data class AnnounceResponseData(
     val phoneNumber:String?,
     val price:Long,
     val regionId:Int?,
+    @SerializedName("customer")
     val seller:Boolean?,
     val sellerId:Int?,
     val shopId:Int?,

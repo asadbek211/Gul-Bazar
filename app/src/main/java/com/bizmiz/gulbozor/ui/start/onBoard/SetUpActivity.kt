@@ -1,7 +1,9 @@
 package com.bizmiz.gulbozor.ui.start.onBoard
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -36,7 +38,8 @@ class SetUpActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             finish()
-        } else {
+        }
+        else {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -100,6 +103,12 @@ class SetUpActivity : AppCompatActivity() {
     private fun windowStatus() {
         window.statusBarColor =
             ContextCompat.getColor(this, R.color.white)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
     }
 
     override fun onResume() {

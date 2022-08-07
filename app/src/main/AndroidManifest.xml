@@ -38,9 +38,6 @@
             android:name=".ui.bottom_nav.add.AddAnnounceActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.start.onBoard.MiddleActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.start.authentication.signUp.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:inputType="number"
                 android:textSelectHandle="@drawable/login_phone_num__back"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:cornerRadius="5dp"
                 app:distanceInBetween="10dp"
                 app:fieldColor="@color/hint_color"
@@ -79,31 +79,6 @@
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hisobingiz mavjudmi?"
-                android:textColor="#9098B1"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/signUp_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:text="Kirish"
-                android:textColor="@color/naturalDark"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
