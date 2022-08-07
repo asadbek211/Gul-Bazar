@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
@@ -31,13 +30,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var flowersAdapter: FlowersAdapter
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
 
+
+    //5:48
+
+
     private val slideModels: ArrayList<SlideModel> = ArrayList()
-    private var page: Int = 0
+    private var pageCurrent: Int = 0
+    //private var totalAvailablePages=0
+
+    private var isLoading = false
+    private var isLastPage = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel.getAnnounce(page)
+        homeViewModel.getAnnounce(pageCurrent)
         homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
@@ -75,24 +82,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
             Navigation.findNavController(view).navigate(action)
         })
-        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener {
-                v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                page++
-                binding.progressBarHome.visibility = View.VISIBLE
-                homeViewModel.getAnnounce(page)
+
+
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY + 6 >= v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                if (!isLastPage) {
+                    pageCurrent++
+                    binding.progressBarHome.visibility = View.VISIBLE
+                    homeViewModel.getAnnounce(pageCurrent)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Boshqa elonlar mavjud emas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.progressBarHome.visibility = View.GONE
+                }
             }
         })
 
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners(view)
+
         (activity as MainActivity).destinationId = 0
             flowersAdapter = FlowersAdapter()
             binding.homeRecyclerview.adapter = flowersAdapter
+
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -114,32 +134,34 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 destination(it.department, bundle)
             }
         }
-//        flowersAdapter.deleteItemById()
         viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
         announceObserve()
 
         binding.swipeContainer.setOnRefreshListener {
-            homeViewModel.getAnnounce(page)
+            flowersAdapter.clearAdapter()
+            pageCurrent = 0
+            homeViewModel.getAnnounce(pageCurrent)
             homeViewModel.getVideoLInkByID(2)
+            isLastPage = false
         }
         binding.categoryWithBucket.setOnClickListener {
-//            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home")
-//            Navigation.findNavController(view).navigate(action)
+            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home", "1")
+            Navigation.findNavController(view).navigate(action)
         }
         binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home")
+            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home", "2")
             Navigation.findNavController(view).navigate(action)
         })
         binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home")
+            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home", "3")
             Navigation.findNavController(view).navigate(action)
         })
         binding.potFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home")
+            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home", "5")
             Navigation.findNavController(view).navigate(action)
         })
         binding.customersCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Haridorlar", "home")
+            val action = HomeFragmentDirections.homeToCustomers("customer")
             Navigation.findNavController(view).navigate(action)
         })
         binding.shopsCat.setOnClickListener(View.OnClickListener {
@@ -149,6 +171,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     }
+
 
     private fun onImageClick() {
         binding.imgYoutube.setOnClickListener {
@@ -189,24 +212,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     private fun announceObserve() {
-        homeViewModel.announce.observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                ResourceState.SUCCESS -> {
-                    binding.swipeContainer.isRefreshing = false
-                    it.data?.content?.let { it1 -> flowersAdapter.flowersList.addAll(it1) }
-                    binding.progressBarHome.visibility = View.GONE
-                }
-                ResourceState.ERROR -> {
-                    binding.swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    binding.progressBarHome.visibility = View.VISIBLE
-                }
-            }
-        })
+        onlyData()
         homeViewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.swipeContainer.isRefreshing = false
+                    slideModels.clear()
                     slideModels.add(SlideModel(it.data!!.`object`.image1, ScaleTypes.FIT))
                     slideModels.add(SlideModel(it.data.`object`.image2, ScaleTypes.FIT))
                     slideModels.add(SlideModel(it.data.`object`.image3, ScaleTypes.FIT))
@@ -249,4 +260,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
     }
+
+    private fun onlyData() {
+        homeViewModel.announce.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    binding.swipeContainer.isRefreshing = false
+                    flowersAdapter.addData(it.data!!.content)
+                    binding.progressBarHome.visibility = View.GONE
+                    if (it.data.empty) {
+                        isLastPage = true
+                    }
+                }
+                ResourceState.ERROR -> {
+                    binding.swipeContainer.isRefreshing = false
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBarHome.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+
 }

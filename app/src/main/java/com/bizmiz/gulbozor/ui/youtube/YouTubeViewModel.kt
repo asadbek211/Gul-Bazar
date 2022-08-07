@@ -29,8 +29,8 @@ class YouTubeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
         )
     }
 
-    fun getYouTubePage() {
-        networkHelper.getYouTubePage(page = 0, {
+    fun getYouTubePage(page: Int) {
+        networkHelper.getYouTubePage(page = page, {
             getYouTubePage.value = Resource.success(it)
         }, {
             getYouTubePage.value = Resource.error(it)

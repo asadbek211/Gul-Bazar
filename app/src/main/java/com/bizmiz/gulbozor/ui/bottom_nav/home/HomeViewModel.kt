@@ -12,6 +12,8 @@ import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class HomeViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
+    private val pageV: Int = 0
+
     private val getAnnounce: MutableLiveData<Resource<GetAnnounceByIndexPage>> =
         MutableLiveData()
     val announce: LiveData<Resource<GetAnnounceByIndexPage>>
