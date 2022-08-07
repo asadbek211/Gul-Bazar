@@ -2,10 +2,7 @@ package com.bizmiz.gulbozor.ui.start.authentication.sms_verify
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -19,7 +16,6 @@ import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentSignUp1Binding
-import com.bizmiz.gulbozor.databinding.FragmentSignUp2Binding
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel

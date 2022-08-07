@@ -9,15 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
-import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentSignUp2Binding
-import com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SmsVerifyViewModel
 import com.poovam.pinedittextfield.PinField
-import okhttp3.MultipartBody
-
-import okhttp3.RequestBody
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SignUpFragment2 : Fragment(R.layout.fragment_sign_up2) {
