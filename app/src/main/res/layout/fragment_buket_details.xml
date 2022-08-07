@@ -33,6 +33,17 @@
                 app:strokeWidth="1dp"
                 tools:ignore="MissingClass,SpeakableTextPresentCheck" />
 
+            <ProgressBar
+                android:id="@+id/progress_bar_item"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:indeterminateDrawable="@drawable/progress_bar"
+                android:padding="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/carouselView"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constLayout"
                 android:layout_width="match_parent"

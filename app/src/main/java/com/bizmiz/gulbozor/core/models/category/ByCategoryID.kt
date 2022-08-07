@@ -1,7 +1,9 @@
 package com.bizmiz.gulbozor.core.models.category
 
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+
 data class ByCategoryID(
-    val content: List<Content>,
+    val content: List<AnnounceResponseData>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,
