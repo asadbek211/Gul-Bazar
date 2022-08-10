@@ -4,12 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
@@ -60,6 +58,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         checking()
+        //onBackPressed()
         loadListener(view)
         setListeners(view)
     }
@@ -521,4 +520,13 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.gray_main)
     }
+
+    /*private fun onBackPressed() {
+        val callBack = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_category_to_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callBack)
+    }*/
 }
