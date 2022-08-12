@@ -3,20 +3,15 @@ package com.bizmiz.gulbozor.ui.bottom_nav.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import com.bizmiz.gulbozor.R
 import androidx.navigation.Navigation
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
-import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
-import com.bizmiz.gulbozor.databinding.FragmentSignUp2Binding
-import com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SmsVerifyViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -25,7 +20,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var shopId = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onBackPressed()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
         binding.editProfile.setOnClickListener {
@@ -48,26 +42,26 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         userDataObserve()
     }
 
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_profile_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
+    /* private fun onBackPressed() {
+         val callBack = object : OnBackPressedCallback(true) {
+             override fun handleOnBackPressed() {
+                 findNavController().navigate(R.id.nav_profile_to_home)
+             }
+         }
+         requireActivity().onBackPressedDispatcher.addCallback(callBack)
+     }*/
     private fun userDataObserve() {
         profileViewModel.userData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
-                    if (it.data?.shopId!=null){
+                ResourceState.SUCCESS -> {
+                    if (it.data?.shopId != null) {
                         shopId = it.data.shopId
                     }
-              binding.txtNameSurname.text = it.data?.username
-              binding.txtPhoneNumber.text = it.data?.phoneNumber
-                    if (it.data?.shopId!=null && it.data.shopId>0){
+                    binding.txtNameSurname.text = it.data?.username
+                    binding.txtPhoneNumber.text = it.data?.phoneNumber
+                    if (it.data?.shopId != null && it.data.shopId > 0) {
                         binding.txtShop.text = "Mening do‘konim"
-                    }else{
+                    } else {
                         binding.txtShop.text = "Do‘kon ochish"
                     }
                 }

@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
@@ -32,6 +30,7 @@ class OneShopFragment : Fragment() {
     private var isLastPage: Boolean = false
 
     private var page: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (args.position == "customer") {
@@ -55,13 +54,13 @@ class OneShopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = OneShopAdapter()
         binding.oneShopRec.adapter = adapter
-        onBackPressed()
         binding.backPressed.setOnClickListener(View.OnClickListener {
-            if (args.position == "customer") {
-                findNavController().navigate(R.id.shop_to_home)
-            } else {
-                findNavController().navigate(R.id.shop_to_shops)
-            }
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.nav_host_fragment_activity_main
+                )
+            navController.popBackStack()
         })
         if (args.position == "customer") {
             binding.bottomMainTxt.text = "Eksportchi tashkilotlar"
@@ -108,6 +107,7 @@ class OneShopFragment : Fragment() {
         announceObserve()
 
         intent()
+        //onBackPressed()
     }
 
     private fun intent() {
@@ -179,7 +179,7 @@ class OneShopFragment : Fragment() {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
-                if (it.data!!.content.isEmpty()) {
+                if (it.data!!.content.isEmpty() && page == 0) {
                     binding.notPostYet.visibility = View.VISIBLE
                 }
             })
@@ -205,19 +205,8 @@ class OneShopFragment : Fragment() {
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
+
     }
 
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.position == "customer") {
-                    findNavController().navigate(R.id.shop_to_home)
-                } else {
-                    findNavController().navigate(R.id.shop_to_shops)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
 
 }

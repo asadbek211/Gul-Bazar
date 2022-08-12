@@ -3,14 +3,12 @@ package com.bizmiz.gulbozor.ui.bottom_nav.categories.oneCategory
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
@@ -27,7 +25,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     private val viewModel: OneTypeOfCatVM by viewModel()
     private val binding by viewBinding { FragmentOneCategoryBinding.bind(it) }
 
-    private val categoryAdapter = OneTypeAdapterCategory()
+    private var categoryAdapter: OneTypeAdapterCategory? = null
 
     private var page: Int = 0
 
@@ -44,6 +42,8 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        categoryAdapter = OneTypeAdapterCategory()
+
         binding.categoryRecyclerView.adapter = categoryAdapter
 
         binding.categoryU.setOnClickListener(View.OnClickListener {
@@ -52,30 +52,34 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         val category = args.categoryName
         binding.oneCatTitle.text = category
         windowStatus()
-        onBackPressed()
         announceObserve()
 
         intent()
+        swipeScroll()
 
         binding.backPressed.setOnClickListener(View.OnClickListener {
-            if (args.onBack == "home") {
-                findNavController().navigate(R.id.one_to_home)
-            } else if (args.onBack == "category") {
-                findNavController().navigate(R.id.onBack_to_category)
-            }
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.nav_host_fragment_activity_main
+                )
+            navController.popBackStack()
         })
+
+    }
+
+    private fun swipeScroll() {
         binding.swipeContainer.setOnRefreshListener {
             if (args.onBack == "home") {
-                categoryAdapter.clearAdapter()
+                categoryAdapter!!.clearAdapter()
                 viewModel.getDepartment(args.categoryId.toInt(), 0)
                 isLastPage = false
             } else if (args.onBack == "category") {
-                categoryAdapter.clearAdapter()
+                categoryAdapter!!.clearAdapter()
                 viewModel.getByCategoryID(args.categoryId.toInt(), 0)
                 isLastPage = false
             }
         }
-        // TODO: OnBackPressedFromDetails
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 if (!isLastPage) {
@@ -102,7 +106,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     }
 
     private fun intent() {
-        categoryAdapter.onClickListener {
+        categoryAdapter!!.onClickListener {
             if (it.department != null) {
                 val bundle = bundleOf(
                     "flowerData" to it,
@@ -142,13 +146,15 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
-                        categoryAdapter.addOneCategoryListData(it.data!!.content)
+                        binding.progressBarOneCat.visibility = View.GONE
+                        categoryAdapter!!.addOneCategoryListData(it.data!!.content)
                         if (it.data.empty) {
                             isLastPage = true
                         }
 
                     }
                     ResourceState.ERROR -> {
+                        binding.progressBarOneCat.visibility = View.GONE
                         binding.swipeContainer.isRefreshing = false
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
@@ -159,7 +165,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
-                        categoryAdapter.addOneCategoryListData(it.data!!.content)
+                        categoryAdapter!!.addOneCategoryListData(it.data!!.content)
                         binding.progressBarOneCat.visibility = View.GONE
                         if (it.data.empty) {
                             isLastPage = true
@@ -167,6 +173,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                     }
                     ResourceState.ERROR -> {
                         binding.swipeContainer.isRefreshing = false
+                        binding.progressBarOneCat.visibility = View.GONE
                     }
                 }
             })
@@ -197,18 +204,4 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
     }
-
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.onBack == "home") {
-                    findNavController().navigate(R.id.one_to_home)
-                } else if (args.onBack == "category") {
-                    findNavController().navigate(R.id.onBack_to_category)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
 }

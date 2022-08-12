@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,34 +49,22 @@ class YouTubeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.categoryType.text = args.title
-
-        adapter = YouTubeAdapter()
-        binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.youtubeRecyclerView.adapter = adapter
-        onBackPressed()
+        basic()
         windowStatus()
         setListeners()
         announceObserve()
+        swipeScroll()
 
+
+    }
+
+    private fun swipeScroll() {
         binding.swipeContainer.setOnRefreshListener {
             adapter.clearAdapter()
             youTubeVM.getYouTubePage(0)
             isLastPage = false
         }
-    }
 
-    private fun setListeners() {
-        binding.onBackYouTube.setOnClickListener(View.OnClickListener {
-            if (args.title == "Barchasi") {
-                findNavController().navigate(R.id.nav_on_back_youtube_to_home)
-            } else {
-                findNavController().navigate(R.id.youtube_to_category)
-            }
-        })
-        binding.categoryU.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.youtube_to_category)
-        })
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 if (!isLastPage) {
@@ -94,12 +82,36 @@ class YouTubeFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun basic() {
+        windowStatus()
+        binding.categoryType.text = args.title
+
+        adapter = YouTubeAdapter()
+        binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.youtubeRecyclerView.adapter = adapter
+
+        adapter.MyAdapter(requireActivity(), binding.categoryType.context)
+    }
+
+    private fun setListeners() {
+        binding.onBackYouTube.setOnClickListener(View.OnClickListener {
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.nav_host_fragment_activity_main
+                )
+            navController.popBackStack()
+        })
+        binding.categoryU.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.youtube_to_category)
+        })
+
 
     }
 
     private fun announceObserve() {
-        adapter.MyAdapter(requireActivity(), binding.categoryType.context)
-
         youTubeVM.announcePage.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
@@ -144,17 +156,5 @@ class YouTubeFragment : Fragment() {
             ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
     }
 
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.back == "category") {
-                    findNavController().navigate(R.id.youtube_to_category)
-                } else if (args.back == "home") {
-                    findNavController().navigate(R.id.nav_on_back_youtube_to_home)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
 
 }

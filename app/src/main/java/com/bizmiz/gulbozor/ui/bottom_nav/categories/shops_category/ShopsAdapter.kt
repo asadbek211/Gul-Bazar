@@ -23,15 +23,18 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
 
     private var lastPosition = -1
 
-    var data: List<ShopsListItem> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    var data = ArrayList<ShopsListItem>()
+
+    fun addShopListData(response: List<ShopsListItem>) {
+        this.data.addAll(response)
+        notifyItemRangeInserted(this.data.size - response.size, response.size)
+
+    }
+
 
     inner class ViewHolder(private val binding: ItemShopsBinding, listener: onItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
-        fun workZone(response: ShopsListItem, position: Int) {
+        fun workZone(response: ShopsListItem, position: Int, listener: onItemClickListener) {
             if (position > lastPosition) {
                 val anim: Animation =
                     AnimationUtils.loadAnimation(binding.nameOfShops.context, R.anim.slide_in_row)
@@ -39,11 +42,10 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
                 binding.itemView.startAnimation(anim)
                 lastPosition = position
             }
-        }
 
-        init {
             binding.nameOfShops.setOnClickListener {
-                listener.onItemClick(position = bindingAdapterPosition)//todo position
+                listener.onItemClick(position = response.id)
+                binding.nameOfShops.text = response.shopName
             }
         }
     }
@@ -56,7 +58,7 @@ class ShopsAdapter : RecyclerView.Adapter<ShopsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder.bindingAdapterPosition > lastPosition) {
-            return holder.workZone(data[position], position)
+            return holder.workZone(data[position], position, mListener)
         }
     }
 

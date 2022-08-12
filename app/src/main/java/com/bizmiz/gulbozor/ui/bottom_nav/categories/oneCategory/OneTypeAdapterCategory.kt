@@ -23,6 +23,7 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
     var categoryList = ArrayList<AnnounceResponseData>()
 
     fun addOneCategoryListData(response: List<AnnounceResponseData>) {
+
         this.categoryList.addAll(response)
         notifyItemRangeInserted(this.categoryList.size - response.size, response.size)
     }
@@ -31,10 +32,6 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
         categoryList.clear()
         notifyDataSetChanged()
     }
-    /* fun clearAdapter() {
-         categoryList.clear()
-         notifyDataSetChanged()
-     }*/
 
     inner class ViewHolder(private val binding: FlowerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -42,7 +39,6 @@ class OneTypeAdapterCategory : RecyclerView.Adapter<OneTypeAdapterCategory.ViewH
             response: AnnounceResponseData,
             position: Int
         ) {
-            ///binding.youtubeTitle.text=response.videoID.categoryId.toString()
             Glide.with(binding.root.context).load(response.image1)
                 .listener(listener(binding.progressBarItem))
                 .into(binding.flowerImage)
