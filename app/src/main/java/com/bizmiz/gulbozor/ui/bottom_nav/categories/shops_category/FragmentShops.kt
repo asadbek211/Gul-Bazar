@@ -1,17 +1,14 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
@@ -31,11 +28,11 @@ class FragmentShops : Fragment() {
 
     private val shopsViewModel: ShopsViewModel by viewModel()
 
-    private lateinit var shopAdapter:ShopsAdapter
+    private var shopAdapter: ShopsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        shopsViewModel.getShopsList()
+        shopsViewModel.getShopsList()// this is list of adapter
         shopsViewModel.getReklamaImages(3)
     }
 
@@ -50,27 +47,42 @@ class FragmentShops : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backPressed.setOnClickListener(View.OnClickListener {
-            if (args.onBack == "home") {
-                findNavController().navigate(R.id.nav_shops_to_home)
-            } else {
-                findNavController().navigate(R.id.nav_shops_to_category)
+        basic()
+        setListeners()
+        announceObserve()// live data
+    }
+
+    private fun setListeners() {
+        shopAdapter?.setOnItemClickListener(object : ShopsAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+                val action = FragmentShopsDirections.shopsToShop((position).toString())
+                Navigation.findNavController(view!!).navigate(action)
             }
         })
+        binding.backPressed.setOnClickListener(View.OnClickListener {
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.nav_host_fragment_activity_main
+                )
+            navController.popBackStack()
+        })
+    }
+
+    private fun basic() {
+        shopAdapter = ShopsAdapter()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
-        shopAdapter = ShopsAdapter()
         binding.shopsRecycler.adapter = shopAdapter
         binding.shopsRecycler.layoutManager = LinearLayoutManager(requireContext())
-        announceObserve()
     }
 
     private fun announceObserve() {
         shopsViewModel.shops.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-                    Log.d("shops",it.data.toString())
-                    shopAdapter.data = it.data!!
+                    //shopAdapter.clearAdapter()
+                    shopAdapter?.addShopListData(it.data!!)
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -93,12 +105,8 @@ class FragmentShops : Fragment() {
                 }
             })
         })
-        shopAdapter.setOnItemClickListener(object : ShopsAdapter.onItemClickListener {
-            override fun onItemClick(position: Int) {
-                val action = FragmentShopsDirections.shopsToShop((position + 1).toString())
-                Navigation.findNavController(view!!).navigate(action)
-            }
 
-        })
     }
+
+
 }

@@ -58,7 +58,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         checking()
-        //onBackPressed()
         loadListener(view)
         setListeners(view)
     }
@@ -387,8 +386,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 }
             })
-            /*val action = CategoryFragmentDirections.navCategoryToOne("O'g'itlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
     }
 
@@ -415,9 +412,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-            /*val action =
-                CategoryFragmentDirections.navCategoryToOne("Manzarali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
         binding.archalarTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum4 = 1
@@ -440,13 +434,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Archalar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
         binding.fruitTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum3 = 1
             if (categoryNum3 == 1) {
-                // viewModel.getByPArentCatId2(6)
                 binding.fruitTreeRecycler.visibility = View.VISIBLE
                 binding.landscapeTreeRecycler.visibility = View.GONE
                 binding.archaTreeRecycler.visibility = View.GONE
@@ -464,8 +455,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-            /*val action = CategoryFragmentDirections.navCategoryToOne("Mavali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
     }
 
@@ -489,8 +478,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Buket gullar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
         binding.potFlowersCatTxt.setOnClickListener(View.OnClickListener {
             categoryNum2 = 1
@@ -511,8 +498,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Tuvakli gullar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
     }
 
@@ -521,12 +506,4 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             ContextCompat.getColor(requireActivity(), R.color.gray_main)
     }
 
-    /*private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_category_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }*/
 }

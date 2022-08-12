@@ -29,18 +29,76 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var flowersAdapter: FlowersAdapter
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
+
+
     //5:48
+
+
     private val slideModels: ArrayList<SlideModel> = ArrayList()
     private var pageCurrent: Int = 0
     //private var totalAvailablePages=0
+
     private var isLoading = false
     private var isLastPage = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce(pageCurrent)
         homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        basic()
+        setListeners(view)
+        announceObserve()
+        onlyData()
+        scrollSwipe()
+
+
+        flowersAdapter.onClickListener {
+            if (it.department != null) {
+                val bundle = bundleOf(
+                    "flowerData" to it,
+                    "desId" to 0,
+                )
+                destination(it.department, bundle)
+            }
+        }
+        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
+
+    }
+
+    private fun scrollSwipe() {
+        binding.swipeContainer.setOnRefreshListener {
+            flowersAdapter.clearAdapter()
+            pageCurrent = 0
+            homeViewModel.getAnnounce(pageCurrent)
+            homeViewModel.getVideoLInkByID(2)
+            isLastPage = false
+        }
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY >= v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                if (!isLastPage) {
+                    pageCurrent++
+                    binding.progressBarHome.visibility = View.VISIBLE
+                    homeViewModel.getAnnounce(pageCurrent)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Boshqa elonlar mavjud emas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.progressBarHome.visibility = View.GONE
+                }
+            }
+        })
+
+    }
+
     private fun destination(categoryId: Int, bundle: Bundle) {
         val navController =
             Navigation.findNavController(
@@ -74,68 +132,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
             Navigation.findNavController(view).navigate(action)
         })
-
-
-        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY + 6 >= v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
-                    pageCurrent++
-                    binding.progressBarHome.visibility = View.VISIBLE
-                    homeViewModel.getAnnounce(pageCurrent)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    binding.progressBarHome.visibility = View.GONE
-                }
-            }
-        })
-
-    }
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setListeners(view)
-
-        (activity as MainActivity).destinationId = 0
-            flowersAdapter = FlowersAdapter()
-            binding.homeRecyclerview.adapter = flowersAdapter
-
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireActivity(), R.color.white)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
-                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-            )
-        }
-        requireActivity().window.setFlags(
-            0,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        flowersAdapter.onClickListener {
-            if (it.department != null) {
-                val bundle = bundleOf(
-                    "flowerData" to it,
-                    "desId" to 0,
-                )
-                destination(it.department, bundle)
-            }
-        }
-        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
-        announceObserve()
-
-        binding.swipeContainer.setOnRefreshListener {
-            flowersAdapter.clearAdapter()
-            pageCurrent = 0
-            homeViewModel.getAnnounce(pageCurrent)
-            homeViewModel.getVideoLInkByID(2)
-            isLastPage = false
-        }
         binding.categoryWithBucket.setOnClickListener {
             val action = HomeFragmentDirections.homeToOne("Buket gullar", "home", "1")
             Navigation.findNavController(view).navigate(action)
@@ -161,8 +157,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             Navigation.findNavController(view).navigate(action)
         })
 
-
     }
+
+
 
 
     private fun onImageClick() {
@@ -204,7 +201,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     private fun announceObserve() {
-        onlyData()
         homeViewModel.getReklamaId.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
@@ -271,6 +267,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         })
+    }
+
+    private fun basic() {
+
+        (activity as MainActivity).destinationId = 0
+        flowersAdapter = FlowersAdapter()
+        binding.homeRecyclerview.adapter = flowersAdapter
+
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireActivity(), R.color.white)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
+        requireActivity().window.setFlags(
+            0,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
 
