@@ -87,13 +87,12 @@ class SignUpFragment2 : Fragment(R.layout.fragment_sign_up2) {
                     SetUpHelper.getHelper().board = true
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
-
                 }
                 ResourceState.ERROR -> {
                     if (it.message=="unregistered"){
                         findNavController().navigate(R.id.action_signUpFragment2_to_signUpFragment3)
                     }else{
-                        binding.progress.visibility = View.GONE
+                        findNavController().popBackStack()
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
