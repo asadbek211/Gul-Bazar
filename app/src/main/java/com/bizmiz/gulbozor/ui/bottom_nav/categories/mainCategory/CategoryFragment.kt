@@ -4,12 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
@@ -388,8 +386,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 }
             })
-            /*val action = CategoryFragmentDirections.navCategoryToOne("O'g'itlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
     }
 
@@ -416,9 +412,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-            /*val action =
-                CategoryFragmentDirections.navCategoryToOne("Manzarali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
         binding.archalarTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum4 = 1
@@ -441,13 +434,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Archalar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
         binding.fruitTreeTxt.setOnClickListener(View.OnClickListener {
             categoryNum3 = 1
             if (categoryNum3 == 1) {
-                // viewModel.getByPArentCatId2(6)
                 binding.fruitTreeRecycler.visibility = View.VISIBLE
                 binding.landscapeTreeRecycler.visibility = View.GONE
                 binding.archaTreeRecycler.visibility = View.GONE
@@ -465,8 +455,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-            /*val action = CategoryFragmentDirections.navCategoryToOne("Mavali daraxtlar", "category")
-            Navigation.findNavController(view).navigate(action)*/
         })
     }
 
@@ -490,8 +478,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Buket gullar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
         binding.potFlowersCatTxt.setOnClickListener(View.OnClickListener {
             categoryNum2 = 1
@@ -512,8 +498,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                     }
                 })
             }
-//            val action = CategoryFragmentDirections.navCategoryToOne("Tuvakli gullar", "category")
-//            Navigation.findNavController(view).navigate(action)
         })
     }
 
@@ -521,4 +505,5 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.gray_main)
     }
+
 }

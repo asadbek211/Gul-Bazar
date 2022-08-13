@@ -22,7 +22,6 @@
         android:gravity="center"
         android:paddingTop="15dp"
         android:paddingBottom="20dp"
-        android:text="@string/green_house"
         android:textColor="#787878"
         android:textSize="22sp" />
 </androidx.cardview.widget.CardView>

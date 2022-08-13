@@ -1,19 +1,16 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.utils.ResourceState
@@ -28,9 +25,9 @@ class OneShopFragment : Fragment() {
     private val binding get() = _binding!!
     private var isLastPage: Boolean = false
     private var page: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("position",args.position)
         if (args.position == "customer") {
             oneShopVM.getAnnounceOfCustomer(page)
         } else {
@@ -52,11 +49,12 @@ class OneShopFragment : Fragment() {
         adapter = OneShopAdapter()
         binding.oneShopRec.adapter = adapter
         binding.backPressed.setOnClickListener(View.OnClickListener {
-            if (args.position == "customer") {
-                findNavController().navigate(R.id.shop_to_home)
-            } else {
-                findNavController().navigate(R.id.shop_to_shops)
-            }
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.nav_host_fragment_activity_main
+                )
+            navController.popBackStack()
         })
         if (args.position == "customer") {
             binding.bottomMainTxt.text = "Eksportchi tashkilotlar"
@@ -174,7 +172,7 @@ class OneShopFragment : Fragment() {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
-                if (it.data!!.content.isEmpty()) {
+                if (it.data!!.content.isEmpty() && page == 0) {
                     binding.notPostYet.visibility = View.VISIBLE
                 }
             })
