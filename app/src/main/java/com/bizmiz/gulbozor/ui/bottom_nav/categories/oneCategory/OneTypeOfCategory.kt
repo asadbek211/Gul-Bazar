@@ -28,6 +28,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
     private var categoryAdapter: OneTypeAdapterCategory? = null
 
     private var page: Int = 0
+    private var totalPage: Int = 0
 
     private var isLastPage = false
 
@@ -82,7 +83,7 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         }
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
+                if (!isLastPage && page + 1 < totalPage) {
                     page++
                     binding.progressBarOneCat.visibility = View.VISIBLE
                     if (args.onBack == "home") {
@@ -146,6 +147,10 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
+                        if (it.data != null) {
+                            page = it.data.pageable.pageNumber
+                            totalPage = it.data.totalPages
+                        }
                         binding.progressBarOneCat.visibility = View.GONE
                         categoryAdapter!!.addOneCategoryListData(it.data!!.content)
                         if (it.data.empty) {
@@ -165,6 +170,10 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
+                        if (it.data != null) {
+                            page = it.data.pageable.pageNumber
+                            totalPage = it.data.totalPages
+                        }
                         categoryAdapter!!.addOneCategoryListData(it.data!!.content)
                         binding.progressBarOneCat.visibility = View.GONE
                         if (it.data.empty) {

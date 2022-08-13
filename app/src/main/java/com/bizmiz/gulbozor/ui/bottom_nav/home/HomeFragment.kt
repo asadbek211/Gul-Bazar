@@ -2,7 +2,6 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -78,10 +77,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage &&currentPage+1 < totalPage){
+                if (!isLastPage && currentPage + 1 < totalPage) {
                     binding.progressBarHome.visibility = View.VISIBLE
-                    homeViewModel.getAnnounce(currentPage+1)
+                    homeViewModel.getAnnounce(currentPage + 1)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Boshqa elonlar mavjud emas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.progressBarHome.visibility = View.GONE
                 }
+
             }
         })
 
