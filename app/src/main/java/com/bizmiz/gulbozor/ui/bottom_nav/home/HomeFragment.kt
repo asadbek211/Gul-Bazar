@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -29,13 +30,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var flowersAdapter: FlowersAdapter
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
-
-
-    //5:48
-
-
     private val slideModels: ArrayList<SlideModel> = ArrayList()
-    private var pageCurrent: Int = 0
+    private var currentPage: Int = 0
+    private var totalPage:Int = 0
     //private var totalAvailablePages=0
 
     private var isLoading = false
@@ -44,7 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel.getAnnounce(pageCurrent)
+        homeViewModel.getAnnounce(currentPage)
         homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
@@ -57,7 +54,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         announceObserve()
         onlyData()
         scrollSwipe()
-
 
         flowersAdapter.onClickListener {
             if (it.department != null) {
@@ -75,24 +71,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun scrollSwipe() {
         binding.swipeContainer.setOnRefreshListener {
             flowersAdapter.clearAdapter()
-            pageCurrent = 0
-            homeViewModel.getAnnounce(pageCurrent)
+            currentPage = 0
+            homeViewModel.getAnnounce(currentPage)
             homeViewModel.getVideoLInkByID(2)
             isLastPage = false
         }
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
-                    pageCurrent++
+                if (!isLastPage &&currentPage+1 < totalPage){
                     binding.progressBarHome.visibility = View.VISIBLE
-                    homeViewModel.getAnnounce(pageCurrent)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    binding.progressBarHome.visibility = View.GONE
+                    homeViewModel.getAnnounce(currentPage+1)
                 }
             }
         })
@@ -254,6 +242,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.swipeContainer.isRefreshing = false
+                    if (it.data !=null){
+                        currentPage = it.data.pageable.pageNumber
+                        totalPage = it.data.totalPages
+                    }
                     flowersAdapter.addData(it.data!!.content)
                     binding.progressBarHome.visibility = View.GONE
                     if (it.data.empty) {
