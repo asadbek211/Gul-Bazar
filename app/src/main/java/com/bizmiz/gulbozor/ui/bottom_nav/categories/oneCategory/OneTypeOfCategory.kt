@@ -52,7 +52,6 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         val category = args.categoryName
         binding.oneCatTitle.text = category
         windowStatus()
-        onBackPressed()
         announceObserve()
 
         intent()
@@ -197,18 +196,4 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), com.bizmiz.gulbozor.R.color.white)
     }
-
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.onBack == "home") {
-                    findNavController().navigate(R.id.one_to_home)
-                } else if (args.onBack == "category") {
-                    findNavController().navigate(R.id.onBack_to_category)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
 }

@@ -68,12 +68,9 @@ class PotDetailsFragment : Fragment(R.layout.fragment_pot_details) {
             ) {
 
             }
-
             override fun onPageSelected(position: Int) {
             }
-
             override fun onPageScrollStateChanged(state: Int) {
-
             }
 
         })

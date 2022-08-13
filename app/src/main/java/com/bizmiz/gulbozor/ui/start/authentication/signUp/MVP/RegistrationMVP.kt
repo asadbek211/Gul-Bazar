@@ -8,11 +8,11 @@ interface RegistrationMVP {
 
     interface Presenter {
         fun sendRegisterData(
-            userName: String,
+            phoneNumber: String,
+            shopId: Int,
             userSurname: String,
-            phoneNumber: String
+            userName: String
         )
-
         fun cancelRequest()
     }
 }

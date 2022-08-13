@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bizmiz.gulbozor.MainActivity
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivitySignUpBinding
@@ -17,9 +19,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        SetUpHelper.getHelper().board = true
-        LoginHelper.getHelper().login = true
-        if (LoginHelper.getHelper().login) {
+        if (AppCache.getHelper().token!=null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

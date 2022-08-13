@@ -34,6 +34,12 @@
         <action
             android:id="@+id/nav_profile_to_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_user_to_oneShopFragment"
+            app:destination="@id/oneShopFragment" />
+        <action
+            android:id="@+id/action_navigation_user_to_myAnnounceFragment"
+            app:destination="@id/myAnnounceFragment" />
     </fragment>
 
     <fragment
@@ -147,12 +153,8 @@
             app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_create_shop"
-        android:id="@+id/createShopFragment"
-        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopFragment"
-        android:label="CreateShopFragment" >
-        <action
-            android:id="@+id/createShop_to_navigation_user"
-            app:destination="@id/navigation_user" />
-    </fragment>
+        tools:layout="@layout/fragment_my_announce"
+        android:id="@+id/myAnnounceFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.my_announce.MyAnnounceFragment"
+        android:label="MyAnnounceFragment" />
 </navigation>

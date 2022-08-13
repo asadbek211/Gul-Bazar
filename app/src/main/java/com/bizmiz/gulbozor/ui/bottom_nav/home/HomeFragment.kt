@@ -29,26 +29,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var flowersAdapter: FlowersAdapter
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
-
-
     //5:48
-
-
     private val slideModels: ArrayList<SlideModel> = ArrayList()
     private var pageCurrent: Int = 0
     //private var totalAvailablePages=0
-
     private var isLoading = false
     private var isLastPage = false
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce(pageCurrent)
         homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
-
     private fun destination(categoryId: Int, bundle: Bundle) {
         val navController =
             Navigation.findNavController(

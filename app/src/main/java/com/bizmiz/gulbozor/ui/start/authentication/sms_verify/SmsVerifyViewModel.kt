@@ -4,22 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
+import com.bizmiz.gulbozor.core.models.LoginResponse
 import com.bizmiz.gulbozor.core.utils.Resource
-import okhttp3.RequestBody
+import com.bizmiz.gulbozor.core.models.LoginRequest
 
 class SmsVerifyViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
-    private val smsResult: MutableLiveData<Resource<String>> = MutableLiveData()
-    val result: LiveData<Resource<String>>
-        get() = smsResult
-
-    fun smsSend(
-        token: String,
-        data: RequestBody,
+    private val checkNumber: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
+    val checkNumberResult: LiveData<Resource<LoginResponse>>
+        get() = checkNumber
+    fun checkPhoneNumber(
+        loginRequest: LoginRequest
     ) {
-        networkHelper.smsSend(token, data, {
-            smsResult.value = Resource.success(it)
+        networkHelper.checkPhoneNumber(loginRequest, {
+            checkNumber.value = Resource.success(it)
         }, {
-            smsResult.value = Resource.error(it)
+            checkNumber.value = Resource.error(it)
         })
     }
 }

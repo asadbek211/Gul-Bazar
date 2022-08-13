@@ -60,7 +60,6 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
         super.onViewCreated(view, savedInstanceState)
         windowStatus()
         checking()
-        onBackPressed()
         loadListener(view)
         setListeners(view)
     }
@@ -521,14 +520,5 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.gray_main)
-    }
-
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_category_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
 }

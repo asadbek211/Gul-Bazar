@@ -1,5 +1,6 @@
 package com.bizmiz.gulbozor.ui.start.authentication.signUp.MVP
 
+import android.util.Log
 import com.bizmiz.gulbozor.core.helper.ApiClient
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.core.RegistrationRequest
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.core.RegistrationService
@@ -19,18 +20,19 @@ class RegistrationPresenter(val view: RegistrationMVP.View) : RegistrationMVP.Pr
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun sendRegisterData(userName: String, phoneNumber: String, userSurname: String) {
+    override fun sendRegisterData(phoneNumber: String, shopId: Int, userSurname: String,userName: String) {
         val body = RegistrationRequest(
-            name = userName,
-            phoneNumber = phoneNumber,
-            surname = userSurname
+            phoneNumber,
+            shopId,
+            userSurname,
+            userName
         )
         val disposable = registerService.registerSend(body)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<Response<Any>>() {
                 override fun onSuccess(t: Response<Any>) {
-
+                    Log.d("responseAny",t.body().toString())
                     if (t.code() == 200) {
                         view.isRegister(true)
                     } else {

@@ -53,7 +53,7 @@
                 android:padding="1dp"
                 android:src="@drawable/ic_edit_text_profile_ic" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -80,7 +80,7 @@
                 android:padding="1dp"
                 android:src="@drawable/ic_edit_text_profile_ic" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/userSurname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

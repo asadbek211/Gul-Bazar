@@ -29,7 +29,6 @@ class SignUpFragment4 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
             windowStatus()
             binding.startAfterReg.setOnClickListener {
-                LoginHelper.getHelper().login = true
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
                 requireActivity().finish()
         }

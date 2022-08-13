@@ -4,7 +4,6 @@ import android.content.Context
 import com.bizmiz.gulbozor.core.app.App
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.Constant
-import com.bizmiz.gulbozor.ui.start.authentication.login.core.LoginService
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.core.RegistrationService
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
@@ -55,11 +54,6 @@ class ApiClient {
         fun getRegisterService(): RegistrationService {
             return getClient().create(RegistrationService::class.java)
         }
-
-        fun getLoginService(): LoginService {
-            return getClient().create(LoginService::class.java)
-        }
-
         private fun getChuckerCollector(): ChuckerCollector {
 
             return ChuckerCollector(

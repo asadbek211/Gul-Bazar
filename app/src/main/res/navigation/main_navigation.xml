@@ -85,8 +85,10 @@
         <action
             android:id="@+id/action_editProfile_to_profileEditSuccessFragment"
             app:destination="@id/profileEditSuccessFragment"
-            app:popUpTo="@id/editProfile"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_editProfile_to_smsVerifyFragment"
+            app:destination="@id/smsVerifyFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_success_edit_profile"
@@ -97,7 +99,13 @@
         tools:layout="@layout/fragment_create_shop"
         android:id="@+id/createShop"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopFragment"
-        android:label="CreateShopFragment" />
+        android:label="CreateShopFragment" >
+        <action
+            android:id="@+id/action_createShop_to_createShopSuccessFragment"
+            app:destination="@id/createShopSuccessFragment"
+            app:popUpTo="@id/createShop"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         tools:layout="@layout/fragment_edit_buket"
         android:id="@+id/editBuket"
@@ -123,4 +131,20 @@
         android:id="@+id/editTree"
         android:name="com.bizmiz.gulbozor.ui.bottom_nav.home.details.edit_announce.edit_tree.EditTreeFragment"
         android:label="EditTreeFragment" />
+    <fragment
+        tools:layout="@layout/fragment_success_shop_create"
+        android:id="@+id/createShopSuccessFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.success_shop.CreateShopSuccessFragment"
+        android:label="CreateShopSuccessFragment" />
+    <fragment
+        tools:layout="@layout/fragment_sms_verify"
+        android:id="@+id/smsVerifyFragment"
+        android:name="com.bizmiz.gulbozor.ui.bottom_nav.profile.edit.sms_verify.SmsVerifyFragment"
+        android:label="SmsVerifyFragment" >
+        <action
+            android:id="@+id/action_smsVerifyFragment_to_profileEditSuccessFragment"
+            app:destination="@id/profileEditSuccessFragment"
+            app:popUpTo="@id/smsVerifyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,19 +22,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OneShopFragment : Fragment() {
     val args: OneShopFragmentArgs by navArgs()
-
-
     private val oneShopVM: OnShopVM by viewModel()
     private lateinit var adapter: OneShopAdapter
-
     private var _binding: FragmentOneShopBinding? = null
     private val binding get() = _binding!!
-
     private var isLastPage: Boolean = false
-
     private var page: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("position",args.position)
         if (args.position == "customer") {
             oneShopVM.getAnnounceOfCustomer(page)
         } else {
@@ -41,7 +38,6 @@ class OneShopFragment : Fragment() {
             oneShopVM.getShopNumber(args.position.toInt())
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +51,6 @@ class OneShopFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = OneShopAdapter()
         binding.oneShopRec.adapter = adapter
-        onBackPressed()
         binding.backPressed.setOnClickListener(View.OnClickListener {
             if (args.position == "customer") {
                 findNavController().navigate(R.id.shop_to_home)
@@ -206,18 +201,4 @@ class OneShopFragment : Fragment() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
     }
-
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.position == "customer") {
-                    findNavController().navigate(R.id.shop_to_home)
-                } else {
-                    findNavController().navigate(R.id.shop_to_shops)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
 }

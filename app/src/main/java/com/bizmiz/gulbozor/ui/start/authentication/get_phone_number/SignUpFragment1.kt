@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.start.authentication.sms_verify
+package com.bizmiz.gulbozor.ui.start.authentication.get_phone_number
 
 import android.os.Build
 import android.os.Bundle
@@ -12,54 +12,31 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.PhoneNumberHelper
-import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentSignUp1Binding
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.random.Random
 
 class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
     private val binding by viewBinding { FragmentSignUp1Binding.bind(it) }
     private var smsCode:String? = null
-    private val smsVerifyViewModel: SmsVerifyViewModel by viewModel()
+    private val getPhoneNumberViewModel: GetPhoneNumberViewModel by viewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
         windowStatus()
         smsResultObserve()
+        smsTokenDataObserve()
+        binding.progress.setOnClickListener {  }
     }
 
     private fun loadViews() {
         binding.signUpToNext.setOnClickListener {
             if (binding.editTextPhoneSignUp.rawText.length == 9) {
-              if (smsCode!=null){
-                  smsCode = null
-              }else{
-                  smsCode = Random.nextInt(9999,99999).toString()
-                  if (smsCode=="86467"){
-                     smsCode = null
-                  }else{
-                      val body: RequestBody = MultipartBody.Builder()
-                          .setType(MultipartBody.FORM)
-                          .addFormDataPart("mobile_phone", "998${binding.editTextPhoneSignUp.text.toString().trim()
-                              .replace("(", "").replace(")", "").replace("\\s".toRegex(), "")}")
-                          .addFormDataPart("message", "Gulbazar.uz: Tasdiqlash kodi - $smsCode")
-                          .addFormDataPart("from", "4546")
-                          .addFormDataPart("callback_url", "http://0000.uz/test.php")
-                          .build()
-                      smsVerifyViewModel.smsSend(
-                          "Bearer ${Constant.SMS_TOKEN}",
-                          body
-                      )
-                      PhoneNumberHelper.getHelper().phoneNumber =
-                          "+998" + binding.editTextPhoneSignUp.text.toString().trim()
-                      binding.progress.visibility = View.VISIBLE
-                  }
-
-              }
+                getPhoneNumberViewModel.getSmsData(4343245366788986756,1)
+                binding.progress.visibility = View.VISIBLE
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -81,12 +58,16 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
         }
     }
     private fun smsResultObserve() {
-        smsVerifyViewModel.result.observe(viewLifecycleOwner, Observer {
+        getPhoneNumberViewModel.result.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     if (it.data=="success" && smsCode!=null){
                         val bundle = bundleOf(
-                            "sms_code" to smsCode
+                            "sms_code" to smsCode,
+                            "number" to "+998${
+                                binding.editTextPhoneSignUp.text.toString().trim()
+                                    .replace("(", "").replace(")", "").replace("\\s".toRegex(), "")
+                            }"
                         )
                         findNavController().navigate(R.id.action_signUpFragment1_to_signUpFragment2,bundle)
                         smsCode = null
@@ -98,5 +79,35 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
                 }
             }
         })
+    }
+    private fun smsTokenDataObserve() {
+        getPhoneNumberViewModel.smsData.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    it.data?.`object`?.let { it1 -> smsSend(it1, it.data.number.toString())}
+                }
+                ResourceState.ERROR -> {
+                    binding.progress.visibility = View.GONE
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun smsSend(token:String,smsKod:String){
+        smsCode = smsKod
+        val body: RequestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("mobile_phone", "998${binding.editTextPhoneSignUp.text.toString().trim()
+                .replace("(", "").replace(")", "").replace("\\s".toRegex(), "")}")
+            .addFormDataPart("message", "Gulbazar.uz: Tasdiqlash kodi - $smsKod")
+            .addFormDataPart("from", "4546")
+            .addFormDataPart("callback_url", "http://0000.uz/test.php")
+            .build()
+        getPhoneNumberViewModel.smsSend(
+            "Bearer $token",
+            body
+        )
+        PhoneNumberHelper.getHelper().phoneNumber =
+            "+998" + binding.editTextPhoneSignUp.text.toString().trim()
     }
 }

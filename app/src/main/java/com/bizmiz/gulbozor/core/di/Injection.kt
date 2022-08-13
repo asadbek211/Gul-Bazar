@@ -19,7 +19,11 @@ import com.bizmiz.gulbozor.ui.bottom_nav.home.details.houseplants_details.Flower
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.pot_details.PotDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.home.details.tree_details.TreeDetailsViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.profile.ProfileViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.profile.edit.EditProfileViewModel
+import com.bizmiz.gulbozor.ui.bottom_nav.profile.my_announce.MyAnnounceViewModel
 import com.bizmiz.gulbozor.ui.bottom_nav.profile.shop.CreateShopViewModel
+import com.bizmiz.gulbozor.ui.start.authentication.get_phone_number.GetPhoneNumberViewModel
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment3ViewModel
 import com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SmsVerifyViewModel
 import com.bizmiz.gulbozor.ui.youtube.YouTubeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -48,6 +52,10 @@ val viewModelModule = module {
     viewModel { BuketDetailsViewModel(get()) }
     viewModel { EditAnnounceViewModel(get()) }
     viewModel { CreateShopViewModel(get()) }
-    viewModel { SmsVerifyViewModel(get()) }
+    viewModel { GetPhoneNumberViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { SmsVerifyViewModel(get()) }
+    viewModel { SignUpFragment3ViewModel(get()) }
+    viewModel { EditProfileViewModel(get()) }
+    viewModel { MyAnnounceViewModel(get()) }
 }
