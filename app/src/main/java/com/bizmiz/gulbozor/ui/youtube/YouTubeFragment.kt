@@ -28,6 +28,7 @@ class YouTubeFragment : Fragment() {
     val args: YouTubeFragmentArgs by navArgs()
     private var page: Int = 0
     private var isLastPage = false
+    private var totalPage: Int = 0
 
     private lateinit var adapter: YouTubeAdapter
     private var _binding: FragmentYouTubeBinding? = null
@@ -67,7 +68,7 @@ class YouTubeFragment : Fragment() {
 
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
+                if (!isLastPage && page + 1 < totalPage) {
                     page++
                     binding.progressBarHome.visibility = View.VISIBLE
                     youTubeVM.getYouTubePage(page)
@@ -115,9 +116,14 @@ class YouTubeFragment : Fragment() {
         youTubeVM.announcePage.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
+                    if (it.data != null) {
+                        page = it.data.pageable.pageNumber
+                        totalPage = it.data.totalPages
+                    }
                     binding.swipeContainer.isRefreshing = false
                     adapter.addYouTubeListData(it.data?.content!!)
                     binding.progressBarHome.visibility = View.GONE
+
                     if (it.data.empty) {
                         isLastPage = true
                     }

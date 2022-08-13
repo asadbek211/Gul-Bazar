@@ -30,6 +30,7 @@ class OneShopFragment : Fragment() {
     private var isLastPage: Boolean = false
 
     private var page: Int = 0
+    private var totalPage: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +82,7 @@ class OneShopFragment : Fragment() {
         }
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
+                if (!isLastPage && page + 1 < totalPage) {
                     page++
                     binding.progressBarOneCat.visibility = View.VISIBLE
                     if (args.position == "customer") {
@@ -152,6 +153,11 @@ class OneShopFragment : Fragment() {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
+                        binding.progressBarOneCat.visibility = View.GONE
+                        if (it.data != null) {
+                            page = it.data.pageable.pageNumber
+                            totalPage = it.data.totalPages
+                        }
                         if (it.data!!.empty) {
                             isLastPage = true
                         }
@@ -160,6 +166,7 @@ class OneShopFragment : Fragment() {
                     }
                     ResourceState.ERROR -> {
                         binding.swipeContainer.isRefreshing = false
+                        binding.progressBarOneCat.visibility = View.GONE
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -169,6 +176,11 @@ class OneShopFragment : Fragment() {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
+                        binding.progressBarOneCat.visibility = View.GONE
+                        if (it.data != null) {
+                            page = it.data.pageable.pageNumber
+                            totalPage = it.data.totalPages
+                        }
                         adapter.addOneShopListData(it.data!!.content)
                         if (it.data.empty) {
                             isLastPage = true
@@ -176,6 +188,7 @@ class OneShopFragment : Fragment() {
                     }
                     ResourceState.ERROR -> {
                         binding.swipeContainer.isRefreshing = false
+                        binding.progressBarOneCat.visibility = View.GONE
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
