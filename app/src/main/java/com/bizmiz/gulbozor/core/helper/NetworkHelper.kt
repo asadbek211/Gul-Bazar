@@ -1,18 +1,23 @@
 package com.bizmiz.gulbozor.core.helper
 
 import android.util.Log
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.category.ByCategoryID
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
+import com.bizmiz.gulbozor.core.models.sms.SmsTokenResponse
 import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.ShopPhoneNumber
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
+import com.bizmiz.gulbozor.core.models.LoginRequest
+import com.bizmiz.gulbozor.core.models.user.edit_user.UserEditRequest
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -114,7 +119,29 @@ class NetworkHelper(
 
         })
     }
+    fun getMyAnnounce(
+        sellerId: Int,
+        page: Int,
+        onSuccess: (flowerList: ByCategoryID) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getMyAnnounce(sellerId,page)
+        call.enqueue(object : Callback<ByCategoryID> {
+            override fun onResponse(
+                call: Call<ByCategoryID>?,
+                response: Response<ByCategoryID>?
+            ) {
+                if (response != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }
+            }
 
+            override fun onFailure(call: Call<ByCategoryID>?, t: Throwable?) {
+                onFailure.invoke("OnOn " + t?.localizedMessage)
+            }
+
+        })
+    }
     fun getYouTubePage(
         page: Int,
         onSuccess: (flowerList: YouTubeLinkPage) -> Unit,
@@ -505,26 +532,24 @@ class NetworkHelper(
 
     fun updateShopId(
         sellerId: Int,
-        shopId: Int,
+        userEditRequest: UserEditRequest,
         onSuccess: (data: Any) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId, shopId)
-        call.enqueue(object : Callback<BaseResponse<Any>> {
+        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId, userEditRequest)
+        call.enqueue(object : Callback<Any> {
             override fun onResponse(
-                call: Call<BaseResponse<Any>>?,
-                response: Response<BaseResponse<Any>>?
+                call: Call<Any>?,
+                response: Response<Any>?
             ) {
                 if (response != null) {
                     Log.d("resultsShopId", response.toString())
-                    Log.d("resultsShopId", response.body()?.`object`.toString())
+                    Log.d("resultsShopId", response.body().toString())
                 }
-                if (response != null) {
-                    response.body()?.`object`?.let { onSuccess.invoke(it) }
-                }
+                response?.body()?.let { onSuccess.invoke(it) }
             }
 
-            override fun onFailure(call: Call<BaseResponse<Any>>?, t: Throwable?) {
+            override fun onFailure(call: Call<Any>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
                 Log.d("results", t?.localizedMessage.toString())
             }
@@ -584,6 +609,94 @@ class NetworkHelper(
             }
 
             override fun onFailure(call: Call<BaseResponse<UserDataResponse>>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun getSmsToken(
+        key: Long,
+        id: Int,
+        onSuccess: (smsData: SmsTokenResponse) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getSMSToken(key,id)
+        call.enqueue(object : Callback<SmsTokenResponse> {
+            override fun onResponse(
+                call: Call<SmsTokenResponse>?,
+                response: Response<SmsTokenResponse>?
+            ) {
+                response?.body()?.let {
+                    onSuccess.invoke(it)
+                }
+            }
+
+            override fun onFailure(call: Call<SmsTokenResponse>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+            }
+
+        })
+    }
+    fun checkPhoneNumber(
+        loginRequest: LoginRequest,
+        onSuccess: (smsData: LoginResponse) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).checkPhoneNumber(loginRequest)
+        call.enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(
+                call: Call<LoginResponse>?,
+                response: Response<LoginResponse>?
+            ) {
+                if (response != null) {
+                    Log.d("messages",response.toString())
+                    Log.d("messages",response.body().toString())
+                    Log.d("messages",response.errorBody().toString())
+                    if (response.code() == 200) {
+                        response.body()?.let {
+                            onSuccess.invoke(it)
+                        }
+                    } else if (response.code()==409) {
+                        val errorResponse = Gson().fromJson(response.errorBody()!!.charStream(), ErrorResponse::class.java)
+                        if (errorResponse.massage=="Bu telefon raqam ro'yxatdan o'tmagan"){
+                            onFailure.invoke("unregistered")
+                        }
+                    } else if (response.code() in 400..499) {
+                        onFailure.invoke("networkError")
+                    }
+                    else {
+                        onFailure.invoke("Error")
+                    }
+                }
+
+            }
+            override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                onFailure.invoke(t?.localizedMessage)
+
+            }
+
+        })
+    }
+    fun getShopId(
+        onSuccess: (shopId: Int) -> Unit,
+        onFailure: (msg: String?) -> Unit
+    ) {
+        val call = apiClient.create(ApiInterface::class.java).getShopsList()
+        call.enqueue(object : Callback<List<ShopsListItem>> {
+            override fun onResponse(
+                call: Call<List<ShopsListItem>>?,
+                response: Response<List<ShopsListItem>>?
+            ) {
+                if (response != null) {
+                    response.body()?.forEach {
+                        if (it.sellerId==AppCache.getHelper().userId){
+                            onSuccess.invoke(it.id)
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ShopsListItem>>?, t: Throwable?) {
                 onFailure.invoke(t?.localizedMessage)
             }
 

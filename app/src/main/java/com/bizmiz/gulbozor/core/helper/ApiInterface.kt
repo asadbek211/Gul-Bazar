@@ -6,15 +6,16 @@ import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
 import com.bizmiz.gulbozor.core.models.home.GetAnnounceByIndexPage
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
 import com.bizmiz.gulbozor.core.models.slideReklama.ReklamaImages
-import com.bizmiz.gulbozor.core.models.sms.SmsResponseData
+import com.bizmiz.gulbozor.core.models.sms.SmsTokenResponse
 import com.bizmiz.gulbozor.core.models.user.UserDataResponse
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkById.YouTubeLinkID
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.YouTubeLinkPage
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.ShopsListItem
 import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.oneShop.model.ShopPhoneNumber
 import com.bizmiz.gulbozor.ui.model.ImageResponseData
+import com.bizmiz.gulbozor.core.models.LoginRequest
+import com.bizmiz.gulbozor.core.models.user.edit_user.UserEditRequest
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -35,6 +36,11 @@ interface ApiInterface {
         @Query("page") page: Int
     ): Call<ByCategoryID>
 
+    @GET("/announce/myAnnounce/{sellerId}?")
+    fun getMyAnnounce(
+        @Path("sellerId")sellerId:Int,
+        @Query("page") page: Int
+    ): Call<ByCategoryID>
 
     @Headers("Content-Type:application/json")
     @DELETE("/announce/delete/{id}")
@@ -55,12 +61,11 @@ interface ApiInterface {
     ): Call<BaseResponse<CreateShopRequest>>
 
     @Headers("Content-Type:application/json")
-    @FormUrlEncoded
-    @PATCH("/user/{id}")
+    @PUT("/user/{id}")
     fun updateShopId(
         @Path("id") id: Int,
-        @Field("shopId") shopId: Int
-    ): Call<BaseResponse<Any>>
+        @Body userEditRequest: UserEditRequest
+    ): Call<Any>
 
     @Multipart
     @POST("/attachment/uploadImage")
@@ -74,15 +79,6 @@ interface ApiInterface {
         @Part image7: MultipartBody.Part?,
         @Part image8: MultipartBody.Part?
     ): Call<ImageResponseData>
-
-   @Multipart
-    @POST
-    fun smsSend(
-        @Url url:String,
-        @Header("Authorization") token: String,
-        @Part("body") body:RequestBody,
-    ): Call<SmsResponseData>
-
     @GET("/region")
     fun getRegion(
     ): Call<RegionData>
@@ -140,12 +136,18 @@ interface ApiInterface {
         @Path("userId") userId: Int
     ): Call<BaseResponse<UserDataResponse>>
 
-    @GET("/api/v1/sms/{id}")
+    @GET("/sms/{key}/{id}")
     fun getSMSToken(
-        @Path("id") id: Int,
-       @Field("password")password:String
-    ): Call<BaseResponse<Any>>
+        @Path("key") key: Long,
+       @Path("id") id:Int
+    ): Call<SmsTokenResponse>
 
     @GET("/reklama/byPlaceNumber/{placeNumber}")
     fun getReklamaId(@Path("placeNumber") placeNumber: Int): Call<ReklamaImages>
+
+    @Headers("Content-Type:application/json")
+    @POST("/auth/checkPhoneNumber")
+    fun checkPhoneNumber(
+        @Body loginRequest: LoginRequest
+    ): Call<LoginResponse>
 }

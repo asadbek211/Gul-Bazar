@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signUpFragment1"
-        android:name="com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SignUpFragment1"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.get_phone_number.SignUpFragment1"
         android:label="SignUpFragment1"
         tools:layout="@layout/fragment_sign_up1">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
-        android:name="com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpFragment2"
+        android:name="com.bizmiz.gulbozor.ui.start.authentication.sms_verify.SignUpFragment2"
         android:label="SignUpFragment2"
         tools:layout="@layout/fragment_sign_up2">
         <action

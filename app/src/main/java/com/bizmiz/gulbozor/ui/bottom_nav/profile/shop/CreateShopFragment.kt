@@ -16,6 +16,7 @@ import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
+import com.bizmiz.gulbozor.core.models.user.edit_user.UserEditRequest
 import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.showSoftKeyboard
@@ -37,7 +38,7 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onBackPressed()
+        binding.progress.setOnClickListener {  }
         binding.btnBack.setOnClickListener {
             val navController =
                 Navigation.findNavController(
@@ -82,41 +83,25 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
         regionResultObserve()
         cityResultObserve()
         binding.btnNext.setOnClickListener {
-            createShopViewModel.updateShopId(
-                7,
-                2
-            )
-//            if (checkShop()){
-//                createShopViewModel.createShop(
-//                    CreateShopRequest(
-//                        cityId = cityId,
-//                        phoneNumber1 = binding.phoneNumber1.text?.trim().toString()
-//                            .replace("\\s".toRegex(), ""),
-//                        phoneNumber2 = binding.phoneNumber2.text?.trim().toString()
-//                            .replace("\\s".toRegex(), ""),
-//                        regionId= regionId,
-//                        sellerId = AppCache.getHelper().userId,
-//                        shopName = binding.etShopName.text?.trim().toString(),
-//                        streetHouse = binding.etStreet.text?.trim().toString()
-//                    )
-//                )
-//            }
+            if (checkShop()){
+                binding.progress.visibility = View.VISIBLE
+                createShopViewModel.createShop(
+                    CreateShopRequest(
+                        cityId = cityId,
+                        phoneNumber1 = binding.phoneNumber1.text?.trim().toString()
+                            .replace("\\s".toRegex(), ""),
+                        phoneNumber2 = binding.phoneNumber2.text?.trim().toString()
+                            .replace("\\s".toRegex(), ""),
+                        regionId= regionId,
+                        sellerId = AppCache.getHelper().userId,
+                        shopName = binding.etShopName.text?.trim().toString(),
+                        streetHouse = binding.etStreet.text?.trim().toString()
+                    )
+                )
+            }
         }
         createShopResultObserve()
         updateShopIdObserve()
-    }
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val navController =
-                    Navigation.findNavController(
-                        requireActivity(),
-                        R.id.mainContainer
-                    )
-                navController.popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
     private fun regionResultObserve() {
         val list:ArrayList<String> = arrayListOf()
@@ -166,9 +151,25 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
         createShopViewModel.resultShop.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
+                    val phoneNumber = requireArguments().getString("phone_number")
+                    val username = requireArguments().getString("username")
+                    val surname = requireArguments().getString("surname")
+                    if (phoneNumber!=null && username!=null && surname!=null){
+                        createShopViewModel.updateShopId(
+                            AppCache.getHelper().userId,
+                            UserEditRequest(
+                                "string",
+                                phoneNumber,
+                                1,
+                                surname,
+                                username
 
+                            )
+                        )
+                    }
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -178,16 +179,15 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
         createShopViewModel.resultShopId.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    Toast.makeText(requireActivity(), "Do'kon muvaffaqiyatli yaratildi:)", Toast.LENGTH_SHORT).show()
-                    Log.d("result",it.data.toString())
-                    //                    val navController =
-//                        Navigation.findNavController(
-//                            requireActivity(),
-//                            R.id.addContainer
-//                        )
-//                    navController.navigate(R.id.addBuketFragment_to_addSuccess)
+                    val navController =
+                        Navigation.findNavController(
+                            requireActivity(),
+                            R.id.mainContainer
+                        )
+                    navController.navigate(R.id.action_createShop_to_createShopSuccessFragment)
                 }
                 ResourceState.ERROR -> {
+                    binding.progress.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }

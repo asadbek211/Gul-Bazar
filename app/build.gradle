@@ -16,10 +16,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
     }
 
     buildTypes {
@@ -100,8 +96,9 @@ dependencies {
     //youtubePlayer
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 
+
     //SlideImage uchun  reclama joyiga
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.1'
+
 
 }

@@ -10,10 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
 import com.bizmiz.gulbozor.core.caches.SetUpHelper
 import com.bizmiz.gulbozor.databinding.ActivitySetUpBinding
-import com.bizmiz.gulbozor.ui.start.authentication.new_auth.NewAuthActivity
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpActivity
 
 class SetUpActivity : AppCompatActivity() {
@@ -35,8 +35,8 @@ class SetUpActivity : AppCompatActivity() {
         if (!boardOpen) {
             loadBoardData()
             windowStatus()
-        } else if (!LoginHelper.getHelper().login) {
-            val intent = Intent(this, NewAuthActivity::class.java)
+        } else if (AppCache.getHelper().token==null) {
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             finish()
         }

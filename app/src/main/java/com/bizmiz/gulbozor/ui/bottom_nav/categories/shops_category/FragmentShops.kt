@@ -1,6 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class FragmentShops : Fragment() {
 
     private val shopsViewModel: ShopsViewModel by viewModel()
 
-    private val shopAdapter = ShopsAdapter()
+    private lateinit var shopAdapter:ShopsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +50,6 @@ class FragmentShops : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        announceObserve()
-        onBackHomePressed()
-
         binding.backPressed.setOnClickListener(View.OnClickListener {
             if (args.onBack == "home") {
                 findNavController().navigate(R.id.nav_shops_to_home)
@@ -61,16 +59,17 @@ class FragmentShops : Fragment() {
         })
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
-
+        shopAdapter = ShopsAdapter()
         binding.shopsRecycler.adapter = shopAdapter
         binding.shopsRecycler.layoutManager = LinearLayoutManager(requireContext())
-
+        announceObserve()
     }
 
     private fun announceObserve() {
         shopsViewModel.shops.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
+                    Log.d("shops",it.data.toString())
                     shopAdapter.data = it.data!!
                 }
                 ResourceState.ERROR -> {
@@ -102,20 +101,4 @@ class FragmentShops : Fragment() {
 
         })
     }
-
-
-    private fun onBackHomePressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (args.onBack == "home") {
-                    findNavController().navigate(R.id.nav_shops_to_home)
-                } else {
-                    findNavController().navigate(R.id.nav_shops_to_category)
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
-    }
-
-
 }

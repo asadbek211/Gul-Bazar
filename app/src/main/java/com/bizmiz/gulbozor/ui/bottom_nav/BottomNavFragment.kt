@@ -24,7 +24,6 @@ class BottomNavFragment : Fragment(R.layout.fragment_bottom_nav) {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
         binding.bottomNavView.background = null
         binding.bottomNavView.setupWithNavController(navController)
-        LoginHelper.getHelper().login = true
         binding.fab.setOnClickListener {
             startActivity(Intent(requireActivity(), AddAnnounceActivity::class.java))
         }

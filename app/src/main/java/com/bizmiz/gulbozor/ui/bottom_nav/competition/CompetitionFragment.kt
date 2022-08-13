@@ -15,17 +15,7 @@ class CompetitionFragment : Fragment(R.layout.fragment_competition) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onBackPressed()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
-    }
-
-    private fun onBackPressed() {
-        val callBack = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_competition_to_home)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callBack)
     }
 }

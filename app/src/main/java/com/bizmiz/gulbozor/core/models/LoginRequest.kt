@@ -1,4 +1,4 @@
-package com.bizmiz.gulbozor.ui.start.authentication.login.core
+package com.bizmiz.gulbozor.core.models
 
 import com.google.gson.annotations.SerializedName
 

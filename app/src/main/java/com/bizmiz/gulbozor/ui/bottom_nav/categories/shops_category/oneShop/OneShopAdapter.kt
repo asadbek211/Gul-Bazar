@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
+import com.bizmiz.gulbozor.core.utils.checkMonth
 import com.bizmiz.gulbozor.databinding.FlowerItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 
 class OneShopAdapter : RecyclerView.Adapter<OneShopAdapter.MyViewHolder>() {
 
@@ -38,16 +40,41 @@ class OneShopAdapter : RecyclerView.Adapter<OneShopAdapter.MyViewHolder>() {
                 .listener(listener(binding.progressBarItem))
                 .into(binding.flowerImage)
             binding.flowerName.text = response.title
-            binding.flowerDescription.text = response.createAt.toString()
+            binding.flowerDescription.text =
+                "${response.regionName}, ${response.cityName} ${
+                    dataSettings(response.createAt)
+                }"
             val df = DecimalFormat("#,###.##")
             val number = df.format(response.price)
-            binding.flowerPrice.text = number
+            binding.flowerPrice.text = number.replace(".", " ").replace(",", " ")
             binding.cardView.setOnClickListener {
                 onclick.invoke(response)
             }
         }
     }
-
+    private fun dataSettings(data:Long?):String{
+        var postData = ""
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateString = simpleDateFormat.format(data)
+        val currentDataMillis = System.currentTimeMillis()
+        val currentDateString = simpleDateFormat.format(currentDataMillis)
+        if (dateString==currentDateString){
+            val timeFormat = SimpleDateFormat("HH:mm")
+            val timeString = timeFormat.format(data)
+            postData = "Bugun ${String.format("%s", timeString)}"
+        }
+        else if (currentDateString.substring(8,10).toInt()-1==dateString.substring(8,10).toInt() &&
+            currentDateString.substring(5,7)==dateString.substring(5,7) &&
+            currentDateString.substring(0,4)==dateString.substring(0,4)){
+            val timeFormat = SimpleDateFormat("HH:mm")
+            val timeString = timeFormat.format(data)
+            postData = "Kecha ${String.format("%s", timeString)}"
+        }else{
+            val number = dateString.substring(5,7).toInt()
+            postData = "${dateString.substring(8,10).toInt()}-${checkMonth(number)}"
+        }
+        return postData
+    }
     private fun listener(progressBar: ProgressBar) = object : RequestListener<Drawable> {
         override fun onLoadFailed(
             e: GlideException?,

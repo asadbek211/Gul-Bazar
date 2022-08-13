@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.bizmiz.gulbozor.core.helper.NetworkHelper
 import com.bizmiz.gulbozor.core.models.*
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
+import com.bizmiz.gulbozor.core.models.user.edit_user.UserEditRequest
 import com.bizmiz.gulbozor.core.utils.Resource
 
 class CreateShopViewModel(private val networkHelper: NetworkHelper) : ViewModel() {
@@ -44,9 +45,9 @@ class CreateShopViewModel(private val networkHelper: NetworkHelper) : ViewModel(
     }
     fun updateShopId(
         sellerId: Int,
-        shopId: Int,
+        userEditRequest: UserEditRequest,
     ) {
-        networkHelper.updateShopId(sellerId,shopId, {
+        networkHelper.updateShopId(sellerId,userEditRequest, {
             updateShopId.value = Resource.success(it)
         }, {
             updateShopId.value = Resource.error(it)
