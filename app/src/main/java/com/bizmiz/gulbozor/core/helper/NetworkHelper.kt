@@ -649,9 +649,6 @@ class NetworkHelper(
                 response: Response<LoginResponse>?
             ) {
                 if (response != null) {
-                    Log.d("messages",response.toString())
-                    Log.d("messages",response.body().toString())
-                    Log.d("messages",response.errorBody().toString())
                     if (response.code() == 200) {
                         response.body()?.let {
                             onSuccess.invoke(it)
@@ -660,6 +657,8 @@ class NetworkHelper(
                         val errorResponse = Gson().fromJson(response.errorBody()!!.charStream(), ErrorResponse::class.java)
                         if (errorResponse.massage=="Bu telefon raqam ro'yxatdan o'tmagan"){
                             onFailure.invoke("unregistered")
+                        }else{
+                            onFailure.invoke(errorResponse.massage)
                         }
                     } else if (response.code() in 400..499) {
                         onFailure.invoke("networkError")

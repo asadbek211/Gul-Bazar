@@ -22,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
     private val binding by viewBinding { FragmentSignUp1Binding.bind(it) }
     private var smsCode:String? = null
+    private var isClick = false
     private val getPhoneNumberViewModel: GetPhoneNumberViewModel by viewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +36,7 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
     private fun loadViews() {
         binding.signUpToNext.setOnClickListener {
             if (binding.editTextPhoneSignUp.rawText.length == 9) {
+                isClick = true
                 getPhoneNumberViewModel.getSmsData(4343245366788986756,1)
                 binding.progress.visibility = View.VISIBLE
             } else {
@@ -71,6 +73,7 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
                         )
                         findNavController().navigate(R.id.action_signUpFragment1_to_signUpFragment2,bundle)
                         smsCode = null
+                        isClick = false
                     }
                 }
                 ResourceState.ERROR -> {
@@ -84,7 +87,9 @@ class SignUpFragment1 : Fragment(R.layout.fragment_sign_up1) {
         getPhoneNumberViewModel.smsData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-                    it.data?.`object`?.let { it1 -> smsSend(it1, it.data.number.toString())}
+                    if (isClick){
+                        it.data?.`object`?.let { it1 -> smsSend(it1, it.data.number.toString())}
+                    }
                 }
                 ResourceState.ERROR -> {
                     binding.progress.visibility = View.GONE
