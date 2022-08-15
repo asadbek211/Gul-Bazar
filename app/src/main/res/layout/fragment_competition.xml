@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/btnSearch"
         android:layout_marginEnd="20dp"
         android:layout_width="50dp"
@@ -51,6 +52,7 @@
         android:layout_marginEnd="45dp"
         android:background="@drawable/button_bg_tanlov"
         android:clickable="true"
+        android:visibility="invisible"
         android:elevation="15dp"
         android:focusable="true"
         android:src="@drawable/ic_plus_24"
@@ -61,6 +63,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:visibility="invisible"
         android:id="@+id/container1"
         android:elevation="5dp"
         android:layout_marginStart="20dp"
@@ -142,6 +145,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="20dp"
         android:id="@+id/container2"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
@@ -223,6 +227,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container3"
         android:layout_marginTop="20dp"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
@@ -300,4 +305,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Bu bo'lim tez kunda ishga tushiriladi..."
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

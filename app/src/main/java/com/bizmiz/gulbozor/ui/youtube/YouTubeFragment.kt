@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -93,7 +94,17 @@ class YouTubeFragment : Fragment() {
         binding.youtubeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.youtubeRecyclerView.adapter = adapter
 
-        adapter.MyAdapter(requireActivity(), binding.categoryType.context)
+        adapter.onClickListener { youtubeLink->
+            val bundle = bundleOf(
+                "videoLink" to youtubeLink
+            )
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.mainContainer
+                )
+            navController.navigate(R.id.action_bottomNavFragment_to_videoPlayerFragment,bundle)
+        }
     }
 
     private fun setListeners() {

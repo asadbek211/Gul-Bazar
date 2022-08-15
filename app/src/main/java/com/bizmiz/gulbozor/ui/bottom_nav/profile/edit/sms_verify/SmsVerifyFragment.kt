@@ -61,7 +61,7 @@ class SmsVerifyFragment : Fragment(R.layout.fragment_sms_verify) {
             binding.progress.visibility = View.VISIBLE
             editProfileViewModel.updateUser(
                 AppCache.getHelper().userId, UserEditRequest(
-                "string",phoneNumber.toString()
+                phoneNumber.toString()
                 , shopId!!,surname.toString(),username.toString()
             )
             )
@@ -99,6 +99,12 @@ class SmsVerifyFragment : Fragment(R.layout.fragment_sms_verify) {
                 ResourceState.ERROR -> {
                     binding.progress.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    val navController =
+                        Navigation.findNavController(
+                            requireActivity(),
+                            R.id.mainContainer
+                        )
+                    navController.popBackStack()
                 }
             }
         })

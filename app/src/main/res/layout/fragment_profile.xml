@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/btnSearch"
         android:layout_marginEnd="20dp"
         android:layout_width="50dp"

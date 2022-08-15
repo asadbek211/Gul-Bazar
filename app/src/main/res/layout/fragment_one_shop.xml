@@ -169,14 +169,16 @@
                             android:id="@+id/not_post_yet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="77dp"
                             android:gravity="center"
-                            android:text="Bu do'kon hali elon bergani yo'q"
+                            android:layout_marginTop="80dp"
+                            android:text="Bu do'kon hali e'lon bergani yo'q"
                             android:textColor="@color/naturalDark"
-                            android:textSize="30sp"
+                            android:textSize="20dp"
                             android:textStyle="bold"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txt_all_p" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
