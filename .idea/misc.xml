@@ -211,14 +211,17 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_set_up.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_vide_player.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/dialog_image_upload.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/flower_item.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_add_flower.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_add_navigation.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_add_success.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_bottom_nav.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_buket_details.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.2125" />
+        <entry key="app/src/main/res/layout/fragment_competition.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_create_shop.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.2125" />
@@ -238,6 +241,7 @@
         <entry key="app/src/main/res/layout/fragment_success_edit_profile.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_success_pay.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/fragment_success_shop_create.xml" value="0.2125" />
+        <entry key="app/src/main/res/layout/fragment_vide_player.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/item_board.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2125" />
       </map>

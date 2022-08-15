@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/btnSearch"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -27,7 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:tint="@color/secondary_color" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="wrap_content"
@@ -237,17 +237,16 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/just"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="240dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/youtube_title">
 
-                        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        <WebView
                             android:id="@+id/youtube_player_view"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            app:autoPlay="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -263,24 +262,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/img_youtube"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            app:layout_constraintBottom_toBottomOf="@id/youtube_player_view"
-                            app:layout_constraintEnd_toEndOf="@id/youtube_player_view"
-                            app:layout_constraintStart_toStartOf="@id/youtube_player_view"
-                            app:layout_constraintTop_toTopOf="@id/youtube_player_view" />
-
-                        <ImageView
-                            android:id="@+id/icon_youtube"
-                            android:layout_width="66dp"
-                            android:layout_height="66dp"
-                            android:src="@drawable/ic_youtube_icon"
-                            app:layout_constraintBottom_toBottomOf="@id/youtube_player_view"
-                            app:layout_constraintEnd_toEndOf="@id/youtube_player_view"
-                            app:layout_constraintStart_toStartOf="@id/youtube_player_view"
-                            app:layout_constraintTop_toTopOf="@id/img_youtube" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,8 +1,11 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.profile
 
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -11,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.bizmiz.gulbozor.R
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bizmiz.gulbozor.BuildConfig
 import com.bizmiz.gulbozor.core.app.App
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.ResourceState
@@ -35,6 +39,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
         binding.editProfile.setOnClickListener {
             val navController =
                 Navigation.findNavController(
@@ -77,6 +87,35 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             startActivity(intent)
             requireActivity().finish()
         }
+        binding.privacyPolicy.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.freeprivacypolicy.com/live/66044b9a-bde6-4d18-8a5c-2748d47cbec7")
+            )
+            startActivity(browserIntent)
+        }
+        binding.share.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                "Tavsiya qilaman: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+            )
+            sendIntent.type = "text/plain"
+            startActivity(sendIntent)
+        }
+        binding.support.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/danko_98"))
+            startActivity(browserIntent)
+        }
+        binding.appInfo.setOnClickListener {
+            val navController =
+                Navigation.findNavController(
+                    requireActivity(),
+                    R.id.mainContainer
+                )
+            navController.navigate(R.id.action_bottomNavFragment_to_aboutFragment)
+        }
         profileViewModel.getUserData(AppCache.getHelper().userId)
         userDataObserve()
         shopIdObserve()
@@ -85,14 +124,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         profileViewModel.userData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    phoneNumber = it.data?.phoneNumberTest
-                    username = it.data?.username
+                    phoneNumber = it.data?.username
+                    username = it.data?.usernameTest
                     surname = it.data?.surname
                     if (it.data?.shopId!=null){
                         userShopId = it.data.shopId
                     }
-              binding.txtNameSurname.text = "${it.data?.username}  ${it.data?.surname}"
-              binding.txtPhoneNumber.text = it.data?.phoneNumberTest
+              binding.txtNameSurname.text = "${it.data?.usernameTest}  ${it.data?.surname}"
+              binding.txtPhoneNumber.text = it.data?.username
                     if (it.data?.shopId!=null && it.data.shopId>0){
                         binding.txtShop.text = "Mening do‘konim"
                         profileViewModel.getShopId()

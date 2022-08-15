@@ -1,5 +1,7 @@
 package com.bizmiz.gulbozor.core.models.user
 
+import com.google.gson.annotations.SerializedName
+
 data class UserDataResponse(
     val accountNonExpired: Boolean,
     val accountNonLocked: Boolean,
@@ -9,8 +11,7 @@ data class UserDataResponse(
     val enabled: Boolean,
     val id: Int,
     val password: String,
-    val phoneNumber: String,
-    val phoneNumberTest: String,
+    val usernameTest: String,
     val roles: List<Role>,
     val shopId: Int,
     val updateAt: String,

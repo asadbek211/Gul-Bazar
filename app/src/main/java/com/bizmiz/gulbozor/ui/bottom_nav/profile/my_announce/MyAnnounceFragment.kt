@@ -27,10 +27,11 @@ class MyAnnounceFragment : Fragment() {
     private var _binding: FragmentMyAnnounceBinding? = null
     private val binding get() = _binding!!
     private var isLastPage: Boolean = false
-    private var page: Int = 0
+    private var currentPage: Int = 0
+    private var totalPage:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myAnnounceViewModel.getMyAnnounce(AppCache.getHelper().userId,page)
+        myAnnounceViewModel.getMyAnnounce(AppCache.getHelper().userId,currentPage)
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,10 +60,9 @@ class MyAnnounceFragment : Fragment() {
         }
         binding.scrollNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                if (!isLastPage) {
-                    page++
+                if (!isLastPage && currentPage + 1 < totalPage) {
                     binding.progressBarOneCat.visibility = View.VISIBLE
-                        myAnnounceViewModel.getMyAnnounce(AppCache.getHelper().userId,page)
+                    myAnnounceViewModel.getMyAnnounce(AppCache.getHelper().userId,currentPage + 1)
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -71,14 +71,10 @@ class MyAnnounceFragment : Fragment() {
                     ).show()
                     binding.progressBarOneCat.visibility = View.GONE
                 }
-
             }
         })
-
         windowStatus()
-
         announceObserve()
-
         intent()
     }
 
@@ -123,11 +119,19 @@ class MyAnnounceFragment : Fragment() {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
+                        if (it.data !=null){
+                            currentPage = it.data.pageable.pageNumber
+                            totalPage = it.data.totalPages
+                        }
                         if (it.data!!.empty) {
                             isLastPage = true
+                            binding.muAnnounceRec.visibility = View.GONE
+                            binding.notPostYet.visibility = View.VISIBLE
+                        }else{
+                            binding.muAnnounceRec.visibility = View.VISIBLE
+                            binding.notPostYet.visibility = View.GONE
+                            adapter.addOneShopListData(it.data.content)
                         }
-                        adapter.addOneShopListData(it.data.content)
-
                     }
                     ResourceState.ERROR -> {
                         binding.swipeContainer.isRefreshing = false
