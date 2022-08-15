@@ -158,7 +158,6 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
                         createShopViewModel.updateShopId(
                             AppCache.getHelper().userId,
                             UserEditRequest(
-                                "string",
                                 phoneNumber,
                                 1,
                                 surname,

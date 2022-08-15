@@ -542,11 +542,12 @@ class NetworkHelper(
                 call: Call<Any>?,
                 response: Response<Any>?
             ) {
-                if (response != null) {
-                    Log.d("resultsShopId", response.toString())
-                    Log.d("resultsShopId", response.body().toString())
+                if (response?.body() != null) {
+                    response.body()?.let { onSuccess.invoke(it) }
+                }else{
+                    val errorResponse = Gson().fromJson(response?.errorBody()!!.charStream(), ErrorResponse::class.java)
+                  onFailure.invoke(errorResponse.massage)
                 }
-                response?.body()?.let { onSuccess.invoke(it) }
             }
 
             override fun onFailure(call: Call<Any>?, t: Throwable?) {

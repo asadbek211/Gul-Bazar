@@ -6,16 +6,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.models.youtube.getVideoLinkPage.Content
 import com.bizmiz.gulbozor.databinding.ItemYoutubeBinding
 import com.bumptech.glide.Glide
 
 
 class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
-    var mActivity: Activity = Activity()
-    var context: Context? = null
-
-
     var youTubeList = ArrayList<Content>()
     fun addYouTubeListData(response: List<Content>) {
         this.youTubeList.addAll(response)
@@ -26,12 +23,10 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
         youTubeList.clear()
         notifyDataSetChanged()
     }
-
-    fun MyAdapter(activity: Activity, context: Context) {
-        this.mActivity = activity
-        this.context = context
+    private var onclick: (videoLink: String) -> Unit = {}
+    fun onClickListener(onclick: (videoLink: String) -> Unit) {
+        this.onclick = onclick
     }
-
     inner class MyViewHolder(private val binding: ItemYoutubeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun workWithModel(response: Content, position: Int) {
@@ -39,10 +34,7 @@ class YouTubeAdapter : RecyclerView.Adapter<YouTubeAdapter.MyViewHolder>() {
             Glide.with(binding.imgYouTube).load(response.imageUrl).into(binding.imgYouTube)
 
             binding.imgYouTube.setOnClickListener {
-                val intent = Intent(mActivity, VidePlayerActivity::class.java)
-                intent.putExtra("videoLink", response.videoLink)
-                context!!.startActivity(intent)
-
+                onclick.invoke(response.videoLink)
             }
 
         }

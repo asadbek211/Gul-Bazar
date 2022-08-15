@@ -115,6 +115,9 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:visibility="invisible"
                     android:id="@+id/favourite"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -41,7 +43,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce(currentPage)
-        homeViewModel.getVideoLInkByID(1)
+        homeViewModel.getVideoLInkByID(2)
         homeViewModel.getReklamaImages(1)
     }
 
@@ -63,7 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 destination(it.department, bundle)
             }
         }
-        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
+//        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
 
     }
 
@@ -158,21 +160,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     private fun onImageClick() {
-        binding.imgYoutube.setOnClickListener {
+//        binding.imgYoutube.setOnClickListener {
             homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
-                        it.let {
-                            binding.youtubeTitle.text = it.data!!.`object`.title
-                            lifecycle.addObserver(binding.youtubePlayerView)
-                            binding.youtubePlayerView.addYouTubePlayerListener(object :
-                                AbstractYouTubePlayerListener() {
-                                override fun onReady(youTubePlayer: YouTubePlayer) {
-                                    binding.progressBarYu.visibility = View.GONE
-                                    binding.swipeContainer.isRefreshing = false
-                                    youTubePlayer.loadVideo(it.data.`object`.videoLink, 0f)
-                                }
-                            })
+                        binding.swipeContainer.isRefreshing = false
+                        binding.progressBarYu.visibility = View.GONE
+                        binding.youtubePlayerView.apply {
+                            settings.pluginState = WebSettings.PluginState.ON
+                            webChromeClient = WebChromeClient()
+                            settings.javaScriptEnabled = true
+                            settings.setAppCacheEnabled(true)
+                            settings.loadWithOverviewMode = true
+                            settings.useWideViewPort = true
+                            settings.loadWithOverviewMode = true
+                            settings.builtInZoomControls = true
+                            settings.displayZoomControls  =true
+                            settings.loadsImagesAutomatically = true
+                            settings.setSupportZoom(true)
+                            settings.domStorageEnabled = true
+                            loadUrl("https://www.youtube.com/embed/${it.data?.`object`?.videoLink}")
                         }
                     }
                     ResourceState.ERROR -> {
@@ -189,9 +196,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     }
                 }
             })
-            binding.imgYoutube.visibility = View.GONE
-            binding.iconYoutube.visibility = View.GONE
-        }
+//            binding.imgYoutube.visibility = View.GONE
+//            binding.iconYoutube.visibility = View.GONE
     }
 
 
@@ -223,8 +229,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ResourceState.SUCCESS -> {
                     it.let {
                         binding.youtubeTitle.text = it.data!!.`object`.title
-                        Glide.with(binding.imgYoutube).load(it.data.`object`.imageUrl)
-                            .into(binding.imgYoutube)
+//                        Glide.with(binding.imgYoutube).load(it.data.`object`.imageUrl)
+//                            .into(binding.imgYoutube)
                         onImageClick()
                     }
                 }

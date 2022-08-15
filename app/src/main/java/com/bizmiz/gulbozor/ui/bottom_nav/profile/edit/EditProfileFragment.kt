@@ -60,7 +60,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     isClick = true
                     binding.progress.visibility = View.VISIBLE
                     editProfileViewModel.updateUser(AppCache.getHelper().userId, UserEditRequest(
-                        "string","+998${binding.phoneNumber.text?.trim().toString().replace("\\s".toRegex(), "")}"
+                        "+998${binding.phoneNumber.text?.trim().toString().replace("\\s".toRegex(), "")}"
                         , shopId!!,binding.userSurname.text.trim().toString(),binding.username.text.trim().toString()
                     ))
                 }else{
@@ -267,8 +267,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         editProfileViewModel.userData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS-> {
-                    phoneNumber = it.data?.phoneNumberTest
-                    username = it.data?.username
+                    phoneNumber = it.data?.username
+                    username = it.data?.usernameTest
                     surname = it.data?.surname
                     if (it.data?.shopId!=null){
                         shopId = it.data.shopId
