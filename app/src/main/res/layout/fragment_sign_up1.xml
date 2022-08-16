@@ -23,10 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/gulbazarga_xush_kelibsiz"
             android:textColor="@color/naturalDark"
-            android:textSize="16dp"
-            android:fontFamily="@font/poppins_bold"/>
+            android:textSize="16dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -64,26 +64,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:paddingTop="8dp"
-                    android:gravity="center"
-                    android:text="+998"
                     android:fontFamily="@font/poppins_bold"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:text="+998"
                     android:textColor="@color/naturalDark"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp" />
             </LinearLayout>
+
             <com.santalu.maskedittext.MaskEditText
                 android:id="@+id/edit_text_phone_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/login_phone_num__back"
-                android:hint="(00) 000 00 00"
                 android:fontFamily="@font/poppins_bold"
+                android:hint="(00) 000 00 00"
                 android:inputType="number"
-                android:paddingBottom="5dp"
+                android:paddingStart="8dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="8dp"
-                android:paddingStart="8dp"
+                android:paddingBottom="5dp"
                 android:textColor="@color/naturalDark"
                 android:textSize="18dp"
                 app:met_mask="(##) ### ## ##" />
@@ -110,15 +111,18 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
     <RelativeLayout
-        android:visibility="gone"
-        android:background="#81717171"
         android:id="@+id/progress"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#81717171"
+        android:visibility="gone">
+
         <ProgressBar
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_bar" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

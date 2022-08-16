@@ -1,5 +1,7 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -11,20 +13,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.bizmiz.gulbozor.R
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import com.bizmiz.gulbozor.BuildConfig
-import com.bizmiz.gulbozor.core.app.App
+import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
-import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.FragmentShopsArgs
-import com.bizmiz.gulbozor.ui.bottom_nav.categories.shops_category.FragmentShopsDirections
-import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpActivity
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -81,11 +76,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         }
         binding.imgLogout.setOnClickListener {
-            AppCache.getHelper().token = null
+            // TODO: AlertDialog
+            showDialog()
+            /*AppCache.getHelper().token = null
             AppCache.getHelper().userId = 0
             val intent = Intent(requireActivity(), SignUpActivity::class.java)
             startActivity(intent)
-            requireActivity().finish()
+            requireActivity().finish()*/
         }
         binding.privacyPolicy.setOnClickListener {
             val browserIntent = Intent(
@@ -120,14 +117,31 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         userDataObserve()
         shopIdObserve()
     }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Ishonchingiz komilmi?")
+        builder.setMessage("Bu dasturdan chiqib ketmoqchimisiz?")
+        builder.setPositiveButton("Ha", { dialogInterface: DialogInterface, i: Int ->
+            AppCache.getHelper().token = null
+            AppCache.getHelper().userId = 0
+            /*val intent = Intent(requireActivity(), SignUpActivity::class.java)
+            startActivity(intent)*/
+            requireActivity().finish()
+            //Toast.makeText(requireContext(),"Finish",Toast.LENGTH_SHORT).show()
+        })
+        builder.setNegativeButton("Yo'q", { dialogInterface: DialogInterface, i: Int -> })
+        builder.show()
+    }
+
     private fun userDataObserve() {
         profileViewModel.userData.observe(viewLifecycleOwner, Observer {
             when (it.status) {
-                ResourceState.SUCCESS-> {
+                ResourceState.SUCCESS -> {
                     phoneNumber = it.data?.username
                     username = it.data?.usernameTest
                     surname = it.data?.surname
-                    if (it.data?.shopId!=null){
+                    if (it.data?.shopId != null) {
                         userShopId = it.data.shopId
                     }
               binding.txtNameSurname.text = "${it.data?.usernameTest}  ${it.data?.surname}"
