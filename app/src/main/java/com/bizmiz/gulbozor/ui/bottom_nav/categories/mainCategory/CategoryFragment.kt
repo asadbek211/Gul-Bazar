@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.models.category.ByParentIDItem
+import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentCategoryBinding
@@ -45,13 +46,13 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getByPArentCatId(4)
-        viewModel.getByPArentCatId1(5)
-        viewModel.getByPArentCatId2(6)
-        viewModel.getByPArentCatId3(17)
-        viewModel.getByPArentCatId4(7)
-        viewModel.getByPArentCatId5(29)
-        viewModel.getByPArentCatId6(8)
+        viewModel.getByPArentCatId(Constant.BUCKET_CATEGORY_ID)
+        viewModel.getByPArentCatId1(Constant.HOUSE_PLANTS_CATEGORY_ID)
+        viewModel.getByPArentCatId2(Constant.ARCHA_CATEGORY_ID)
+        viewModel.getByPArentCatId3(Constant.FRUIT_TREE_CATEGORY_ID)
+        viewModel.getByPArentCatId4(Constant.LANDSCAPE_CATEGORY_ID)
+        viewModel.getByPArentCatId5(Constant.DUNG_CATEGORY_ID)
+        viewModel.getByPArentCatId6(Constant.POT_CATEGORY_ID)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -359,7 +360,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             binding.dungRecycler.visibility = View.GONE
             binding.dungTxt.setTextColor(Color.parseColor("#626262"))
             binding.potCatTxt.setTextColor(Color.parseColor("#00B83F"))
-            viewModel.childCat5.observe(viewLifecycleOwner, Observer {
+            viewModel.potCategoryID.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.ERROR -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -376,7 +377,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
             binding.dungRecycler.visibility = View.VISIBLE
             binding.dungTxt.setTextColor(Color.parseColor("#00B83F"))
             binding.potCatTxt.setTextColor(Color.parseColor("#626262"))
-            viewModel.childCat6.observe(viewLifecycleOwner, Observer {
+            viewModel.dungCategoryID.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.ERROR -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -401,7 +402,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 binding.fruitTreeTxt.setTextColor(Color.parseColor("#626262"))
                 binding.sceneTreeTxt.setTextColor(Color.parseColor("#00B83F"))
                 binding.archalarTreeTxt.setTextColor(Color.parseColor("#626262"))
-                viewModel.childCat4.observe(viewLifecycleOwner, Observer {
+                viewModel.landScapeCategoryID.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
                         ResourceState.SUCCESS -> {
                             categoryAdapter5.categoryList = it.data!!
@@ -423,7 +424,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 binding.fruitTreeTxt.setTextColor(Color.parseColor("#626262"))
                 binding.sceneTreeTxt.setTextColor(Color.parseColor("#626262"))
                 binding.archalarTreeTxt.setTextColor(Color.parseColor("#00B83F"))
-                viewModel.childCat3.observe(viewLifecycleOwner, Observer {
+                viewModel.archaCategoryID.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
                         ResourceState.SUCCESS -> {
                             categoryAdapter4.categoryList = it.data!!
@@ -444,7 +445,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
                 binding.fruitTreeTxt.setTextColor(Color.parseColor("#00B83F"))
                 binding.sceneTreeTxt.setTextColor(Color.parseColor("#626262"))
                 binding.archalarTreeTxt.setTextColor(Color.parseColor("#626262"))
-                viewModel.childCat2.observe(viewLifecycleOwner, Observer {
+                viewModel.fruitCategoryID.observe(viewLifecycleOwner, Observer {
                     when (it.status) {
                         ResourceState.SUCCESS -> {
                             categoryAdapter3.categoryList = it.data!!

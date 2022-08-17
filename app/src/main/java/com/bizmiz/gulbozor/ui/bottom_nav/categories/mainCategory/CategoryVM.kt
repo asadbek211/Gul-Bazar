@@ -18,23 +18,23 @@ class CategoryVM(private val networkHelper: NetworkHelper) : ViewModel() {
         get() = getChildCat1
 
     private val getChildCat2: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
-    val childCat2: LiveData<Resource<List<ByParentIDItem>>>
+    val archaCategoryID: LiveData<Resource<List<ByParentIDItem>>>
         get() = getChildCat2
 
     private val getChildCat3: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
-    val childCat3: LiveData<Resource<List<ByParentIDItem>>>
+    val fruitCategoryID: LiveData<Resource<List<ByParentIDItem>>>
         get() = getChildCat3
 
     private val getChildCat4: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
-    val childCat4: LiveData<Resource<List<ByParentIDItem>>>
+    val landScapeCategoryID: LiveData<Resource<List<ByParentIDItem>>>
         get() = getChildCat4
 
     private val getChildCat5: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
-    val childCat5: LiveData<Resource<List<ByParentIDItem>>>
+    val dungCategoryID: LiveData<Resource<List<ByParentIDItem>>>
         get() = getChildCat5
 
     private val getChildCat6: MutableLiveData<Resource<List<ByParentIDItem>>> = MutableLiveData()
-    val childCat6: LiveData<Resource<List<ByParentIDItem>>>
+    val potCategoryID: LiveData<Resource<List<ByParentIDItem>>>
         get() = getChildCat6
 
     fun getByPArentCatId(id: Int) {
