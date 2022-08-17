@@ -35,6 +35,7 @@ import java.io.IOException
 class NetworkHelper(
     private val apiClient: Retrofit
 ) {
+    val token = "Bearer ${AppCache.getHelper().token}"
     fun addFlowerImage(
         img1: MultipartBody.Part?,
         img2: MultipartBody.Part?,
@@ -48,7 +49,7 @@ class NetworkHelper(
         onFailure: (msg: String?) -> Unit
     ) {
         val call = apiClient.create(ApiInterface::class.java)
-            .addFlowerImage(img1, img2, img3, img4, img5, img6, img7, img8)
+            .addFlowerImage(token,img1, img2, img3, img4, img5, img6, img7, img8)
         call.enqueue(object : Callback<ImageResponseData> {
             override fun onResponse(
                 call: Call<ImageResponseData>?,
@@ -78,7 +79,7 @@ class NetworkHelper(
         onSuccess: (flowerListPage: GetAnnounceByIndexPage) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getAnnounce(page)
+        val call = apiClient.create(ApiInterface::class.java).getAnnounce(token,page)
         call.enqueue(object : Callback<GetAnnounceByIndexPage> {
             override fun onResponse(
                 call: Call<GetAnnounceByIndexPage>?,
@@ -102,7 +103,7 @@ class NetworkHelper(
         onSuccess: (flowerList: ByCategoryID) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).announceOfCustomers(page)
+        val call = apiClient.create(ApiInterface::class.java).announceOfCustomers(token,page)
         call.enqueue(object : Callback<ByCategoryID> {
             override fun onResponse(
                 call: Call<ByCategoryID>?,
@@ -125,7 +126,7 @@ class NetworkHelper(
         onSuccess: (flowerList: ByCategoryID) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getMyAnnounce(sellerId,page)
+        val call = apiClient.create(ApiInterface::class.java).getMyAnnounce(token,sellerId,page)
         call.enqueue(object : Callback<ByCategoryID> {
             override fun onResponse(
                 call: Call<ByCategoryID>?,
@@ -147,7 +148,7 @@ class NetworkHelper(
         onSuccess: (flowerList: YouTubeLinkPage) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getVideoLinkPage(page)
+        val call = apiClient.create(ApiInterface::class.java).getVideoLinkPage(token,page)
         call.enqueue(object : Callback<YouTubeLinkPage> {
             override fun onResponse(
                 call: Call<YouTubeLinkPage>?,
@@ -173,7 +174,7 @@ class NetworkHelper(
     ) {
         val call =
             apiClient.create(ApiInterface::class.java)
-                .getDepartmentId(departmentId = departmentId, page = page)// TODO: change the places
+                .getDepartmentId(token,departmentId = departmentId, page = page)// TODO: change the places
         call.enqueue(object : Callback<ByCategoryID> {
             override fun onResponse(call: Call<ByCategoryID>?, response: Response<ByCategoryID>?) {
                 if (response != null) {
@@ -196,7 +197,7 @@ class NetworkHelper(
     ) {
         val call =
             apiClient.create(ApiInterface::class.java)
-                .getOneCategoryPosts(categoryId = categoryId, page = page)// TODO: change the places
+                .getOneCategoryPosts(token,categoryId = categoryId, page = page)// TODO: change the places
         call.enqueue(object : Callback<ByCategoryID> {
             override fun onResponse(call: Call<ByCategoryID>?, response: Response<ByCategoryID>?) {
                 if (response != null) {
@@ -218,7 +219,7 @@ class NetworkHelper(
         onFailure: (msg: String?) -> Unit
     ) {
         val call =
-            apiClient.create(ApiInterface::class.java).getOneShopPosts(page = page, shopId = shopId)
+            apiClient.create(ApiInterface::class.java).getOneShopPosts(token,page = page, shopId = shopId)
         call.enqueue(object : Callback<ByCategoryID> {
             override fun onResponse(call: Call<ByCategoryID>?, response: Response<ByCategoryID>?) {
                 if (response != null) {
@@ -239,7 +240,7 @@ class NetworkHelper(
         onFailure: (msg: String?) -> Unit
     ) {
         val call =
-            apiClient.create(ApiInterface::class.java).getShopPhoneNumber(shopId = id)
+            apiClient.create(ApiInterface::class.java).getShopPhoneNumber(token,shopId = id)
         call.enqueue(object : Callback<ShopPhoneNumber> {
             override fun onResponse(
                 call: Call<ShopPhoneNumber>?,
@@ -266,7 +267,7 @@ class NetworkHelper(
         Log.d("url", announceRequestDataResponse.image2.toString())
         Log.d("url", announceRequestDataResponse.image3.toString())
         val call =
-            apiClient.create(ApiInterface::class.java).setAnnounce(announceRequestDataResponse)
+            apiClient.create(ApiInterface::class.java).setAnnounce(token,announceRequestDataResponse)
         call.enqueue(object : Callback<AnnounceBaseResponse> {
             override fun onResponse(
                 call: Call<AnnounceBaseResponse>?,
@@ -292,7 +293,7 @@ class NetworkHelper(
         onSuccess: (regionData: RegionData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getRegion()
+        val call = apiClient.create(ApiInterface::class.java).getRegion(token)
         call.enqueue(object : Callback<RegionData> {
             override fun onResponse(call: Call<RegionData>?, response: Response<RegionData>?) {
                 if (response != null) {
@@ -312,7 +313,7 @@ class NetworkHelper(
         onSuccess: (cityData: ArrayList<CityDataItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getCity()
+        val call = apiClient.create(ApiInterface::class.java).getCity(token)
         val list: ArrayList<CityDataItem> = arrayListOf()
         call.enqueue(object : Callback<CityData> {
             override fun onResponse(call: Call<CityData>?, response: Response<CityData>?) {
@@ -337,7 +338,7 @@ class NetworkHelper(
         onSuccess: (typeData: FlowerTypeData) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getFlowerType()
+        val call = apiClient.create(ApiInterface::class.java).getFlowerType(token)
         call.enqueue(object : Callback<FlowerTypeData> {
             override fun onResponse(
                 call: Call<FlowerTypeData>?,
@@ -359,7 +360,7 @@ class NetworkHelper(
         onSuccess: (typeData: List<ShopsListItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getShopsList()
+        val call = apiClient.create(ApiInterface::class.java).getShopsList(token)
         call.enqueue(object : Callback<List<ShopsListItem>> {
             override fun onResponse(
                 call: Call<List<ShopsListItem>>?,
@@ -382,7 +383,7 @@ class NetworkHelper(
         onSuccess: (typeData: FlowerTypeDataItem) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getFlowerTypeById(id)
+        val call = apiClient.create(ApiInterface::class.java).getFlowerTypeById(token,id)
         call.enqueue(object : Callback<BaseResponse<FlowerTypeDataItem>> {
             override fun onResponse(
                 call: Call<BaseResponse<FlowerTypeDataItem>>?,
@@ -406,7 +407,7 @@ class NetworkHelper(
         onSuccess: (typeData: YouTubeLinkID?) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getVideoLinkById(id)
+        val call = apiClient.create(ApiInterface::class.java).getVideoLinkById(token,id)
         call.enqueue(object : Callback<YouTubeLinkID> {
             override fun onResponse(
                 call: Call<YouTubeLinkID>?,
@@ -432,7 +433,7 @@ class NetworkHelper(
         onSuccess: (typeData: ReklamaImages?) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getReklamaId(id)
+        val call = apiClient.create(ApiInterface::class.java).getReklamaId(token,id)
         call.enqueue(object : Callback<ReklamaImages> {
             override fun onResponse(
                 call: Call<ReklamaImages>?,
@@ -458,7 +459,7 @@ class NetworkHelper(
         onSuccess: (typeData: List<ByParentIDItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(id)
+        val call = apiClient.create(ApiInterface::class.java).getCategoryParentByID(token,id)
         call.enqueue(object : Callback<List<ByParentIDItem>> {
             override fun onResponse(
                 call: Call<List<ByParentIDItem>>?,
@@ -484,7 +485,7 @@ class NetworkHelper(
         onSuccess: (createShopRequest: CreateShopRequest) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).createShop(createShopRequest)
+        val call = apiClient.create(ApiInterface::class.java).createShop(token,createShopRequest)
         call.enqueue(object : Callback<BaseResponse<CreateShopRequest>> {
             override fun onResponse(
                 call: Call<BaseResponse<CreateShopRequest>>?,
@@ -511,7 +512,7 @@ class NetworkHelper(
         onSuccess: (data: Any) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).deleteAnnounceById(announceId)
+        val call = apiClient.create(ApiInterface::class.java).deleteAnnounceById(token,announceId)
         call.enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>?, response: Response<Any>?) {
                 if (response != null) {
@@ -536,7 +537,7 @@ class NetworkHelper(
         onSuccess: (data: Any) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).updateShopId(sellerId, userEditRequest)
+        val call = apiClient.create(ApiInterface::class.java).updateShopId(token,sellerId, userEditRequest)
         call.enqueue(object : Callback<Any> {
             override fun onResponse(
                 call: Call<Any>?,
@@ -594,7 +595,7 @@ class NetworkHelper(
         onSuccess: (userData: UserDataResponse) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getUserData(userId)
+        val call = apiClient.create(ApiInterface::class.java).getUserData(token,userId)
         call.enqueue(object : Callback<BaseResponse<UserDataResponse>> {
             override fun onResponse(
                 call: Call<BaseResponse<UserDataResponse>>?,
@@ -681,7 +682,7 @@ class NetworkHelper(
         onSuccess: (shopId: Int) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getShopsList()
+        val call = apiClient.create(ApiInterface::class.java).getShopsList(token)
         call.enqueue(object : Callback<List<ShopsListItem>> {
             override fun onResponse(
                 call: Call<List<ShopsListItem>>?,

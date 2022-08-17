@@ -19,16 +19,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OneShopFragment : Fragment() {
     val args: OneShopFragmentArgs by navArgs()
-
-
     private val oneShopVM: OnShopVM by viewModel()
     private lateinit var adapter: OneShopAdapter
-
     private var _binding: FragmentOneShopBinding? = null
     private val binding get() = _binding!!
-
     private var isLastPage: Boolean = false
-
     private var page: Int = 0
     private var totalPage: Int = 0
 
@@ -41,7 +36,6 @@ class OneShopFragment : Fragment() {
             oneShopVM.getShopNumber(args.position.toInt())
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -108,7 +102,6 @@ class OneShopFragment : Fragment() {
         announceObserve()
 
         intent()
-        //onBackPressed()
     }
 
     private fun intent() {
@@ -145,7 +138,6 @@ class OneShopFragment : Fragment() {
             }
         }
     }
-
 
     private fun announceObserve() {
         if (args.position == "customer") {
@@ -218,8 +210,5 @@ class OneShopFragment : Fragment() {
     private fun windowStatus() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireActivity(), R.color.white)
-
     }
-
-
 }

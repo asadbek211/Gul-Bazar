@@ -20,10 +20,10 @@ import java.text.SimpleDateFormat
 
 class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     var flowersList: ArrayList<AnnounceResponseData> = arrayListOf()
-    fun addData(response: List<AnnounceResponseData>) {
-        this.flowersList.addAll(response)
-        notifyItemRangeInserted(this.flowersList.size - response.size, response.size)
-    }
+       set(value) {
+           field = value
+           notifyDataSetChanged()
+       }
 
     fun clearAdapter() {
         flowersList.clear()
@@ -63,7 +63,7 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
             val number = df.format(flowerListResponse.price)
             binding.flowerPrice.text = number.replace(".", " ").replace(",", " ")
             binding.cardView.setOnClickListener {
-                onclick.invoke(flowerListResponse)
+                onclick.invoke(position,flowerListResponse)
             }
         }
 
@@ -93,24 +93,13 @@ class FlowersAdapter : RecyclerView.Adapter<FlowersAdapter.Myholder>() {
     }
 
     fun deleteItemById(id: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            flowersList.removeIf {
-                it.id == id
-            }
-        }
-        flowersList.forEach {
-
-      }
+            flowersList.removeAt(id)
+            notifyDataSetChanged()
   }
-    private var onclick: (flowerListResponse: AnnounceResponseData) -> Unit = {}
-    fun onClickListener(onclick: (flowerListResponse: AnnounceResponseData) -> Unit) {
+    private var onclick: (position:Int,flowerListResponse: AnnounceResponseData) -> Unit = {position, flowerListResponse ->  }
+    fun onClickListener(onclick: (position:Int,flowerListResponse: AnnounceResponseData) -> Unit) {
         this.onclick = onclick
     }
-    //"2022-07-21"
-    //"yyyy-MM-dd'T'HH:mm:ss"
-    //"HH:mm"
-    //"yyyy-MM-dd HH:mm"
-    // postData = "Bugun ${String.format("%s", dateString)}"
     private fun dataSettings(data:Long?):String{
         var postData = ""
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")

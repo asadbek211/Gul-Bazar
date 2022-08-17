@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.ui.bottom_nav.home
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -18,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.app.App
+import com.bizmiz.gulbozor.core.caches.AppCache
+import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
@@ -54,20 +58,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         announceObserve()
         onlyData()
         scrollSwipe()
-
-        //onScrolled()
-
-        flowersAdapter.onClickListener {
-            if (it.department != null) {
+        flowersAdapter.onClickListener {position,data->
+            if (data.department != null) {
                 val bundle = bundleOf(
-                    "flowerData" to it,
+                    "flowerData" to data,
                     "desId" to 0,
+                    "position" to position
                 )
-                destination(it.department, bundle)
+                destination(data.department, bundle)
             }
         }
-//        viewLifecycleOwner.lifecycle.addObserver(binding.youtubePlayerView)
-
+        if (AppCache.getHelper().deletePosition!=null){
+            currentPage = 0
+            homeViewModel.getAnnounce(currentPage)
+            isLastPage = false
+            AppCache.getHelper().deletePosition = null
+        }
     }
 
     private fun onScrolled() {
@@ -112,12 +118,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 if (!isLastPage && currentPage + 1 < totalPage) {
                     binding.progressBarHome.visibility = View.VISIBLE
                     homeViewModel.getAnnounce(currentPage + 1)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                }
+                else {
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "Boshqa elonlar mavjud emas",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                     binding.progressBarHome.visibility = View.GONE
                 }
 
@@ -289,7 +296,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         currentPage = it.data.pageable.pageNumber
                         totalPage = it.data.totalPages
                     }
-                    flowersAdapter.addData(it.data!!.content)
+                    if (currentPage==0){
+                        flowersAdapter.flowersList = it.data!!.content as ArrayList<AnnounceResponseData>
+                    }else{
+                        flowersAdapter.flowersList.addAll(it.data!!.content)
+                    }
                     binding.progressBarHome.visibility = View.GONE
                     if (it.data.empty) {
                         isLastPage = true

@@ -9,6 +9,7 @@ public class AppCache {
     private final static String USER_TOKEN = "token";
     private final static String SHOP_ID = "shopId";
     private final static String USER_ID = "id";
+    private final static String DELETE_POSITION = "position";
     private static AppCache appCache;
     private SharedPreferences preferences;
 
@@ -41,8 +42,12 @@ public class AppCache {
     public int getUserId() {
         return preferences.getInt(USER_ID, 0);
     }
+
     public int getShopId() {
         return preferences.getInt(SHOP_ID, 0);
+    }
+    public String getDeletePosition() {
+        return preferences.getString(DELETE_POSITION, null);
     }
     public void setUserId(int id) {
         preferences.edit().putInt(USER_ID, id).apply();
@@ -52,7 +57,10 @@ public class AppCache {
         preferences.edit().putInt(SHOP_ID, id).apply();
 
     }
+    public void setDeletePosition(String position) {
+        preferences.edit().putString(DELETE_POSITION, position).apply();
 
+    }
     public String getPhoneNumber() {
         return preferences.getString("phone", "1234567");
     }

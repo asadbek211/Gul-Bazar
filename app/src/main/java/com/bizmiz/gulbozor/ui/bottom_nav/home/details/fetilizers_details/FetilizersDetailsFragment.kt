@@ -1,5 +1,6 @@
 package com.bizmiz.gulbozor.ui.bottom_nav.home.details.fetilizers_details
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,8 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bizmiz.gulbozor.R
+import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentFetilizersDetailsBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.payment.PaymentActivity
@@ -87,33 +90,52 @@ class FetilizersDetailsFragment : Fragment(R.layout.fragment_fetilizers_details)
                 navController.popBackStack()
             }
         }
-        binding.ivFavourite.setOnClickListener {
-            if (isFavourite) {
-                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                isFavourite = false
-            } else {
-                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
-                isFavourite = true
-            }
+//        binding.ivFavourite.setOnClickListener {
+//            if (isFavourite) {
+//                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+//                isFavourite = false
+//            } else {
+//                binding.ivFavourite.setImageResource(R.drawable.ic_baseline_favorite_on_purple)
+//                isFavourite = true
+//            }
+//        }
+        if (desId!=1 && flowerData.sellerId==AppCache.getHelper().userId){
+            binding.btnRemove.visibility = View.VISIBLE
+            binding.btnRemove.isEnabled = true
         }
         binding.btnPhone.setOnClickListener {
             val phone = flowerData.phoneNumber.toString()
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
             startActivity(intent)
         }
-        binding.btnAds.setOnClickListener {
-            val intent = Intent(requireActivity(), PaymentActivity::class.java)
-            intent.putExtra("flowerData", flowerData)
-            startActivity(intent)
+        binding.btnRemove.setOnClickListener {
+            if (!networkCheck(requireContext())){
+                Toast.makeText(requireActivity(), "Internet aloqasi yo'q", Toast.LENGTH_SHORT).show()
+            }else{
+                val message = AlertDialog.Builder(requireActivity())
+                message.setTitle("Gul Bazar")
+                    .setMessage("E'loningizni o'chirmoqchimisiz?")
+                    .setCancelable(false)
+                    .setPositiveButton("Ha") { message, _ ->
+                        flowerData.id?.let { it1 -> fetilizersDetailsViewModel.deleteAnnounceById(it1) }
+                    }.setNegativeButton("Yo'q"){message,_->
+                        message.dismiss()
+                    }.create().show()
+            }
         }
-        binding.btnEdit.setOnClickListener {
-            val bundle = bundleOf(
-                "data" to flowerData
-            )
-            val navController =
-                Navigation.findNavController(requireActivity(), R.id.mainContainer)
-            navController.navigate(R.id.action_fetilizersDetails_to_editFertilizers, bundle)
-        }
+//        binding.btnAds.setOnClickListener {
+//            val intent = Intent(requireActivity(), PaymentActivity::class.java)
+//            intent.putExtra("flowerData", flowerData)
+//            startActivity(intent)
+//        }
+//        binding.btnEdit.setOnClickListener {
+//            val bundle = bundleOf(
+//                "data" to flowerData
+//            )
+//            val navController =
+//                Navigation.findNavController(requireActivity(), R.id.mainContainer)
+//            navController.navigate(R.id.action_fetilizersDetails_to_editFertilizers, bundle)
+//        }
         binding.flowerTitle.text = flowerData.title
         binding.tvDescription.text = flowerData.description
         val df = DecimalFormat("#,###.##")
@@ -121,6 +143,7 @@ class FetilizersDetailsFragment : Fragment(R.layout.fragment_fetilizers_details)
         binding.flowerPrice.text = number.toString()
         binding.flowerWidth.text = "${flowerData.weight} kg"
         flowerTypeObserve()
+        deleteAnnounceObserve()
     }
 
     private fun flowerTypeObserve() {
@@ -128,6 +151,22 @@ class FetilizersDetailsFragment : Fragment(R.layout.fragment_fetilizers_details)
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     binding.fetilizerType.text = it.data?.name
+                }
+                ResourceState.ERROR -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+    private fun deleteAnnounceObserve() {
+        fetilizersDetailsViewModel.deleteAnnounceResult.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ResourceState.SUCCESS -> {
+                    val position = requireArguments().getInt("position")
+                    AppCache.getHelper().deletePosition = position.toString()
+                    val navController =
+                        Navigation.findNavController(requireActivity(), R.id.mainContainer)
+                    navController.popBackStack()
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

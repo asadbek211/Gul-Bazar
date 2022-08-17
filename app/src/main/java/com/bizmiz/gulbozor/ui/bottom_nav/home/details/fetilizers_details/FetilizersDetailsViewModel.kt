@@ -11,12 +11,21 @@ class FetilizersDetailsViewModel(private val networkHelper: NetworkHelper) : Vie
     private val flowerTypeData: MutableLiveData<Resource<FlowerTypeDataItem>> = MutableLiveData()
     val flowerType: LiveData<Resource<FlowerTypeDataItem>>
         get() = flowerTypeData
-
+    private val deleteAnnounce: MutableLiveData<Resource<Any>> = MutableLiveData()
+    val deleteAnnounceResult: LiveData<Resource<Any>>
+        get() = deleteAnnounce
     fun getFlowerType(id:Int) {
         networkHelper.getFlowerTypeById(id,{
             flowerTypeData.value = Resource.success(it)
         }, {
             flowerTypeData.value = Resource.error(it)
+        })
+    }
+    fun deleteAnnounceById(announceId:Int) {
+        networkHelper.deleteAnnounceById(announceId, {
+            deleteAnnounce.value = Resource.success(it)
+        }, {
+            deleteAnnounce.value = Resource.error(it)
         })
     }
 }
