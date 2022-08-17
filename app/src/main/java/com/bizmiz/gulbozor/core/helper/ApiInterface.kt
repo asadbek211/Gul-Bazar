@@ -23,46 +23,54 @@ interface ApiInterface {
 
     @GET("/announce/indexPage?")
     fun getAnnounce(
+        @Header("Authorization") token: String,
         @Query("page") page: Int
     ): Call<GetAnnounceByIndexPage>
 
     @GET("videoLink?")
     fun getVideoLinkPage(
+        @Header("Authorization") token: String,
         @Query("page") page: Int
     ): Call<YouTubeLinkPage>
 
     @GET("announce/announceOfCustomer?")
     fun announceOfCustomers(
+        @Header("Authorization") token: String,
         @Query("page") page: Int
     ): Call<ByCategoryID>
 
     @GET("/announce/myAnnounce/{sellerId}?")
     fun getMyAnnounce(
+        @Header("Authorization") token: String,
         @Path("sellerId")sellerId:Int,
         @Query("page") page: Int
     ): Call<ByCategoryID>
 
     @Headers("Content-Type:application/json")
-    @DELETE("/announce/delete/{id}")
+    @DELETE("/announce/delete/id/{id}")
     fun deleteAnnounceById(
+        @Header("Authorization") token: String,
         @Path("id") announceId: Int
     ): Call<Any>
 
     @Headers("Content-Type:application/json")
     @POST("/announce")
     fun setAnnounce(
+        @Header("Authorization") token: String,
         @Body announceRequestData: AnnounceRequestData
     ): Call<AnnounceBaseResponse>
 
     @Headers("Content-Type:application/json")
     @POST("/shop")
     fun createShop(
+        @Header("Authorization") token: String,
         @Body createShopRequest: CreateShopRequest
     ): Call<BaseResponse<CreateShopRequest>>
 
     @Headers("Content-Type:application/json")
     @PUT("/user/{id}")
     fun updateShopId(
+        @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body userEditRequest: UserEditRequest
     ): Call<Any>
@@ -70,6 +78,7 @@ interface ApiInterface {
     @Multipart
     @POST("/attachment/uploadImage")
     fun addFlowerImage(
+        @Header("Authorization") token: String,
         @Part image1: MultipartBody.Part?,
         @Part image2: MultipartBody.Part?,
         @Part image3: MultipartBody.Part?,
@@ -81,46 +90,59 @@ interface ApiInterface {
     ): Call<ImageResponseData>
     @GET("/region")
     fun getRegion(
+        @Header("Authorization") token: String,
     ): Call<RegionData>
 
     @GET("/city")
     fun getCity(
+        @Header("Authorization") token: String,
     ): Call<CityData>
 
     @GET("/category/allParentCategory")
     fun getFlowerType(
+        @Header("Authorization") token: String,
     ): Call<FlowerTypeData>
 
     @GET("/shop")
-    fun getShopsList(): Call<List<ShopsListItem>>
+    fun getShopsList(
+        @Header("Authorization") token: String,
+    ): Call<List<ShopsListItem>>
 
 
     @GET("/category/byParentCategoryId/{parentId}")
-    fun getCategoryParentByID(@Path("parentId") parentID: Int): Call<List<ByParentIDItem>>
+    fun getCategoryParentByID(
+        @Header("Authorization") token: String,
+        @Path("parentId") parentID: Int): Call<List<ByParentIDItem>>
 
     @GET("/category/{id}")
     fun getFlowerTypeById(
+        @Header("Authorization") token: String,
         @Path("id")id:Int
     ): Call<BaseResponse<FlowerTypeDataItem>>
 
     @GET("videoLink/{id}")
-    fun getVideoLinkById(@Path("id") id: Int): Call<YouTubeLinkID>
+    fun getVideoLinkById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int): Call<YouTubeLinkID>
 
 
     @GET("/announce/byShop/{shopId}?")
     fun getOneShopPosts(
+        @Header("Authorization") token: String,
         @Path("shopId") shopId: Int,
         @Query("page") page: Int
     ): Call<ByCategoryID>
 
     @GET("announce/byCategory/{categoryId}?")
     fun getOneCategoryPosts(
+        @Header("Authorization") token: String,
         @Path("categoryId") categoryId: Int,
         @Query("page") page: Int
     ): Call<ByCategoryID>
 
     @GET("/announce/byDepartment/{departmentId}")
     fun getDepartmentId(
+        @Header("Authorization") token: String,
         @Path("departmentId") departmentId: Int,
         @Query("page") page: Int
     ): Call<ByCategoryID>
@@ -128,11 +150,13 @@ interface ApiInterface {
 
     @GET("/shop/{id}")
     fun getShopPhoneNumber(
+        @Header("Authorization") token: String,
         @Path("id") shopId: Int
     ): Call<ShopPhoneNumber>
 
     @GET("/user/{userId}")
     fun getUserData(
+        @Header("Authorization") token: String,
         @Path("userId") userId: Int
     ): Call<BaseResponse<UserDataResponse>>
 
@@ -143,7 +167,9 @@ interface ApiInterface {
     ): Call<SmsTokenResponse>
 
     @GET("/reklama/byPlaceNumber/{placeNumber}")
-    fun getReklamaId(@Path("placeNumber") placeNumber: Int): Call<ReklamaImages>
+    fun getReklamaId(
+        @Header("Authorization") token: String,
+        @Path("placeNumber") placeNumber: Int): Call<ReklamaImages>
 
     @Headers("Content-Type:application/json")
     @POST("/auth/checkPhoneNumber")

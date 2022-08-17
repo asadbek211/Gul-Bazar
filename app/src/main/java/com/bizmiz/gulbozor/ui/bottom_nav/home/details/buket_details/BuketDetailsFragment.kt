@@ -24,6 +24,7 @@ import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentBuketDetailsBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.home.FlowersAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -57,7 +58,7 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
                 WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
             )
         }
-        if (flowerData.sellerId==AppCache.getHelper().userId){
+        if (desId!=1 && flowerData.sellerId==AppCache.getHelper().userId){
             binding.btnRemove.visibility = View.VISIBLE
             binding.btnRemove.isEnabled = true
         }
@@ -71,7 +72,6 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
                     .setCancelable(false)
                     .setPositiveButton("Ha") { message, _ ->
                         flowerData.id?.let { it1 -> buketDetailsViewModel.deleteAnnounceById(it1) }
-//                        binding.loading.visibility = View.VISIBLE
                     }.setNegativeButton("Yo'q"){message,_->
                         message.dismiss()
                     }.create().show()
@@ -129,6 +129,8 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
             val phone = flowerData.phoneNumber.toString()
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
             startActivity(intent)
+//            val adapter = requireArguments().get("adapter") as FlowersAdapter
+//            adapter.deleteItemById(0)
         }
 //        binding.btnAds.setOnClickListener {
 //            val intent = Intent(requireActivity(), PaymentActivity::class.java)
@@ -191,7 +193,11 @@ class BuketDetailsFragment : Fragment(R.layout.fragment_buket_details) {
         buketDetailsViewModel.deleteAnnounceResult.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 ResourceState.SUCCESS -> {
-
+                    val position = requireArguments().getInt("position")
+                     AppCache.getHelper().deletePosition = position.toString()
+                    val navController =
+                        Navigation.findNavController(requireActivity(), R.id.mainContainer)
+                    navController.popBackStack()
                 }
                 ResourceState.ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
