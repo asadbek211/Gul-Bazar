@@ -15,6 +15,8 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.app.App
@@ -23,11 +25,8 @@ import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
-import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -47,7 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce(currentPage)
-        homeViewModel.getVideoLInkByID(1)
+        homeViewModel.getVideoLInkByID(2)
         homeViewModel.getReklamaImages(1)
     }
 
@@ -59,7 +58,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         announceObserve()
         onlyData()
         scrollSwipe()
-        flowersAdapter.notifyDataSetChanged()
         flowersAdapter.onClickListener {position,data->
             if (data.department != null) {
                 val bundle = bundleOf(
@@ -76,6 +74,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             isLastPage = false
             AppCache.getHelper().deletePosition = null
         }
+    }
+
+    private fun onScrolled() {
+
+        val mLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.homeRecyclerview.layoutManager = mLayoutManager
+        var loading = true
+        var pastVisibleItems = 0
+        var visibleItemCount: Int
+        var totalItemCount: Int
+
+        binding.homeRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = mLayoutManager.childCount
+                    totalItemCount = mLayoutManager.itemCount
+                    val positions = mLayoutManager.findFirstVisibleItemPositions(null)
+                    if (positions != null && positions.size > 0) pastVisibleItems = positions[0]
+
+                    if (loading) {
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                            loading = false
+                            Toast.makeText(requireContext(), "Paging", Toast.LENGTH_SHORT).show()
+                            loading = true
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun scrollSwipe() {
