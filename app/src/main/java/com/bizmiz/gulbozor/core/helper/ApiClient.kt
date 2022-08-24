@@ -71,7 +71,7 @@ class ApiClient {
                 val request = chain.request()
                 val builder: Request.Builder = request.newBuilder()
                 builder
-                    .addHeader("Authorization", "Token ${AppCache.getHelper().token}")
+                    .addHeader("Authorization", "Bearer ${AppCache.getHelper().token}")
                 val response = chain.proceed(builder.build())
                 response
             }

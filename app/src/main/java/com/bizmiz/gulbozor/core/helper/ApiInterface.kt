@@ -93,9 +93,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
     ): Call<RegionData>
 
-    @GET("/city")
+    @GET("/city/byRegionId/{regionId}")
     fun getCity(
         @Header("Authorization") token: String,
+        @Path("regionId")regionId:Int
     ): Call<CityData>
 
     @GET("/category/allParentCategory")
