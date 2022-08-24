@@ -313,17 +313,11 @@ class NetworkHelper(
         onSuccess: (cityData: ArrayList<CityDataItem>) -> Unit,
         onFailure: (msg: String?) -> Unit
     ) {
-        val call = apiClient.create(ApiInterface::class.java).getCity(token)
-        val list: ArrayList<CityDataItem> = arrayListOf()
+        val call = apiClient.create(ApiInterface::class.java).getCity(token,id)
         call.enqueue(object : Callback<CityData> {
             override fun onResponse(call: Call<CityData>?, response: Response<CityData>?) {
                 if (response != null) {
-                    response.body()?.forEach {
-                        if (it.regionId == id) {
-                            list.add(it)
-                        }
-                    }
-                    response.body()?.let { onSuccess.invoke(list) }
+                    response.body()?.let { onSuccess.invoke(response.body()!!) }
                 }
             }
 
