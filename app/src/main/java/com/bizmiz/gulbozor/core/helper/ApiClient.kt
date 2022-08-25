@@ -5,9 +5,9 @@ import com.bizmiz.gulbozor.core.app.App
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.Constant
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.core.RegistrationService
-import com.chuckerteam.chucker.api.ChuckerCollector
+/*import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.chuckerteam.chucker.api.RetentionManager
+import com.chuckerteam.chucker.api.RetentionManager*/
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -37,7 +37,7 @@ class ApiClient {
                     .connectTimeout(15, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(15, TimeUnit.SECONDS)
-                    .addInterceptor(getChuckerInterception(getChuckerCollector()))
+                    //.addInterceptor(getChuckerInterception(getChuckerCollector()))
                     .addInterceptor(interceptor)
                     .addInterceptor(interceptor(App.instance))
                     .build()
@@ -54,15 +54,15 @@ class ApiClient {
         fun getRegisterService(): RegistrationService {
             return getClient().create(RegistrationService::class.java)
         }
-        private fun getChuckerCollector(): ChuckerCollector {
+        /* private fun getChuckerCollector(): ChuckerCollector {
 
-            return ChuckerCollector(
-                context = App.instance!!,
-                showNotification = true,
-                retentionPeriod = RetentionManager.Period.FOREVER
-            )
+             return ChuckerCollector(
+                 context = App.instance!!,
+                 showNotification = true,
+                 retentionPeriod = RetentionManager.Period.FOREVER
+             )
 
-        }
+         }*/
 
         private fun interceptor(
             context: Context?,
@@ -77,14 +77,14 @@ class ApiClient {
             }
         }
 
-        private fun getChuckerInterception(chuckerCollector: ChuckerCollector): ChuckerInterceptor {
+        /*private fun getChuckerInterception(chuckerCollector: ChuckerCollector): ChuckerInterceptor {
 
             return ChuckerInterceptor.Builder(App.instance!!)
                 .collector(getChuckerCollector())
                 .maxContentLength(250_000L)
                 .alwaysReadResponseBody(true)
                 .build()
-        }
+        }*/
 
     }
 

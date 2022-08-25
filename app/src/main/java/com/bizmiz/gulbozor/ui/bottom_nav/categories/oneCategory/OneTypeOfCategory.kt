@@ -48,7 +48,8 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
         binding.categoryRecyclerView.adapter = categoryAdapter
 
         binding.categoryU.setOnClickListener(View.OnClickListener {
-            //findNavController().navigate(R.id.oneType_to_categories)
+            Toast.makeText(requireContext(), "Tez kunda ishga tushiriladi", Toast.LENGTH_SHORT)
+                .show()
         })
         val category = args.categoryName
         binding.oneCatTitle.text = category

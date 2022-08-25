@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     //chucker
-    implementation 'com.github.chuckerteam.chucker:library:3.5.2'
+    //implementation 'com.github.chuckerteam.chucker:library:3.5.2'
 
     //circleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
