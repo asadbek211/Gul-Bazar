@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
@@ -15,11 +16,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bizmiz.gulbozor.BuildConfig
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentProfileBinding
+import com.bizmiz.gulbozor.ui.bottom_nav.add.AddAnnounceActivity
+import com.bizmiz.gulbozor.ui.start.authentication.signUp.SignUpActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -41,48 +46,55 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
         }
         binding.editProfile.setOnClickListener {
-            val navController =
-                Navigation.findNavController(
-                    requireActivity(),
-                    R.id.mainContainer
-                )
-            navController.navigate(R.id.bottomNavFragment_to_editProfile)
-        }
-        binding.myAnnounce.setOnClickListener {
-            val navController =
-                Navigation.findNavController(
-                    requireActivity(),
-                    R.id.nav_host_fragment_activity_main
-                )
-            navController.navigate(R.id.action_navigation_user_to_myAnnounceFragment)
-        }
-        binding.shop.setOnClickListener {
-            if (userShopId>0){
-                val action = ProfileFragmentDirections.actionNavigationUserToOneShopFragment((shopId.toString()))
-                Navigation.findNavController(requireView()).navigate(action)
+            if (!networkCheck(requireContext())){
+                (activity as MainActivity).checkConnect()
             }else{
-                val bundle = bundleOf(
-                    "phone_number" to phoneNumber,
-                    "username" to username,
-                    "surname" to surname,
-                )
                 val navController =
                     Navigation.findNavController(
                         requireActivity(),
                         R.id.mainContainer
                     )
-                navController.navigate(R.id.bottomNavFragment_to_createShop,bundle)
+                navController.navigate(R.id.bottomNavFragment_to_editProfile)
+            }
+        }
+        binding.myAnnounce.setOnClickListener {
+            Log.d("config",BuildConfig.API_KEY)
+//            if (!networkCheck(requireContext())){
+//                (activity as MainActivity).checkConnect()
+//            }else{
+//                val navController =
+//                    Navigation.findNavController(
+//                        requireActivity(),
+//                        R.id.nav_host_fragment_activity_main
+//                    )
+//                navController.navigate(R.id.action_navigation_user_to_myAnnounceFragment)
+//            }
+        }
+        binding.shop.setOnClickListener {
+            if (!networkCheck(requireContext())){
+                (activity as MainActivity).checkConnect()
+            }else{
+                if (userShopId>0){
+                    val action = ProfileFragmentDirections.actionNavigationUserToOneShopFragment((shopId.toString()))
+                    Navigation.findNavController(requireView()).navigate(action)
+                }else{
+                    val bundle = bundleOf(
+                        "phone_number" to phoneNumber,
+                        "username" to username,
+                        "surname" to surname,
+                    )
+                    val navController =
+                        Navigation.findNavController(
+                            requireActivity(),
+                            R.id.mainContainer
+                        )
+                    navController.navigate(R.id.bottomNavFragment_to_createShop,bundle)
+                }
             }
 
         }
         binding.imgLogout.setOnClickListener {
-            // TODO: AlertDialog
             showDialog()
-            /*AppCache.getHelper().token = null
-            AppCache.getHelper().userId = 0
-            val intent = Intent(requireActivity(), SignUpActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()*/
         }
         binding.privacyPolicy.setOnClickListener {
             val browserIntent = Intent(
@@ -122,15 +134,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Ishonchingiz komilmi?")
         builder.setMessage("Bu dasturdan chiqib ketmoqchimisiz?")
-        builder.setPositiveButton("Ha", { dialogInterface: DialogInterface, i: Int ->
+        builder.setPositiveButton("Ha") { _: DialogInterface, i: Int ->
             AppCache.getHelper().token = null
             AppCache.getHelper().userId = 0
-            /*val intent = Intent(requireActivity(), SignUpActivity::class.java)
-            startActivity(intent)*/
+            val intent = Intent(requireActivity(), SignUpActivity::class.java)
+            startActivity(intent)
             requireActivity().finish()
-            //Toast.makeText(requireContext(),"Finish",Toast.LENGTH_SHORT).show()
-        })
-        builder.setNegativeButton("Yo'q", { dialogInterface: DialogInterface, i: Int -> })
+        }
+        builder.setNegativeButton("Yo'q") { _: DialogInterface, i: Int -> }
         builder.show()
     }
 
@@ -154,7 +165,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                 }
                 ResourceState.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    if (!networkCheck(requireContext())){
+                        (activity as MainActivity).checkConnect()
+                    }else{
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })
@@ -168,7 +183,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     AppCache.getHelper().shopId = it.data
                 }
                 ResourceState.ERROR -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    if (!networkCheck(requireContext())){
+                        (activity as MainActivity).checkConnect()
+                    }else{
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })

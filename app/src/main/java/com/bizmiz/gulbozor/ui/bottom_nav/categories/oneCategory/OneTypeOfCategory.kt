@@ -94,11 +94,6 @@ class OneTypeOfCategory : Fragment(R.layout.fragment_one_category) {
                         binding.progressBarOneCat.visibility = View.VISIBLE
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     binding.progressBarOneCat.visibility = View.GONE
                 }
 

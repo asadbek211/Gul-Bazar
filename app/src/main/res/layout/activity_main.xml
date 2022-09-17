@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,4 +12,56 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation" />
-</LinearLayout>
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:id="@+id/notConnected"
+       android:visibility="gone"
+       android:background="@color/purple_500"
+       android:layout_height="match_parent">
+
+       <ImageView
+           android:id="@+id/imageView6"
+           android:layout_width="120dp"
+           android:layout_height="120dp"
+           android:src="@drawable/no_wifi"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintVertical_bias="0.44"
+           app:tint="@color/white" />
+
+       <TextView
+           android:id="@+id/textView7"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:fontFamily="@font/poppins_bold"
+           android:text="Siz internetga ulanmagansiz"
+           android:textColor="@color/white"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/imageView6"
+           app:layout_constraintVertical_bias="0.0" />
+
+       <androidx.appcompat.widget.AppCompatButton
+           android:layout_width="wrap_content"
+           android:text="Yangilash"
+           android:id="@+id/btnRefresh"
+           android:fontFamily="@font/poppins_bold"
+           android:textColor="@color/purple_500"
+           android:textAllCaps="false"
+           android:paddingStart="20dp"
+           android:paddingEnd="20dp"
+           android:paddingTop="5dp"
+           android:background="@drawable/shops_back"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/textView7"
+           app:layout_constraintVertical_bias="0.0" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

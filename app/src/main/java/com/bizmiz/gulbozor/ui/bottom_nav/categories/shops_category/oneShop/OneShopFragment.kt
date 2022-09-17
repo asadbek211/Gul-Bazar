@@ -86,11 +86,6 @@ class OneShopFragment : Fragment() {
                         oneShopVM.getShopNumber(args.position.toInt())
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     binding.progressBarOneCat.visibility = View.GONE
                 }
 

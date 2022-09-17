@@ -14,9 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.databinding.FragmentMyAnnounceBinding
 import com.bizmiz.gulbozor.databinding.FragmentOneShopBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -64,11 +66,6 @@ class MyAnnounceFragment : Fragment() {
                     binding.progressBarOneCat.visibility = View.VISIBLE
                     myAnnounceViewModel.getMyAnnounce(AppCache.getHelper().userId,currentPage + 1)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Boshqa elonlar mavjud emas",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     binding.progressBarOneCat.visibility = View.GONE
                 }
             }
@@ -135,7 +132,12 @@ class MyAnnounceFragment : Fragment() {
                     }
                     ResourceState.ERROR -> {
                         binding.swipeContainer.isRefreshing = false
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        if (!networkCheck(requireContext())){
+                            (activity as MainActivity).checkConnect()
+                        }
+                        else{
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             })

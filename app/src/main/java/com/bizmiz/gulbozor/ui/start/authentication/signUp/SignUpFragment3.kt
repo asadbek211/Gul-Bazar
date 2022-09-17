@@ -2,6 +2,7 @@ package com.bizmiz.gulbozor.ui.start.authentication.signUp
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bizmiz.gulbozor.BuildConfig
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.caches.LoginHelper
@@ -22,6 +24,7 @@ import com.bizmiz.gulbozor.core.models.LoginRequest
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.MVP.RegistrationMVP
 import com.bizmiz.gulbozor.ui.start.authentication.signUp.MVP.RegistrationPresenter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class SignUpFragment3 : Fragment(), RegistrationMVP.View {
     private var _binding: FragmentSignUp3Binding? = null
@@ -120,6 +123,8 @@ class SignUpFragment3 : Fragment(), RegistrationMVP.View {
             when (it.status) {
                 ResourceState.SUCCESS -> {
                     AppCache.getHelper().token = it.data?.token
+                    val properties = Properties()
+                    properties.
                     AppCache.getHelper().userId = it.data?.user_id!!.toInt()
                     SetUpHelper.getHelper().board = true
                     findNavController().navigate(R.id.action_signUpFragment3_to_signUpFragment4)

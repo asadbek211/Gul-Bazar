@@ -10,21 +10,18 @@ import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentAddNavigationBinding
 
 class AddNavigationFragment : Fragment(R.layout.fragment_add_navigation) {
-    private var isSeller: Boolean? = null
     private val binding by viewBinding { FragmentAddNavigationBinding.bind(it) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSeller.setOnClickListener {
-            navigation()
-            isSeller = false
+            navigation(false)
         }
         binding.btnShopping.setOnClickListener {
-            navigation()
-            isSeller = true
+            navigation(true)
         }
     }
 
-    private fun navigation() {
+    private fun navigation(isSeller:Boolean) {
         val bundle = bundleOf(
             "isSeller" to isSeller
         )

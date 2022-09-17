@@ -74,6 +74,7 @@
                                 android:layout_height="match_parent"
                                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                                 app:spanCount="2"
+                                android:paddingBottom="80dp"
                                 tools:listitem="@layout/flower_item" />
                         </androidx.core.widget.NestedScrollView>
                         <ProgressBar

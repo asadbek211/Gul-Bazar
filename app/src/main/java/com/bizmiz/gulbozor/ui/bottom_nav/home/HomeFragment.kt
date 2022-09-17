@@ -23,8 +23,10 @@ import com.bizmiz.gulbozor.core.app.App
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceResponseData
 import com.bizmiz.gulbozor.core.utils.ResourceState
+import com.bizmiz.gulbozor.core.utils.networkCheck
 import com.bizmiz.gulbozor.core.utils.viewBinding
 import com.bizmiz.gulbozor.databinding.FragmentHomeBinding
+import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,16 +39,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val slideModels: ArrayList<SlideModel> = ArrayList()
     private var currentPage: Int = 0
     private var totalPage:Int = 0
-    //private var totalAvailablePages=0
-
-    private var isLoading = false
     private var isLastPage = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.getAnnounce(currentPage)
-        homeViewModel.getVideoLInkByID(2)
+        homeViewModel.getVideoLInkByID(1)
         homeViewModel.getReklamaImages(1)
     }
 
@@ -76,41 +75,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun onScrolled() {
-
-        val mLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        binding.homeRecyclerview.layoutManager = mLayoutManager
-        var loading = true
-        var pastVisibleItems = 0
-        var visibleItemCount: Int
-        var totalItemCount: Int
-
-        binding.homeRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) { //check for scroll down
-                    visibleItemCount = mLayoutManager.childCount
-                    totalItemCount = mLayoutManager.itemCount
-                    val positions = mLayoutManager.findFirstVisibleItemPositions(null)
-                    if (positions != null && positions.size > 0) pastVisibleItems = positions[0]
-
-                    if (loading) {
-                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
-                            loading = false
-                            Toast.makeText(requireContext(), "Paging", Toast.LENGTH_SHORT).show()
-                            loading = true
-                        }
-                    }
-                }
-            }
-        })
-    }
 
     private fun scrollSwipe() {
         binding.swipeContainer.setOnRefreshListener {
             flowersAdapter.clearAdapter()
             currentPage = 0
             homeViewModel.getAnnounce(currentPage)
-            homeViewModel.getVideoLInkByID(2)
+            homeViewModel.getVideoLInkByID(1)
+            homeViewModel.getReklamaImages(1)
             isLastPage = false
         }
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -120,11 +92,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     homeViewModel.getAnnounce(currentPage + 1)
                 }
                 else {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "Boshqa elonlar mavjud emas",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
                     binding.progressBarHome.visibility = View.GONE
                 }
 
@@ -161,81 +128,81 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     private fun setListeners(view: View) {
-
-        binding.youtubeOthers.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.categoryWithBucket.setOnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Buket gullar", "home", "1")
-            Navigation.findNavController(view).navigate(action)
+        if (!networkCheck(requireContext())){
+            (activity as MainActivity).checkConnect()
+        }else{
+            binding.youtubeOthers.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.navHomeToYouTube("Barchasi", "home")
+                Navigation.findNavController(view).navigate(action)
+            })
+            binding.categoryWithBucket.setOnClickListener {
+                val action = HomeFragmentDirections.homeToOne("Buket gullar", "home", "1")
+                Navigation.findNavController(view).navigate(action)
+            }
+            binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home", "2")
+                Navigation.findNavController(view).navigate(action)
+            })
+            binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home", "3")
+                Navigation.findNavController(view).navigate(action)
+            })
+            binding.potFlowerCat.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home", "4")
+                Navigation.findNavController(view).navigate(action)
+            })
+            binding.customersCat.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.homeToCustomers("customer")
+                Navigation.findNavController(view).navigate(action)
+            })
+            binding.shopsCat.setOnClickListener(View.OnClickListener {
+                val action = HomeFragmentDirections.homeToShop("home")
+                Navigation.findNavController(view).navigate(action)
+            })
         }
-        binding.homeMadeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Xonaki gullar", "home", "2")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.treeFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Daraxtlar", "home", "3")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.potFlowerCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToOne("Tuvak va o'g'itlar", "home", "5")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.customersCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToCustomers("customer")
-            Navigation.findNavController(view).navigate(action)
-        })
-        binding.shopsCat.setOnClickListener(View.OnClickListener {
-            val action = HomeFragmentDirections.homeToShop("home")
-            Navigation.findNavController(view).navigate(action)
-        })
-
     }
 
 
 
 
     private fun onImageClick() {
-//        binding.imgYoutube.setOnClickListener {
+        binding.imgYoutube.setOnClickListener {
             homeViewModel.getVideoLInkID.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ResourceState.SUCCESS -> {
                         binding.swipeContainer.isRefreshing = false
                         binding.progressBarYu.visibility = View.GONE
-                        binding.youtubePlayerView.apply {
-                            settings.pluginState = WebSettings.PluginState.ON
-                            webChromeClient = WebChromeClient()
-                            settings.javaScriptEnabled = true
-                            settings.setAppCacheEnabled(true)
-                            settings.loadWithOverviewMode = true
-                            settings.useWideViewPort = true
-                            settings.loadWithOverviewMode = true
-                            settings.builtInZoomControls = true
-                            settings.displayZoomControls  =true
-                            settings.loadsImagesAutomatically = true
-                            settings.setSupportZoom(true)
-                            settings.domStorageEnabled = true
-                            loadUrl("https://www.youtube.com/embed/${it.data?.`object`?.videoLink}")
-                        }
+                        val bundle = bundleOf(
+                            "videoLink" to it.data?.`object`?.videoLink
+                        )
+                        val navController =
+                            Navigation.findNavController(
+                                requireActivity(),
+                                R.id.mainContainer
+                            )
+                        navController.navigate(R.id.action_bottomNavFragment_to_videoPlayerFragment2,bundle)
                     }
                     ResourceState.ERROR -> {
                         binding.progressBarYu.visibility = View.GONE
                         binding.swipeContainer.isRefreshing = false
-                        Toast.makeText(
-                            requireContext(),
-                            "Youtube Error" + it.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (!networkCheck(requireContext())){
+                            (activity as MainActivity).checkConnect()
+                        }
+                        else{
+                            Toast.makeText(
+                                requireContext(),
+                                "Youtube Error" + it.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
                     }
                     ResourceState.LOADING -> {
                         binding.progressBarYu.visibility = View.VISIBLE
                     }
                 }
             })
-//            binding.imgYoutube.visibility = View.GONE
-//            binding.iconYoutube.visibility = View.GONE
-    }
+    }}
 
 
     private fun announceObserve() {
@@ -253,11 +220,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false
-                    Toast.makeText(
-                        requireContext(),
-                        "Reklama error" + it.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (!networkCheck(requireContext())){
+                        (activity as MainActivity).checkConnect()
+                    }
+                    else{
+                        Toast.makeText(
+                            requireContext(),
+                            "Reklama error" + it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
             }
         })
@@ -266,19 +239,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ResourceState.SUCCESS -> {
                     it.let {
                         binding.youtubeTitle.text = it.data!!.`object`.title
-//                        Glide.with(binding.imgYoutube).load(it.data.`object`.imageUrl)
-//                            .into(binding.imgYoutube)
+                        Glide.with(binding.imgYoutube).load(it.data.`object`.imageUrl)
+                            .into(binding.imgYoutube)
                         onImageClick()
                     }
                 }
                 ResourceState.ERROR -> {
                     binding.progressBarYu.visibility = View.GONE
                     binding.swipeContainer.isRefreshing = false
-                    Toast.makeText(
-                        requireContext(),
-                        "Youtube Error" + it.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (!networkCheck(requireContext())){
+                        (activity as MainActivity).checkConnect()
+                    }
+                    else{
+                        Toast.makeText(
+                            requireContext(),
+                            "Youtube Error" + it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
                 ResourceState.LOADING -> {
                     binding.progressBarYu.visibility = View.VISIBLE
@@ -308,7 +287,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 ResourceState.ERROR -> {
                     binding.swipeContainer.isRefreshing = false
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    if (!networkCheck(requireContext())){
+                        (activity as MainActivity).checkConnect()
+                    }
+                    else{
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
                     binding.progressBarHome.visibility = View.VISIBLE
                 }
             }

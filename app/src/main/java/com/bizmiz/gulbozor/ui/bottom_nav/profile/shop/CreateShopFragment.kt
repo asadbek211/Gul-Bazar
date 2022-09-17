@@ -12,15 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.bizmiz.gulbozor.MainActivity
 import com.bizmiz.gulbozor.R
 import com.bizmiz.gulbozor.core.caches.AppCache
 import com.bizmiz.gulbozor.core.models.AnnounceRequestData
 import com.bizmiz.gulbozor.core.models.shop.CreateShopRequest
 import com.bizmiz.gulbozor.core.models.user.edit_user.UserEditRequest
-import com.bizmiz.gulbozor.core.utils.Constant
-import com.bizmiz.gulbozor.core.utils.ResourceState
-import com.bizmiz.gulbozor.core.utils.showSoftKeyboard
-import com.bizmiz.gulbozor.core.utils.viewBinding
+import com.bizmiz.gulbozor.core.utils.*
 import com.bizmiz.gulbozor.databinding.FragmentCreateShopBinding
 import com.bizmiz.gulbozor.ui.bottom_nav.add.categorys.add_buket.AddBuketViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -83,21 +81,26 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
         regionResultObserve()
         cityResultObserve()
         binding.btnNext.setOnClickListener {
-            if (checkShop()){
-                binding.progress.visibility = View.VISIBLE
-                createShopViewModel.createShop(
-                    CreateShopRequest(
-                        cityId = cityId,
-                        phoneNumber1 = binding.phoneNumber1.text?.trim().toString()
-                            .replace("\\s".toRegex(), ""),
-                        phoneNumber2 = binding.phoneNumber2.text?.trim().toString()
-                            .replace("\\s".toRegex(), ""),
-                        regionId= regionId,
-                        sellerId = AppCache.getHelper().userId,
-                        shopName = binding.etShopName.text?.trim().toString(),
-                        streetHouse = binding.etStreet.text?.trim().toString()
+            if (!networkCheck(requireContext())){
+                (activity as MainActivity).checkConnect()
+            }
+            else{
+                if (checkShop()){
+                    binding.progress.visibility = View.VISIBLE
+                    createShopViewModel.createShop(
+                        CreateShopRequest(
+                            cityId = cityId,
+                            phoneNumber1 = binding.phoneNumber1.text?.trim().toString()
+                                .replace("\\s".toRegex(), ""),
+                            phoneNumber2 = binding.phoneNumber2.text?.trim().toString()
+                                .replace("\\s".toRegex(), ""),
+                            regionId= regionId,
+                            sellerId = AppCache.getHelper().userId,
+                            shopName = binding.etShopName.text?.trim().toString(),
+                            streetHouse = binding.etStreet.text?.trim().toString()
+                        )
                     )
-                )
+                }
             }
         }
         createShopResultObserve()
@@ -209,8 +212,18 @@ class CreateShopFragment : Fragment(R.layout.fragment_create_shop) {
                 binding.phoneNumber1.showSoftKeyboard()
                 false
             }
+            binding.phoneNumber1.text?.length != 17 -> {
+                binding.phoneNumber1.error = "Raqam to'liq emas"
+                binding.phoneNumber1.showSoftKeyboard()
+                false
+            }
             binding.phoneNumber2.text?.isEmpty() == true -> {
                 binding.phoneNumber2.error = "Telefon raqam kiriting"
+                binding.phoneNumber2.showSoftKeyboard()
+                false
+            }
+            binding.phoneNumber2.text?.length != 17 -> {
+                binding.phoneNumber2.error = "Raqam to'liq emas"
                 binding.phoneNumber2.showSoftKeyboard()
                 false
             }
